@@ -726,24 +726,30 @@ const RetroCards: React.FC = () => {
       {/* Card Content - Swiper.js slide animation like friends app */}
       <div className="flex-1 flex items-center justify-center px-4 pb-4">
         <div className="w-full h-full">
-          <Swiper
+           <Swiper
             modules={[Navigation, Pagination]}
             spaceBetween={0}
             slidesPerView={1}
-            speed={600}
+            speed={500}
             onSwiper={setSwiperRef}
             onSlideChange={(swiper) => setCurrentCard(swiper.activeIndex)}
             allowTouchMove={!draggingMemoji}
             style={{ height: '100%', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}
-            // Friends app style transition
+            // Friends app style smooth transition with easing
             effect="slide"
             resistance={true}
             resistanceRatio={0.3}
-            // Enhanced touch settings
             touchStartPreventDefault={false}
             simulateTouch={true}
             watchSlidesProgress={true}
             centeredSlides={true}
+            // Enhanced momentum and easing like friends app
+            touchRatio={1}
+            threshold={10}
+            shortSwipes={true}
+            longSwipes={true}
+            longSwipesRatio={0.5}
+            longSwipesMs={300}
           >
             {Array.from({ length: totalCards }, (_, index) => (
               <SwiperSlide key={index}>
