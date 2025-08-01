@@ -16,11 +16,12 @@ export default defineConfig(({ mode }) => ({
     },
   },
   server: {
-    host: "0.0.0.0",
+    host: "localhost",
     port: 8080,
-    strictPort: true,
-    hmr: {
-      clientPort: 443
+    strictPort: false,
+    cors: true,
+    headers: {
+      'Content-Type': 'application/javascript',
     }
   },
   build: {
