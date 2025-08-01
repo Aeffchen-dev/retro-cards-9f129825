@@ -679,11 +679,15 @@ const RetroCards: React.FC = () => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
                     setTimeout(() => {
-                      window.scrollTo(0, 0);
-                      if (window.visualViewport) {
-                        setViewportHeight(window.visualViewport.height);
-                      }
-                    }, 100);
+                      // Force viewport to recalculate instead of scrolling to top
+                      const currentHeight = window.innerHeight;
+                      setViewportHeight(currentHeight);
+                      // Trigger a gentle reflow without scrolling
+                      document.body.style.height = `${currentHeight}px`;
+                      requestAnimationFrame(() => {
+                        document.body.style.height = '';
+                      });
+                    }, 150);
                   }
                 }}
                 className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
@@ -701,11 +705,15 @@ const RetroCards: React.FC = () => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
                     setTimeout(() => {
-                      window.scrollTo(0, 0);
-                      if (window.visualViewport) {
-                        setViewportHeight(window.visualViewport.height);
-                      }
-                    }, 100);
+                      // Force viewport to recalculate instead of scrolling to top
+                      const currentHeight = window.innerHeight;
+                      setViewportHeight(currentHeight);
+                      // Trigger a gentle reflow without scrolling
+                      document.body.style.height = `${currentHeight}px`;
+                      requestAnimationFrame(() => {
+                        document.body.style.height = '';
+                      });
+                    }, 150);
                   }
                 }}
                 className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
