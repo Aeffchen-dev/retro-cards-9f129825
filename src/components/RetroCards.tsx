@@ -73,12 +73,19 @@ const RetroCards: React.FC = () => {
       // Update mobile detection
       setIsMobile(width <= 768);
 
-      // Calculate available height for cards - similar to friends app
+      // Calculate available height for cards - improved iOS handling
       let availableHeight;
       if (isIOS && isSafari) {
-        // For iOS Safari, account for dynamic viewport and browser bars
-        const statusBarHeight = height > 800 ? 47 : 44;
-        availableHeight = Math.min(height, window.screen.height * 0.85) - statusBarHeight;
+        // For iOS Safari, use the visual viewport for better accuracy
+        const visualViewport = window.visualViewport;
+        if (visualViewport) {
+          availableHeight = visualViewport.height;
+        } else {
+          // Fallback for older iOS versions
+          const statusBarHeight = height > 800 ? 47 : 44;
+          const safariBarHeight = 44; // Bottom safari bar
+          availableHeight = height - statusBarHeight - safariBarHeight;
+        }
       } else {
         availableHeight = height;
       }
@@ -120,9 +127,12 @@ const RetroCards: React.FC = () => {
 
       // Boundaries relative to the memoji container - allow dragging right after text
       const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
-      // Adjust container height for 27" desktop (2560px+ width) to prevent dragging below instruction text
-      const isLargeDesktop = window.innerWidth >= 2560;
-      const containerHeight = isMobile ? 350 : (isLargeDesktop ? 320 : 400); // Reduced height for large desktop
+      // Calculate container height dynamically to allow dragging until instruction text
+      // Account for header (~120px), mt-10 (40px), and instruction text area (~60px)
+      const headerAndMargin = 160;
+      const instructionTextArea = 60;
+      const availableHeight = viewportHeight - headerAndMargin - instructionTextArea;
+      const containerHeight = Math.max(350, availableHeight); // Minimum 350px for usability
       
       const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
       const newY = Math.max(-40, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // -40px allows dragging into mt-10 space
@@ -153,9 +163,12 @@ const RetroCards: React.FC = () => {
 
       // Boundaries relative to the memoji container - allow dragging right after text
       const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
-      // Adjust container height for 27" desktop (2560px+ width) to prevent dragging below instruction text
-      const isLargeDesktop = window.innerWidth >= 2560;
-      const containerHeight = isMobile ? 350 : (isLargeDesktop ? 320 : 400); // Reduced height for large desktop
+      // Calculate container height dynamically to allow dragging until instruction text
+      // Account for header (~120px), mt-10 (40px), and instruction text area (~60px)
+      const headerAndMargin = 160;
+      const instructionTextArea = 60;
+      const availableHeight = viewportHeight - headerAndMargin - instructionTextArea;
+      const containerHeight = Math.max(350, availableHeight); // Minimum 350px for usability
       
       const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
       const newY = Math.max(-40, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // -40px allows dragging into mt-10 space
