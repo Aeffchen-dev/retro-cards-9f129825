@@ -129,6 +129,10 @@ const RetroCards: React.FC = () => {
     };
 
     const handleGlobalMouseUp = () => {
+      // Re-enable swiper when memoji dragging ends
+      if (swiperRef) {
+        swiperRef.allowTouchMove = true;
+      }
       setDraggingMemoji(null);
     };
 
@@ -155,6 +159,10 @@ const RetroCards: React.FC = () => {
     };
 
     const handleGlobalTouchEnd = () => {
+      // Re-enable swiper when memoji dragging ends  
+      if (swiperRef) {
+        swiperRef.allowTouchMove = true;
+      }
       setDraggingMemoji(null);
     };
 
@@ -334,6 +342,13 @@ const RetroCards: React.FC = () => {
     person: "niklas" | "jana",
   ) => {
     e.stopPropagation();
+    e.preventDefault();
+    
+    // Disable swiper while dragging memoji
+    if (swiperRef) {
+      swiperRef.allowTouchMove = false;
+    }
+    
     const currentPos = memojisPositions[cardIndex]?.[person];
     setDraggingMemoji({
       cardIndex,
@@ -351,6 +366,13 @@ const RetroCards: React.FC = () => {
     person: "niklas" | "jana",
   ) => {
     e.stopPropagation();
+    e.preventDefault();
+    
+    // Disable swiper while dragging memoji
+    if (swiperRef) {
+      swiperRef.allowTouchMove = false;
+    }
+    
     const touch = e.touches[0];
     const currentPos = memojisPositions[cardIndex]?.[person];
     setDraggingMemoji({
