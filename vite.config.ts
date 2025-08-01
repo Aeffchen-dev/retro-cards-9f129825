@@ -9,17 +9,6 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    headers: {
-      'Cache-Control': 'no-cache'
-    }
-  },
-  build: {
-    assetsInlineLimit: 0,
-    rollupOptions: {
-      output: {
-        format: 'es'
-      }
-    }
   },
   plugins: [
     react(),
