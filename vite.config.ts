@@ -5,7 +5,6 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/retrocards/',
   server: {
     host: "::",
     port: 8080,
@@ -15,16 +14,6 @@ export default defineConfig(({ mode }) => ({
     mode === 'development' &&
     componentTagger(),
   ].filter(Boolean),
-  build: {
-    target: 'esnext',
-    rollupOptions: {
-      output: {
-        entryFileNames: '[name].js',
-        chunkFileNames: '[name].js',
-        assetFileNames: '[name].[ext]'
-      }
-    }
-  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
