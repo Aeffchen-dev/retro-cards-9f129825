@@ -166,78 +166,134 @@ const RetroCards: React.FC = () => {
     };
   }, [draggingMemoji]);
 
-  const openCamera = () => {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+  const openCamera = async () => {
+    console.log('Camera button clicked, attempting to access camera...');
+    
+    // Check if we're on HTTPS or localhost (required for camera access)
+    const isSecureContext = window.isSecureContext || window.location.protocol === 'https:' || window.location.hostname === 'localhost';
+    
+    if (!isSecureContext) {
       alert(
-        "📸 Kamera nicht verfügbar\n\nIhr Browser unterstützt keinen Kamerazugriff. Verwenden Sie einen modernen Browser wie Chrome, Firefox oder Safari.",
+        "📸 Kamera-Zugriff nicht möglich\n\n" +
+        "Kamera-Zugriff ist nur über HTTPS oder localhost verfügbar.\n" +
+        "Bitte verwenden Sie eine sichere Verbindung."
       );
       return;
     }
 
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then((stream) => {
-        // Create video element and display camera
-        const video = document.createElement("video");
-        video.srcObject = stream;
-        video.play();
+    // Check if mediaDevices API is available
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      console.log('MediaDevices API not available, trying fallback...');
+      // Fallback for older browsers or iOS
+      handleCameraFallback();
+      return;
+    }
 
-        // For demo purposes, show success message
-        alert(
-          "📸 Kamera erfolgreich aktiviert!\n\nHier würde normalerweise die Kamera-App oder Foto-Funktion geöffnet werden.",
-        );
-
-        // Stop the stream
-        stream.getTracks().forEach((track) => track.stop());
-      })
-      .catch((err) => {
-        console.error("Error accessing camera:", err);
-
-        let message = "📸 Kamera-Zugriff nicht möglich\n\n";
-
-        if (
-          err.name === "NotAllowedError" ||
-          err.name === "PermissionDeniedError"
-        ) {
-          message +=
-            "Die Kamera-Berechtigung wurde verweigert.\n\n" +
-            "So aktivieren Sie die Kamera:\n" +
-            "• Klicken Sie auf das Kamera-Symbol in der Adressleiste\n" +
-            "• Wählen Sie 'Zulassen' für Kamera-Zugriff\n" +
-            "• Laden Sie die Seite neu und versuchen Sie es erneut";
-        } else if (
-          err.name === "NotFoundError" ||
-          err.name === "DevicesNotFoundError"
-        ) {
-          message +=
-            "Keine Kamera gefunden.\n\n" +
-            "Überprüfen Sie, ob eine Kamera angeschlossen ist.";
-        } else if (
-          err.name === "NotReadableError" ||
-          err.name === "TrackStartError"
-        ) {
-          message +=
-            "Die Kamera wird bereits von einer anderen App verwendet.\n\n" +
-            "Schließen Sie andere Apps die die Kamera verwenden und versuchen Sie es erneut.";
-        } else if (
-          err.name === "OverconstrainedError" ||
-          err.name === "ConstraintNotSatisfiedError"
-        ) {
-          message += "Kamera-Einstellungen werden nicht unterstützt.";
-        } else if (err.name === "NotSupportedError") {
-          message +=
-            "Kamera-Zugriff wird nicht unterstützt.\n\n" +
-            "Verwenden Sie HTTPS oder einen modernen Browser.";
-        } else if (err.name === "AbortError") {
-          message += "Kamera-Zugriff wurde abgebrochen.";
-        } else {
-          message +=
-            "Unbekannter Fehler beim Kamera-Zugriff.\n\n" +
-            "Versuchen Sie es später erneut oder verwenden Sie einen anderen Browser.";
+    try {
+      console.log('Requesting camera permissions...');
+      
+      // For iOS Safari, we need to be more specific with constraints
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      const constraints = {
+        video: {
+          facingMode: 'user', // Front camera (selfie mode)
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
         }
+      };
 
-        alert(message);
+      // Request camera access
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      console.log('Camera access granted successfully');
+
+      // For demo purposes, show success and then stop the stream
+      alert(
+        "📸 Kamera erfolgreich aktiviert!\n\n" +
+        "Kamera-Zugriff wurde gewährt. In einer echten App würde hier die Kamera-Oberfläche erscheinen."
+      );
+
+      // Clean up the stream
+      stream.getTracks().forEach((track) => {
+        track.stop();
+        console.log('Camera track stopped');
       });
+
+    } catch (err) {
+      console.error("Error accessing camera:", err);
+      handleCameraError(err);
+    }
+  };
+
+  const handleCameraFallback = () => {
+    // For iOS or browsers without getUserMedia, try opening camera via file input
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    
+    if (isIOS) {
+      // Create a hidden file input that opens camera on iOS
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.capture = 'user'; // This should open front camera on iOS
+      input.style.display = 'none';
+      
+      input.onchange = (e) => {
+        const target = e.target as HTMLInputElement;
+        if (target.files && target.files[0]) {
+          alert(
+            "📸 Foto erfolgreich aufgenommen!\n\n" +
+            "Das Foto wurde ausgewählt. In einer echten App würde es jetzt verarbeitet werden."
+          );
+        }
+        document.body.removeChild(input);
+      };
+      
+      document.body.appendChild(input);
+      input.click();
+    } else {
+      alert(
+        "📸 Kamera nicht verfügbar\n\n" +
+        "Ihr Browser unterstützt keinen Kamerazugriff. Verwenden Sie einen modernen Browser wie Chrome, Firefox oder Safari."
+      );
+    }
+  };
+
+  const handleCameraError = (err: any) => {
+    let message = "📸 Kamera-Zugriff nicht möglich\n\n";
+
+    if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
+      message +=
+        "Die Kamera-Berechtigung wurde verweigert.\n\n" +
+        "So aktivieren Sie die Kamera:\n" +
+        "• Klicken Sie auf das Schloss-Symbol in der Adressleiste\n" +
+        "• Wählen Sie 'Zulassen' für Kamera-Zugriff\n" +
+        "• Laden Sie die Seite neu und versuchen Sie es erneut\n\n" +
+        "Auf iPhone: Gehen Sie zu Einstellungen > Safari > Kamera und erlauben Sie den Zugriff.";
+    } else if (err.name === "NotFoundError" || err.name === "DevicesNotFoundError") {
+      message +=
+        "Keine Kamera gefunden.\n\n" +
+        "Überprüfen Sie, ob eine Kamera verfügbar ist.";
+    } else if (err.name === "NotReadableError" || err.name === "TrackStartError") {
+      message +=
+        "Die Kamera wird bereits verwendet.\n\n" +
+        "Schließen Sie andere Apps, die die Kamera verwenden.";
+    } else if (err.name === "OverconstrainedError") {
+      message +=
+        "Kamera-Einstellungen werden nicht unterstützt.\n\n" +
+        "Versuchen Sie es mit anderen Kamera-Einstellungen.";
+    } else if (err.name === "NotSupportedError") {
+      message +=
+        "Kamera-Zugriff wird nicht unterstützt.\n\n" +
+        "Verwenden Sie HTTPS oder einen modernen Browser.";
+    } else if (err.name === "AbortError") {
+      message += "Kamera-Zugriff wurde abgebrochen.";
+    } else {
+      message +=
+        "Unbekannter Fehler beim Kamera-Zugriff.\n\n" +
+        "Fehler: " + (err.message || err.name || 'Unbekannt') + "\n\n" +
+        "Versuchen Sie es später erneut oder verwenden Sie einen anderen Browser.";
+    }
+
+    alert(message);
   };
 
   const openFeedbackEmail = () => {
