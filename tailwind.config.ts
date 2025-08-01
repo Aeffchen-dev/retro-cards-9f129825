@@ -19,15 +19,16 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				inter: ['Inter', 'Arial', 'sans-serif'],
+				kokoro: ["Kokoro", "Arial", "sans-serif"],
+				arial: ["Arial", "sans-serif"],
 			},
 			colors: {
 				// Retro Cards specific colors
 				retro: {
-					black: 'hsl(var(--retro-black))',
-					'card-bg': 'hsl(var(--retro-card-bg))',
-					white: 'hsl(var(--retro-white))',
-					'post-it': 'hsl(var(--retro-post-it))',
+					black: "#000000",
+					'card-bg': "#161616",
+					white: "#FFFFFF",
+					'post-it': "#F4E5A3",
 				},
 				// Keep existing colors for compatibility
 				border: 'hsl(var(--border))',
