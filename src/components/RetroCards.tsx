@@ -118,12 +118,12 @@ const RetroCards: React.FC = () => {
       const deltaX = e.clientX - draggingMemoji.startX;
       const deltaY = e.clientY - draggingMemoji.startY;
 
-      // Boundaries relative to the memoji container, not viewport
+      // Boundaries relative to the memoji container - allow dragging right after text
       const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
       const containerHeight = isMobile ? 350 : 400; // Height of the draggable area
       
       const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
-      const newY = Math.max(0, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // 56px = memoji height
+      const newY = Math.max(-40, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // -40px allows dragging into mt-10 space
 
       setMemojisPositions((prev) => ({
         ...prev,
@@ -149,12 +149,12 @@ const RetroCards: React.FC = () => {
       const deltaX = touch.clientX - draggingMemoji.startX;
       const deltaY = touch.clientY - draggingMemoji.startY;
 
-      // Boundaries relative to the memoji container, not viewport
+      // Boundaries relative to the memoji container - allow dragging right after text
       const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
       const containerHeight = isMobile ? 350 : 400; // Height of the draggable area
       
       const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
-      const newY = Math.max(0, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // 56px = memoji height
+      const newY = Math.max(-40, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // -40px allows dragging into mt-10 space
 
       setMemojisPositions((prev) => ({
         ...prev,
