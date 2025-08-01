@@ -54,6 +54,10 @@ const RetroCards: React.FC = () => {
     jana: "",
   });
 
+  // State for camera modal
+  const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   const totalCards = 6;
 
   // Handle mobile Safari viewport height and card dimensions
@@ -250,16 +254,8 @@ const RetroCards: React.FC = () => {
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
       console.log('Camera access granted successfully');
 
-      alert(
-        "📸 Kamera erfolgreich aktiviert!\n\n" +
-        "Kamera-Zugriff wurde gewährt."
-      );
-
-      // Clean up the stream
-      stream.getTracks().forEach((track) => {
-        track.stop();
-        console.log('Camera track stopped');
-      });
+      // Create camera preview modal
+      openCameraPreview(stream);
 
     } catch (err) {
       console.error("Error accessing camera via getUserMedia:", err);
@@ -336,6 +332,68 @@ const RetroCards: React.FC = () => {
       );
     }
   };
+
+  const openCameraPreview = (stream: MediaStream) => {
+    console.log('Opening camera preview with stream');
+    setCameraStream(stream);
+    
+    // Set up video element when stream is available
+    setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        videoRef.current.play().catch(err => {
+          console.error('Error playing video:', err);
+        });
+      }
+    }, 100);
+  };
+
+  const closeCameraPreview = () => {
+    console.log('Closing camera preview');
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(track => {
+        track.stop();
+        console.log('Camera track stopped');
+      });
+      setCameraStream(null);
+    }
+  };
+
+  const takePicture = () => {
+    if (!videoRef.current || !cameraStream) return;
+
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    if (!context) return;
+
+    // Set canvas dimensions to match video
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
+
+    // Draw the video frame to canvas
+    context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+
+    // Convert to blob and show success message
+    canvas.toBlob((blob) => {
+      if (blob) {
+        console.log('Picture taken, blob size:', blob.size);
+        alert(
+          "📸 Foto erfolgreich aufgenommen!\n\n" +
+          "Das Foto wurde erfolgreich erstellt."
+        );
+        closeCameraPreview();
+      }
+    }, 'image/jpeg', 0.8);
+  };
+
+  // Cleanup camera stream on unmount
+  useEffect(() => {
+    return () => {
+      if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, [cameraStream]);
 
   const openFeedbackEmail = () => {
     const email = "hello@relationshipbydesign.de";
@@ -743,6 +801,35 @@ const RetroCards: React.FC = () => {
           Feedback geben
         </button>
       </div>
+
+      {/* Camera Preview Modal */}
+      {cameraStream && (
+        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg overflow-hidden max-w-md w-full">
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              muted
+              className="w-full aspect-video object-cover"
+            />
+            <div className="p-4 flex gap-3 justify-center">
+              <button
+                onClick={takePicture}
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              >
+                📸 Foto aufnehmen
+              </button>
+              <button
+                onClick={closeCameraPreview}
+                className="px-6 py-2 bg-gray-600 text-white rounded-lg font-medium hover:bg-gray-700 transition-colors"
+              >
+                ❌ Schließen
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
