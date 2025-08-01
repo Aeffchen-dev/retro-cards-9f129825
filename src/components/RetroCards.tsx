@@ -81,10 +81,8 @@ const RetroCards: React.FC = () => {
         if (visualViewport) {
           availableHeight = visualViewport.height;
         } else {
-          // Fallback for older iOS versions
-          const statusBarHeight = height > 800 ? 47 : 44;
-          const safariBarHeight = 44; // Bottom safari bar
-          availableHeight = height - statusBarHeight - safariBarHeight;
+          // Fallback for older iOS versions - use document height to avoid keyboard issues
+          availableHeight = Math.max(height, document.documentElement.clientHeight);
         }
       } else {
         availableHeight = height;
@@ -127,7 +125,7 @@ const RetroCards: React.FC = () => {
 
       // Boundaries relative to the memoji container - keep within card bounds
       const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
-      const containerHeight = isMobile ? 350 : 400; // Fixed container height to match card dimensions
+      const containerHeight = isMobile ? 300 : 320; // Reduced height to stop right above the instruction text
       
       const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
       const newY = Math.max(-40, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // -40px allows dragging into mt-10 space
@@ -158,7 +156,7 @@ const RetroCards: React.FC = () => {
 
       // Boundaries relative to the memoji container - keep within card bounds
       const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
-      const containerHeight = isMobile ? 350 : 400; // Fixed container height to match card dimensions
+      const containerHeight = isMobile ? 300 : 320; // Reduced height to stop right above the instruction text
       
       
       const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
