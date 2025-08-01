@@ -48,7 +48,7 @@ const RetroCards: React.FC = () => {
 
   const totalCards = 6;
 
-  // Handle mobile Safari viewport height
+  // Handle mobile Safari viewport height and card dimensions
   useEffect(() => {
     const updateViewportHeight = () => {
       const height = window.innerHeight;
@@ -61,33 +61,40 @@ const RetroCards: React.FC = () => {
       // Update mobile detection
       setIsMobile(width <= 768);
 
-      // For iOS Safari, use a smaller height to account for browser bars
+      // Calculate available height for cards - similar to friends app
+      let availableHeight;
       if (isIOS && isSafari) {
-        // Subtract estimated status bar height for different iPhone models
-        const statusBarHeight = height > 800 ? 47 : 44; // iPhone X+ vs older models
-        const adjustedHeight = Math.min(height, window.screen.height * 0.85);
-        setViewportHeight(adjustedHeight - statusBarHeight);
+        // For iOS Safari, account for dynamic viewport and browser bars
+        const statusBarHeight = height > 800 ? 47 : 44;
+        availableHeight = Math.min(height, window.screen.height * 0.85) - statusBarHeight;
       } else {
-        setViewportHeight(height);
+        availableHeight = height;
       }
+
+      // Ensure minimum height for usability
+      const minHeight = 600;
+      setViewportHeight(Math.max(availableHeight, minHeight));
     };
 
     updateViewportHeight();
-    window.addEventListener("resize", updateViewportHeight);
-    window.addEventListener("orientationchange", updateViewportHeight);
+    
+    // Set up event listeners for viewport changes
+    const events = ['resize', 'orientationchange', 'scroll'];
+    events.forEach(event => {
+      window.addEventListener(event, updateViewportHeight);
+    });
 
-    // Handle iOS viewport changes when browser bars appear/disappear
-    window.addEventListener("scroll", updateViewportHeight);
-
-    // Multiple timeouts for Safari's delayed viewport calculation
-    setTimeout(updateViewportHeight, 100);
-    setTimeout(updateViewportHeight, 500);
-    setTimeout(updateViewportHeight, 1000);
+    // Handle iOS viewport changes with multiple timeouts for Safari's delayed calculation
+    const timeouts = [100, 300, 500, 1000];
+    const timeoutIds = timeouts.map(delay => 
+      setTimeout(updateViewportHeight, delay)
+    );
 
     return () => {
-      window.removeEventListener("resize", updateViewportHeight);
-      window.removeEventListener("orientationchange", updateViewportHeight);
-      window.removeEventListener("scroll", updateViewportHeight);
+      events.forEach(event => {
+        window.removeEventListener(event, updateViewportHeight);
+      });
+      timeoutIds.forEach(id => clearTimeout(id));
     };
   }, []);
 
@@ -252,16 +259,29 @@ const RetroCards: React.FC = () => {
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging || draggingMemoji) return;
+    
+    // Prevent default to avoid page scrolling during swipe
+    e.preventDefault();
+    
     const currentX = e.touches[0].clientX;
     const diff = currentX - startX;
-    setTranslateX(diff);
+    
+    // Add resistance at boundaries for natural feel - like friends app
+    let resistanceFactor = 1;
+    if ((currentCard === 0 && diff > 0) || (currentCard === totalCards - 1 && diff < 0)) {
+      resistanceFactor = 0.3; // Add resistance at boundaries
+    }
+    
+    setTranslateX(diff * resistanceFactor);
   };
 
   const handleTouchEnd = () => {
     if (!isDragging || draggingMemoji) return;
     setIsDragging(false);
 
-    if (Math.abs(translateX) > 50) {
+    // Increased threshold for more deliberate swipes - like friends app
+    const threshold = 80;
+    if (Math.abs(translateX) > threshold) {
       if (translateX > 0 && currentCard > 0) {
         setCurrentCard(currentCard - 1);
       } else if (translateX < 0 && currentCard < totalCards - 1) {
@@ -282,14 +302,23 @@ const RetroCards: React.FC = () => {
     if (!isDragging || draggingMemoji) return;
     const currentX = e.clientX;
     const diff = currentX - startX;
-    setTranslateX(diff);
+    
+    // Add resistance at boundaries for natural feel - like friends app
+    let resistanceFactor = 1;
+    if ((currentCard === 0 && diff > 0) || (currentCard === totalCards - 1 && diff < 0)) {
+      resistanceFactor = 0.3;
+    }
+    
+    setTranslateX(diff * resistanceFactor);
   };
 
   const handleMouseUp = () => {
     if (!isDragging || draggingMemoji) return;
     setIsDragging(false);
 
-    if (Math.abs(translateX) > 50) {
+    // Increased threshold for more deliberate swipes - like friends app
+    const threshold = 80;
+    if (Math.abs(translateX) > threshold) {
       if (translateX > 0 && currentCard > 0) {
         setCurrentCard(currentCard - 1);
       } else if (translateX < 0 && currentCard < totalCards - 1) {
@@ -587,29 +616,24 @@ const RetroCards: React.FC = () => {
         maxHeight: `${viewportHeight}px`,
         overflowY: "hidden",
         position: "fixed",
-        top: isMobile ? "0px" : "0px",
+        top: 0,
         left: 0,
         right: 0,
+        bottom: 0,
       }}
     >
-      {/* Header - Full Width */}
-      <div
-        className="flex items-center gap-4 w-full px-4 pb-4"
-        style={{ marginTop: isMobile ? "0px" : "0px" }}
-      >
+      {/* Header - Compact like friends app */}
+      <div className="flex items-center gap-4 w-full px-4 py-3">
         <h1 className="retro-title">Retro Cards</h1>
         <div className="flex-1 text-right retro-body">
           {currentCard + 1} / {totalCards}
         </div>
       </div>
 
-      {/* Card Content - Centered with max-width */}
-      <div
-        className="flex-1 flex items-stretch justify-center px-4"
-        style={{ marginTop: isMobile ? "4px" : "0px" }}
-      >
+      {/* Card Content - Tall card design like friends app */}
+      <div className="flex-1 flex items-center justify-center px-4 pb-4">
         <div
-          className="w-full max-w-[500px] flex flex-col"
+          className="w-full max-w-[500px] h-full flex flex-col"
           ref={containerRef}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -620,10 +644,15 @@ const RetroCards: React.FC = () => {
           onMouseLeave={handleMouseUp}
           style={{
             transform: `translateX(${translateX}px)`,
-            transition: isDragging ? "none" : "transform 0.3s ease",
+            transition: isDragging ? "none" : "transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           }}
         >
-          <div className="flex-1 flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 relative">
+          <div 
+            className="h-full flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 relative shadow-2xl"
+            style={{
+              minHeight: `${Math.max(viewportHeight * 0.75, 500)}px`, // Ensure card takes up most of viewport like friends app
+            }}
+          >
             {renderCard()}
 
             {/* Navigation hint on first card */}
@@ -654,17 +683,17 @@ const RetroCards: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer - Full Width */}
-      <div className="flex items-start gap-4 w-full px-4" style={{ paddingTop: "16px", paddingBottom: isMobile ? "0px" : "16px", marginBottom: isMobile ? "16px" : "0px" }}>
+      {/* Footer - Compact like friends app */}
+      <div className="flex items-center gap-4 w-full px-4 py-3">
         <button
           onClick={openRelationshipByDesign}
-          className="flex-1 retro-body text-left cursor-pointer"
+          className="flex-1 retro-body text-left cursor-pointer hover:opacity-80 transition-opacity"
         >
           Relationship by design
         </button>
         <button
           onClick={openFeedbackEmail}
-          className="retro-body cursor-pointer"
+          className="retro-body cursor-pointer hover:opacity-80 transition-opacity"
         >
           Feedback geben
         </button>
