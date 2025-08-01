@@ -469,7 +469,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "jana")}
               >
                 <img
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/d9b3f8e4a6c8d7b2a9e5f3c1b4d6e8a7c9f1e5b2?width=112"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/3a8f9b2c1e5d4f7a6c9e2b8d5f1a4c7e9b2f5a8d?width=112"
                   alt="Jana Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
@@ -530,7 +530,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "jana")}
               >
                 <img
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/d9b3f8e4a6c8d7b2a9e5f3c1b4d6e8a7c9f1e5b2?width=112"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/3a8f9b2c1e5d4f7a6c9e2b8d5f1a4c7e9b2f5a8d?width=112"
                   alt="Jana Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
