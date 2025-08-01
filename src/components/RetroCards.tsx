@@ -702,21 +702,19 @@ const RetroCards: React.FC = () => {
                     </div>
                   )}
 
-                  {/* Left navigation zone (32px wide) */}
+                  {/* Left navigation zone - Extended for desktop */}
                   {index > 0 && (
                     <div
                       onClick={() => navigateCard("prev")}
-                      className="absolute left-0 top-0 w-8 h-full cursor-pointer z-20"
-                      style={{ width: "32px" }}
+                      className="absolute left-0 top-0 h-full cursor-pointer z-20 w-8 md:w-32 lg:w-48"
                     />
                   )}
 
-                  {/* Right navigation zone (32px wide) */}
+                  {/* Right navigation zone - Extended for desktop */}
                   {index < totalCards - 1 && (
                     <div
                       onClick={() => navigateCard("next")}
-                      className="absolute right-0 top-0 w-8 h-full cursor-pointer z-20"
-                      style={{ width: "32px" }}
+                      className="absolute right-0 top-0 h-full cursor-pointer z-20 w-8 md:w-32 lg:w-48"
                     />
                   )}
                 </div>
