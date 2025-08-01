@@ -190,14 +190,23 @@ const RetroCards: React.FC = () => {
     console.log('Hostname:', window.location.hostname);
     
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isMac = /Mac|Macintosh/.test(navigator.userAgent);
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     
     console.log('Is iOS:', isIOS);
+    console.log('Is Mac:', isMac);
     console.log('Is Safari:', isSafari);
     
     // For iPhone, try the file input method first (most reliable)
     if (isIOS) {
       console.log('iPhone detected, using file input method');
+      openCameraForIOS();
+      return;
+    }
+    
+    // For Mac Safari, use file input method as well (more reliable)
+    if (isMac && isSafari) {
+      console.log('Mac Safari detected, using file input method');
       openCameraForIOS();
       return;
     }
