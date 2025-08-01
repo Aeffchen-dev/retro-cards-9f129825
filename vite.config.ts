@@ -16,12 +16,14 @@ export default defineConfig(({ mode }) => ({
     },
   },
   server: {
-    port: 8080,
     host: "::",
+    port: 8080,
     strictPort: false,
+    open: false,
+    cors: true,
     hmr: {
       port: 8080,
-    },
+    }
   },
   build: {
     assetsDir: 'assets',
@@ -31,4 +33,5 @@ export default defineConfig(({ mode }) => ({
       }
     }
   },
+  assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.svg'],
 }));
