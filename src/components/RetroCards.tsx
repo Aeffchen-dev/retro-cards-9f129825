@@ -118,15 +118,11 @@ const RetroCards: React.FC = () => {
       const deltaX = e.clientX - draggingMemoji.startX;
       const deltaY = e.clientY - draggingMemoji.startY;
 
+      // Set proper drag boundaries based on card layout
       const newX = Math.max(0, Math.min(436, draggingMemoji.initialX + deltaX));
-      // Adjust Y boundaries based on card content - slide 2 has shorter headline  
-      const isSlide2 = draggingMemoji.cardIndex === 2;
-      const topBoundary = isSlide2 && !isMobile ? -10 : 10; // Allow higher positioning on slide 2 desktop
-      const bottomBoundary = isMobile ? 420 : 480;
-      
       const newY = Math.max(
-        topBoundary,
-        Math.min(bottomBoundary, draggingMemoji.initialY + deltaY),
+        isMobile ? 10 : 80, // Top boundary: after header section
+        Math.min(isMobile ? 420 : 440, draggingMemoji.initialY + deltaY), // Bottom boundary: within card
       );
 
       setMemojisPositions((prev) => ({
@@ -153,15 +149,11 @@ const RetroCards: React.FC = () => {
       const deltaX = touch.clientX - draggingMemoji.startX;
       const deltaY = touch.clientY - draggingMemoji.startY;
 
+      // Set proper drag boundaries based on card layout
       const newX = Math.max(0, Math.min(436, draggingMemoji.initialX + deltaX));
-      // Adjust Y boundaries based on card content - slide 2 has shorter headline
-      const isSlide2 = draggingMemoji.cardIndex === 2;
-      const topBoundary = isSlide2 && !isMobile ? -10 : 10; // Allow higher positioning on slide 2 desktop
-      const bottomBoundary = isMobile ? 420 : 480;
-      
       const newY = Math.max(
-        topBoundary,
-        Math.min(bottomBoundary, draggingMemoji.initialY + deltaY),
+        isMobile ? 10 : 80, // Top boundary: after header section  
+        Math.min(isMobile ? 420 : 440, draggingMemoji.initialY + deltaY), // Bottom boundary: within card
       );
 
       setMemojisPositions((prev) => ({
