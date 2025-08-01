@@ -16,11 +16,12 @@ export default defineConfig(({ mode }) => ({
     componentTagger(),
   ].filter(Boolean),
   build: {
+    target: 'esnext',
     rollupOptions: {
       output: {
-        entryFileNames: 'assets/[name].[hash].js',
-        chunkFileNames: 'assets/[name].[hash].js',
-        assetFileNames: 'assets/[name].[hash].[ext]'
+        entryFileNames: '[name].js',
+        chunkFileNames: '[name].js',
+        assetFileNames: '[name].[ext]'
       }
     }
   },
