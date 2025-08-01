@@ -533,7 +533,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "niklas")}
               >
                 <img
-                  src="/lovable-uploads/265b3d56-6631-4628-82ae-33e1c30e87ca.png"
+                  src="assets/niklas-memoji.png"
                   alt="Niklas Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
@@ -550,7 +550,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "jana")}
               >
                 <img
-                  src="/lovable-uploads/927f4bb3-7ec2-4772-84d6-b06b2151d173.png"
+                  src="assets/jana-memoji.png"
                   alt="Jana Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
@@ -594,7 +594,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "niklas")}
               >
                 <img
-                  src="/lovable-uploads/265b3d56-6631-4628-82ae-33e1c30e87ca.png"
+                  src="assets/niklas-memoji.png"
                   alt="Niklas Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
@@ -611,7 +611,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "jana")}
               >
                 <img
-                  src="/lovable-uploads/927f4bb3-7ec2-4772-84d6-b06b2151d173.png"
+                  src="assets/jana-memoji.png"
                   alt="Jana Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
