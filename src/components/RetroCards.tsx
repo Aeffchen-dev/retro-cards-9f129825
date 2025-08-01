@@ -130,7 +130,7 @@ const RetroCards: React.FC = () => {
 
       // Boundaries relative to the memoji container - keep within card bounds
       const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
-      const containerHeight = isMobile ? 300 : 420; // Increased desktop height to allow dragging closer to instruction text
+      const containerHeight = isMobile ? 300 : 520; // Increased desktop height to allow dragging closer to instruction text
       
       const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
       const newY = Math.max(-40, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // -40px allows dragging into mt-10 space
@@ -161,7 +161,7 @@ const RetroCards: React.FC = () => {
 
       // Boundaries relative to the memoji container - keep within card bounds
       const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
-      const containerHeight = isMobile ? 300 : 420; // Increased desktop height to allow dragging closer to instruction text
+      const containerHeight = isMobile ? 300 : 520; // Increased desktop height to allow dragging closer to instruction text
       
       
       const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
