@@ -192,27 +192,3 @@ button {
 .bg-retro-post-it::placeholder {
   color: #b29f71 !important;
 }
-
-/* Custom slide animations for desktop */
-@media (min-width: 768px) {
-  .swiper-slide {
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  }
-  
-  .swiper-slide-prev {
-    transform: translateX(-85vw) !important;
-  }
-  
-  .swiper-slide-next {
-    transform: translateX(85vw) !important;
-  }
-  
-  .swiper-slide-active {
-    transform: translateX(0) !important;
-  }
-  
-  /* Override Swiper's default transition for smoother effect */
-  .swiper-wrapper {
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
-  }
-}
