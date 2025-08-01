@@ -452,7 +452,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "niklas")}
               >
                 <img
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/ee83edcf23407c8bac163d99b50bfcd0b1b0b81d?width=112"
+                  src="/lovable-uploads/265b3d56-6631-4628-82ae-33e1c30e87ca.png"
                   alt="Niklas Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
@@ -469,7 +469,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "jana")}
               >
                 <img
-                  src="/lovable-uploads/3b08bc90-6810-45ac-a926-fe10f0fab5aa.png"
+                  src="/lovable-uploads/927f4bb3-7ec2-4772-84d6-b06b2151d173.png"
                   alt="Jana Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
@@ -513,7 +513,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "niklas")}
               >
                 <img
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/ee83edcf23407c8bac163d99b50bfcd0b1b0b81d?width=112"
+                  src="/lovable-uploads/265b3d56-6631-4628-82ae-33e1c30e87ca.png"
                   alt="Niklas Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
@@ -530,7 +530,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "jana")}
               >
                 <img
-                  src="/lovable-uploads/3b08bc90-6810-45ac-a926-fe10f0fab5aa.png"
+                  src="/lovable-uploads/927f4bb3-7ec2-4772-84d6-b06b2151d173.png"
                   alt="Jana Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
