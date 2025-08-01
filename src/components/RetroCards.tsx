@@ -120,7 +120,9 @@ const RetroCards: React.FC = () => {
 
       // Boundaries relative to the memoji container - allow dragging right after text
       const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
-      const containerHeight = isMobile ? 350 : 400; // Height of the draggable area
+      // Adjust container height for 27" desktop (2560px+ width) to prevent dragging below instruction text
+      const isLargeDesktop = window.innerWidth >= 2560;
+      const containerHeight = isMobile ? 350 : (isLargeDesktop ? 320 : 400); // Reduced height for large desktop
       
       const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
       const newY = Math.max(-40, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // -40px allows dragging into mt-10 space
@@ -151,7 +153,9 @@ const RetroCards: React.FC = () => {
 
       // Boundaries relative to the memoji container - allow dragging right after text
       const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
-      const containerHeight = isMobile ? 350 : 400; // Height of the draggable area
+      // Adjust container height for 27" desktop (2560px+ width) to prevent dragging below instruction text
+      const isLargeDesktop = window.innerWidth >= 2560;
+      const containerHeight = isMobile ? 350 : (isLargeDesktop ? 320 : 400); // Reduced height for large desktop
       
       const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
       const newY = Math.max(-40, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // -40px allows dragging into mt-10 space
@@ -793,8 +797,8 @@ const RetroCards: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer - Compact like friends app */}
-      <div className="flex items-center gap-4 w-full px-4 py-1">
+      {/* Footer - Same margin as header for consistency */}
+      <div className={`flex items-center gap-4 w-full px-4 ${isMobile ? 'py-3' : 'py-3'}`}>
         <button
           onClick={openRelationshipByDesign}
           className="flex-1 retro-body text-left cursor-pointer hover:opacity-80 transition-opacity"
