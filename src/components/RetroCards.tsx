@@ -7,6 +7,8 @@ interface MemojisPosition {
 
 const RetroCards: React.FC = () => {
   const [currentCard, setCurrentCard] = useState(0);
+  const [nextCard, setNextCard] = useState<number | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [translateX, setTranslateX] = useState(0);
@@ -320,15 +322,28 @@ const RetroCards: React.FC = () => {
   const openRelationshipByDesign = () => {
     window.open("https://relationshipbydesign.de/", "_blank");
   };
+  const animateToCard = (targetCard: number) => {
+    if (isTransitioning || targetCard === currentCard) return;
+    
+    setIsTransitioning(true);
+    setNextCard(targetCard);
+    
+    // After animation completes, update current card
+    setTimeout(() => {
+      setCurrentCard(targetCard);
+      setNextCard(null);
+      setIsTransitioning(false);
+    }, 600); // Match transition duration
+  };
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    if (draggingMemoji) return;
+    if (draggingMemoji || isTransitioning) return;
     setIsDragging(true);
     setStartX(e.touches[0].clientX);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || draggingMemoji) return;
+    if (!isDragging || draggingMemoji || isTransitioning) return;
     
     // Prevent default to avoid page scrolling during swipe
     e.preventDefault();
@@ -346,16 +361,18 @@ const RetroCards: React.FC = () => {
   };
 
   const handleTouchEnd = () => {
-    if (!isDragging || draggingMemoji) return;
+    if (!isDragging || draggingMemoji || isTransitioning) return;
     setIsDragging(false);
 
     // Increased threshold for more deliberate swipes - like friends app
     const threshold = 80;
     if (Math.abs(translateX) > threshold) {
       if (translateX > 0 && currentCard > 0) {
-        setCurrentCard(currentCard - 1);
+        // Swiping right (previous card)
+        animateToCard(currentCard - 1);
       } else if (translateX < 0 && currentCard < totalCards - 1) {
-        setCurrentCard(currentCard + 1);
+        // Swiping left (next card)
+        animateToCard(currentCard + 1);
       }
     }
 
@@ -363,13 +380,13 @@ const RetroCards: React.FC = () => {
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
-    if (draggingMemoji) return;
+    if (draggingMemoji || isTransitioning) return;
     setIsDragging(true);
     setStartX(e.clientX);
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || draggingMemoji) return;
+    if (!isDragging || draggingMemoji || isTransitioning) return;
     const currentX = e.clientX;
     const diff = currentX - startX;
     
@@ -383,16 +400,16 @@ const RetroCards: React.FC = () => {
   };
 
   const handleMouseUp = () => {
-    if (!isDragging || draggingMemoji) return;
+    if (!isDragging || draggingMemoji || isTransitioning) return;
     setIsDragging(false);
 
     // Increased threshold for more deliberate swipes - like friends app
     const threshold = 80;
     if (Math.abs(translateX) > threshold) {
       if (translateX > 0 && currentCard > 0) {
-        setCurrentCard(currentCard - 1);
+        animateToCard(currentCard - 1);
       } else if (translateX < 0 && currentCard < totalCards - 1) {
-        setCurrentCard(currentCard + 1);
+        animateToCard(currentCard + 1);
       }
     }
 
@@ -436,14 +453,14 @@ const RetroCards: React.FC = () => {
 
   const navigateCard = (direction: "prev" | "next") => {
     if (direction === "prev" && currentCard > 0) {
-      setCurrentCard(currentCard - 1);
+      animateToCard(currentCard - 1);
     } else if (direction === "next" && currentCard < totalCards - 1) {
-      setCurrentCard(currentCard + 1);
+      animateToCard(currentCard + 1);
     }
   };
 
-  const renderCard = () => {
-    switch (currentCard) {
+  const renderCard = (cardIndex: number) => {
+    switch (cardIndex) {
       case 0:
         return (
           <div className="flex flex-col items-start w-full">
@@ -700,10 +717,10 @@ const RetroCards: React.FC = () => {
         </div>
       </div>
 
-      {/* Card Content - Tall card design like friends app */}
-      <div className="flex-1 flex items-center justify-center px-4 pb-4">
+      {/* Card Content - Friends app style slide animation */}
+      <div className="flex-1 flex items-center justify-center px-4 pb-4 relative overflow-hidden">
         <div
-          className="w-full max-w-[500px] h-full flex flex-col"
+          className="w-full max-w-[500px] h-full flex flex-col relative"
           ref={containerRef}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -712,28 +729,31 @@ const RetroCards: React.FC = () => {
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
-          style={{
-            transform: `translateX(${translateX}px)`,
-            transition: isDragging ? "none" : "transform 600ms cubic-bezier(0.16, 1, 0.3, 1)",
-          }}
         >
+          {/* Current Card */}
           <div 
-            className="h-full flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 relative shadow-2xl"
+            className="absolute inset-0 flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl transition-all"
             style={{
-              minHeight: `${Math.max(viewportHeight * 0.75, 500)}px`, // Ensure card takes up most of viewport like friends app
+              minHeight: `${Math.max(viewportHeight * 0.75, 500)}px`,
+              transform: isTransitioning 
+                ? `translateX(-100%)` 
+                : `translateX(${translateX}px)`,
+              transitionDuration: isDragging ? "0ms" : isTransitioning ? "600ms" : "0ms",
+              transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+              opacity: isTransitioning ? 0 : 1,
             }}
           >
-            {renderCard()}
+            {renderCard(currentCard)}
 
             {/* Navigation hint on first card */}
-            {currentCard === 0 && (
+            {currentCard === 0 && !isTransitioning && (
               <div className="absolute bottom-8 left-8 right-8 text-center retro-body">
                 Swipe um weiter zu navigieren
               </div>
             )}
 
             {/* Left navigation zone (32px wide) */}
-            {currentCard > 0 && (
+            {currentCard > 0 && !isTransitioning && (
               <div
                 onClick={() => navigateCard("prev")}
                 className="absolute left-0 top-0 w-8 h-full cursor-pointer z-20"
@@ -742,7 +762,7 @@ const RetroCards: React.FC = () => {
             )}
 
             {/* Right navigation zone (32px wide) */}
-            {currentCard < totalCards - 1 && (
+            {currentCard < totalCards - 1 && !isTransitioning && (
               <div
                 onClick={() => navigateCard("next")}
                 className="absolute right-0 top-0 w-8 h-full cursor-pointer z-20"
@@ -750,6 +770,22 @@ const RetroCards: React.FC = () => {
               />
             )}
           </div>
+
+          {/* Next Card (slides in from right) */}
+          {nextCard !== null && (
+            <div 
+              className="absolute inset-0 flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl transition-all"
+              style={{
+                minHeight: `${Math.max(viewportHeight * 0.75, 500)}px`,
+                transform: isTransitioning ? `translateX(0)` : `translateX(100%)`,
+                transitionDuration: "600ms",
+                transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                opacity: isTransitioning ? 1 : 0,
+              }}
+            >
+              {renderCard(nextCard)}
+            </div>
+          )}
         </div>
       </div>
 
