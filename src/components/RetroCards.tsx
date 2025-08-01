@@ -452,7 +452,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "niklas")}
               >
                 <img
-                  src="/src/assets/memoji-niklas.png"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/ee83edcf23407c8bac163d99b50bfcd0b1b0b81d?width=112"
                   alt="Niklas Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
@@ -469,7 +469,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "jana")}
               >
                 <img
-                  src="/src/assets/memoji-jana.png"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/5e1f61c91e8b4c6382c10b5e6cb5bf5a6f33e3f5?width=112"
                   alt="Jana Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
@@ -513,7 +513,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "niklas")}
               >
                 <img
-                  src="/src/assets/memoji-niklas.png"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/ee83edcf23407c8bac163d99b50bfcd0b1b0b81d?width=112"
                   alt="Niklas Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
@@ -530,7 +530,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "jana")}
               >
                 <img
-                  src="/src/assets/memoji-jana.png"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/5e1f61c91e8b4c6382c10b5e6cb5bf5a6f33e3f5?width=112"
                   alt="Jana Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
