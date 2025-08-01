@@ -120,8 +120,8 @@ const RetroCards: React.FC = () => {
 
       const newX = Math.max(0, Math.min(436, draggingMemoji.initialX + deltaX));
       const newY = Math.max(
-        -30,
-        Math.min(isMobile ? 500 : 550, draggingMemoji.initialY + deltaY),
+        10,
+        Math.min(isMobile ? 420 : 480, draggingMemoji.initialY + deltaY),
       );
 
       setMemojisPositions((prev) => ({
@@ -150,8 +150,8 @@ const RetroCards: React.FC = () => {
 
       const newX = Math.max(0, Math.min(436, draggingMemoji.initialX + deltaX));
       const newY = Math.max(
-        -30,
-        Math.min(isMobile ? 500 : 550, draggingMemoji.initialY + deltaY),
+        10,
+        Math.min(isMobile ? 420 : 480, draggingMemoji.initialY + deltaY),
       );
 
       setMemojisPositions((prev) => ({
@@ -724,7 +724,7 @@ const RetroCards: React.FC = () => {
       </div>
 
       {/* Card Content - Swiper.js slide animation like friends app */}
-      <div className="flex-1 flex items-center justify-center px-4 pb-4">
+      <div className="flex-1 flex items-center justify-center px-4 pb-1">
         <div className="w-full h-full">
            <Swiper
             modules={[Navigation, Pagination]}
@@ -792,7 +792,7 @@ const RetroCards: React.FC = () => {
       </div>
 
       {/* Footer - Compact like friends app */}
-      <div className="flex items-center gap-4 w-full px-4 py-3">
+      <div className="flex items-center gap-4 w-full px-4 py-1">
         <button
           onClick={openRelationshipByDesign}
           className="flex-1 retro-body text-left cursor-pointer hover:opacity-80 transition-opacity"
