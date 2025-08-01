@@ -10,6 +10,13 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     fs: {
       strict: false
+    },
+    hmr: {
+      port: 8080
+    },
+    middlewareMode: false,
+    headers: {
+      'Content-Type': 'application/javascript'
     }
   },
   build: {
