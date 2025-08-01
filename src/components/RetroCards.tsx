@@ -725,7 +725,7 @@ const RetroCards: React.FC = () => {
 
       {/* Card Content - Swiper.js slide animation like friends app */}
       <div className="flex-1 flex items-center justify-center px-4 pb-4">
-        <div className="w-full max-w-[500px] h-full">
+        <div className="w-full h-full">
           <Swiper
             modules={[Navigation, Pagination]}
             spaceBetween={0}
@@ -734,7 +734,7 @@ const RetroCards: React.FC = () => {
             onSwiper={setSwiperRef}
             onSlideChange={(swiper) => setCurrentCard(swiper.activeIndex)}
             allowTouchMove={!draggingMemoji}
-            style={{ height: '100%' }}
+            style={{ height: '100%', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}
             // Friends app style transition
             effect="slide"
             resistance={true}
@@ -747,38 +747,40 @@ const RetroCards: React.FC = () => {
           >
             {Array.from({ length: totalCards }, (_, index) => (
               <SwiperSlide key={index}>
-                <div 
-                  className="h-full flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 relative shadow-2xl"
-                  style={{
-                    minHeight: `${Math.max(viewportHeight * 0.75, 500)}px`,
-                  }}
-                >
-                  {renderCard(index)}
+                <div className="w-full h-full flex items-center justify-center px-4">
+                  <div 
+                    className="w-full max-w-[500px] h-full flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 relative shadow-2xl"
+                    style={{
+                      minHeight: `${Math.max(viewportHeight * 0.75, 500)}px`,
+                    }}
+                  >
+                    {renderCard(index)}
 
-                  {/* Navigation hint on first card */}
-                  {index === 0 && (
-                    <div className="absolute bottom-8 left-8 right-8 text-center retro-body">
-                      Swipe um weiter zu navigieren
-                    </div>
-                  )}
+                    {/* Navigation hint on first card */}
+                    {index === 0 && (
+                      <div className="absolute bottom-8 left-8 right-8 text-center retro-body">
+                        Swipe um weiter zu navigieren
+                      </div>
+                    )}
 
-                  {/* Left navigation zone (32px wide) */}
-                  {index > 0 && (
-                    <div
-                      onClick={() => navigateCard("prev")}
-                      className="absolute left-0 top-0 w-8 h-full cursor-pointer z-20"
-                      style={{ width: "32px" }}
-                    />
-                  )}
+                    {/* Left navigation zone (32px wide) */}
+                    {index > 0 && (
+                      <div
+                        onClick={() => navigateCard("prev")}
+                        className="absolute left-0 top-0 w-8 h-full cursor-pointer z-20"
+                        style={{ width: "32px" }}
+                      />
+                    )}
 
-                  {/* Right navigation zone (32px wide) */}
-                  {index < totalCards - 1 && (
-                    <div
-                      onClick={() => navigateCard("next")}
-                      className="absolute right-0 top-0 w-8 h-full cursor-pointer z-20"
-                      style={{ width: "32px" }}
-                    />
-                  )}
+                    {/* Right navigation zone (32px wide) */}
+                    {index < totalCards - 1 && (
+                      <div
+                        onClick={() => navigateCard("next")}
+                        className="absolute right-0 top-0 w-8 h-full cursor-pointer z-20"
+                        style={{ width: "32px" }}
+                      />
+                    )}
+                  </div>
                 </div>
               </SwiperSlide>
             ))}
