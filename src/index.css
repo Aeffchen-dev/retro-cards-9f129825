@@ -2,15 +2,15 @@
 /* Custom Kokoro font */
 @font-face {
   font-family: "Kokoro";
-  src: url("/fonts/kokoro.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
+  src: url("/fonts/kokoro-bolditalic-webfont.woff2") format("woff2");
+  font-weight: bold;
+  font-style: italic;
   font-display: swap;
 }
 
 @font-face {
   font-family: "Kokoro";
-  src: url("/fonts/kokoro.woff2") format("woff2");
+  src: url("/fonts/kokoro-bolditalic-webfont.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
