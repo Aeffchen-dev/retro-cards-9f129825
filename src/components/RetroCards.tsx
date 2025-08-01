@@ -758,6 +758,7 @@ const RetroCards: React.FC = () => {
                     className="w-full max-w-[500px] h-full flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 relative shadow-2xl"
                     style={{
                       minHeight: `${Math.max(viewportHeight * 0.75, 500)}px`,
+                      maxHeight: '780px',
                     }}
                   >
                     {renderCard(index)}
