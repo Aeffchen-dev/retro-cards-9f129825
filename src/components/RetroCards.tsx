@@ -724,7 +724,7 @@ const RetroCards: React.FC = () => {
       </div>
 
       {/* Card Content - Swiper.js slide animation like friends app */}
-      <div className="flex-1 flex items-center justify-center px-4 pb-4">
+      <div className="flex-1 flex items-center justify-center px-4 pb-4" style={{ alignItems: "center" }}>
         <div className="w-full h-full">
            <Swiper
             modules={[Navigation, Pagination]}
@@ -758,6 +758,7 @@ const RetroCards: React.FC = () => {
                     className="w-full max-w-[500px] h-full flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 relative shadow-2xl"
                     style={{
                       minHeight: `${Math.max(viewportHeight * 0.75, 500)}px`,
+                      maxHeight: "780px",
                     }}
                   >
                     {renderCard(index)}
