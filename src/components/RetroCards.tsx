@@ -120,7 +120,7 @@ const RetroCards: React.FC = () => {
 
       const newX = Math.max(0, Math.min(436, draggingMemoji.initialX + deltaX));
       const newY = Math.max(
-        10,
+        isMobile ? 10 : -20,
         Math.min(isMobile ? 420 : 480, draggingMemoji.initialY + deltaY),
       );
 
@@ -150,7 +150,7 @@ const RetroCards: React.FC = () => {
 
       const newX = Math.max(0, Math.min(436, draggingMemoji.initialX + deltaX));
       const newY = Math.max(
-        10,
+        isMobile ? 10 : -20,
         Math.min(isMobile ? 420 : 480, draggingMemoji.initialY + deltaY),
       );
 
