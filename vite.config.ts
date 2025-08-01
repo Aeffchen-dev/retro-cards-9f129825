@@ -16,12 +16,29 @@ export default defineConfig(({ mode }) => ({
     },
   },
   server: {
-    host: "localhost",
+    host: "::",
     port: 8080,
     strictPort: false,
-    cors: true,
-    headers: {
-      'Content-Type': 'application/javascript',
+    fs: {
+      strict: false
+    },
+    middlewareMode: false,
+    hmr: {
+      port: 8080
+    }
+  },
+  esbuild: {
+    loader: "tsx",
+    include: /src\/.*\.[tj]sx?$/,
+    exclude: []
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: {
+        '.js': 'jsx',
+        '.ts': 'tsx',
+        '.tsx': 'tsx'
+      }
     }
   },
   build: {
@@ -31,8 +48,5 @@ export default defineConfig(({ mode }) => ({
         manualChunks: undefined
       }
     }
-  },
-  optimizeDeps: {
-    include: ['react', 'react-dom']
   },
 }));
