@@ -714,7 +714,7 @@ const RetroCards: React.FC = () => {
           onMouseLeave={handleMouseUp}
           style={{
             transform: `translateX(${translateX}px)`,
-            transition: isDragging ? "none" : "transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+            transition: isDragging ? "none" : "transform 600ms cubic-bezier(0.16, 1, 0.3, 1)",
           }}
         >
           <div 
