@@ -16,11 +16,12 @@ export default defineConfig(({ mode }) => ({
     },
   },
   server: {
-    host: "::",
     port: 8080,
-    fs: {
-      strict: false
-    }
+    host: "::",
+    strictPort: false,
+    hmr: {
+      port: 8080,
+    },
   },
   build: {
     assetsDir: 'assets',
