@@ -689,12 +689,41 @@ const RetroCards: React.FC = () => {
             // Friends app style transition
             effect="slide"
             resistance={true}
-            resistanceRatio={0.3}
+            resistanceRatio={0.15}
             // Enhanced touch settings
             touchStartPreventDefault={false}
             simulateTouch={true}
             watchSlidesProgress={true}
             centeredSlides={true}
+            // Custom transition settings for desktop dramatic effect
+            onProgress={(swiper, progress) => {
+              if (typeof window !== 'undefined' && window.innerWidth > 768) {
+                // Only apply dramatic transitions on desktop
+                for (let i = 0; i < swiper.slides.length; i++) {
+                  const slide = swiper.slides[i] as HTMLElement;
+                  const slideData = swiper.slides[i] as any; // Access slide data
+                  const slideProgress = slideData.progress || 0;
+                  let transform = `translateX(${slideProgress * 85}vw)`;
+                  
+                  if (Math.abs(slideProgress) > 1) {
+                    // Hide slides that are far away
+                    slide.style.opacity = '0';
+                  } else {
+                    slide.style.opacity = '1';
+                  }
+                  
+                  slide.style.transform = transform;
+                }
+              }
+            }}
+            onSetTransition={(swiper, duration) => {
+              if (typeof window !== 'undefined' && window.innerWidth > 768) {
+                // Apply transition to all slides for smooth animation on desktop
+                for (let i = 0; i < swiper.slides.length; i++) {
+                  swiper.slides[i].style.transitionDuration = `${duration}ms`;
+                }
+              }
+            }}
           >
             {Array.from({ length: totalCards }, (_, index) => (
               <SwiperSlide key={index}>
