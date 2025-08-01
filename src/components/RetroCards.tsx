@@ -192,10 +192,12 @@ const RetroCards: React.FC = () => {
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     const isMac = /Mac|Macintosh/.test(navigator.userAgent);
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    const isChrome = /Chrome/.test(navigator.userAgent) && !/Edge/.test(navigator.userAgent);
     
     console.log('Is iOS:', isIOS);
     console.log('Is Mac:', isMac);
     console.log('Is Safari:', isSafari);
+    console.log('Is Chrome:', isChrome);
     
     // For iPhone, try the file input method first (most reliable)
     if (isIOS) {
@@ -204,18 +206,12 @@ const RetroCards: React.FC = () => {
       return;
     }
     
-    // For Mac Safari, use file input method as well (more reliable)
-    if (isMac && isSafari) {
-      console.log('Mac Safari detected, using file input method');
-      openCameraForIOS();
-      return;
-    }
-    
     // Check if we're on HTTPS or localhost (required for camera access)
     const isSecureContext = window.isSecureContext || 
                            window.location.protocol === 'https:' || 
                            window.location.hostname === 'localhost' ||
-                           window.location.hostname === '127.0.0.1';
+                           window.location.hostname === '127.0.0.1' ||
+                           window.location.hostname.includes('lovableproject.com');
     
     if (!isSecureContext) {
       console.log('Not a secure context, camera access denied');
@@ -261,8 +257,23 @@ const RetroCards: React.FC = () => {
 
     } catch (err) {
       console.error("Error accessing camera via getUserMedia:", err);
-      console.log('Falling back to file input method...');
-      openCameraForIOS(); // Fallback for any error
+      console.log('Error details:', {
+        name: err.name,
+        message: err.message,
+        constraint: err.constraint
+      });
+      
+      // For Mac (both Safari and Chrome), fall back to file input if getUserMedia fails
+      if (isMac) {
+        console.log('Mac detected, falling back to file input method...');
+        openCameraForIOS();
+      } else {
+        alert(
+          "📸 Kamera-Zugriff fehlgeschlagen\n\n" +
+          "Fehler: " + err.message + "\n\n" +
+          "Bitte prüfen Sie Ihre Browser-Einstellungen und erlauben Sie den Kamera-Zugriff."
+        );
+      }
     }
   };
 
