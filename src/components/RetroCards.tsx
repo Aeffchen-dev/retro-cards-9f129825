@@ -167,49 +167,65 @@ const RetroCards: React.FC = () => {
   }, [draggingMemoji]);
 
   const openCamera = async () => {
-    console.log('Camera button clicked, attempting to access camera...');
+    console.log('Camera button clicked');
+    console.log('User agent:', navigator.userAgent);
+    console.log('Is secure context:', window.isSecureContext);
+    console.log('Protocol:', window.location.protocol);
+    console.log('Hostname:', window.location.hostname);
+    
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    
+    console.log('Is iOS:', isIOS);
+    console.log('Is Safari:', isSafari);
+    
+    // For iPhone, try the file input method first (most reliable)
+    if (isIOS) {
+      console.log('iPhone detected, using file input method');
+      openCameraForIOS();
+      return;
+    }
     
     // Check if we're on HTTPS or localhost (required for camera access)
-    const isSecureContext = window.isSecureContext || window.location.protocol === 'https:' || window.location.hostname === 'localhost';
+    const isSecureContext = window.isSecureContext || 
+                           window.location.protocol === 'https:' || 
+                           window.location.hostname === 'localhost' ||
+                           window.location.hostname === '127.0.0.1';
     
     if (!isSecureContext) {
+      console.log('Not a secure context, camera access denied');
       alert(
         "📸 Kamera-Zugriff nicht möglich\n\n" +
-        "Kamera-Zugriff ist nur über HTTPS oder localhost verfügbar.\n" +
-        "Bitte verwenden Sie eine sichere Verbindung."
+        "Kamera-Zugriff ist nur über HTTPS verfügbar.\n" +
+        "Aktueller Protokoll: " + window.location.protocol
       );
       return;
     }
 
     // Check if mediaDevices API is available
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      console.log('MediaDevices API not available, trying fallback...');
-      // Fallback for older browsers or iOS
-      handleCameraFallback();
+      console.log('MediaDevices API not available');
+      openCameraForIOS(); // Fallback
       return;
     }
 
     try {
-      console.log('Requesting camera permissions...');
+      console.log('Requesting camera permissions via getUserMedia...');
       
-      // For iOS Safari, we need to be more specific with constraints
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
       const constraints = {
         video: {
-          facingMode: 'user', // Front camera (selfie mode)
+          facingMode: 'user',
           width: { ideal: 1280 },
           height: { ideal: 720 }
         }
       };
 
-      // Request camera access
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
       console.log('Camera access granted successfully');
 
-      // For demo purposes, show success and then stop the stream
       alert(
         "📸 Kamera erfolgreich aktiviert!\n\n" +
-        "Kamera-Zugriff wurde gewährt. In einer echten App würde hier die Kamera-Oberfläche erscheinen."
+        "Kamera-Zugriff wurde gewährt."
       );
 
       // Clean up the stream
@@ -219,81 +235,79 @@ const RetroCards: React.FC = () => {
       });
 
     } catch (err) {
-      console.error("Error accessing camera:", err);
-      handleCameraError(err);
+      console.error("Error accessing camera via getUserMedia:", err);
+      console.log('Falling back to file input method...');
+      openCameraForIOS(); // Fallback for any error
     }
   };
 
-  const handleCameraFallback = () => {
-    // For iOS or browsers without getUserMedia, try opening camera via file input
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const openCameraForIOS = () => {
+    console.log('Opening camera using file input method (iOS compatible)');
     
-    if (isIOS) {
-      // Create a hidden file input that opens camera on iOS
+    try {
+      // Create a hidden file input that opens camera on mobile devices
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = 'image/*';
-      input.capture = 'user'; // This should open front camera on iOS
-      input.style.display = 'none';
+      input.capture = 'environment'; // Try back camera first, then user can switch
+      input.style.position = 'fixed';
+      input.style.top = '-1000px';
+      input.style.left = '-1000px';
+      input.style.opacity = '0';
+      input.style.pointerEvents = 'none';
+      
+      console.log('File input created with attributes:', {
+        type: input.type,
+        accept: input.accept,
+        capture: input.capture
+      });
       
       input.onchange = (e) => {
+        console.log('File input change event triggered');
         const target = e.target as HTMLInputElement;
         if (target.files && target.files[0]) {
+          console.log('File selected:', target.files[0]);
           alert(
             "📸 Foto erfolgreich aufgenommen!\n\n" +
-            "Das Foto wurde ausgewählt. In einer echten App würde es jetzt verarbeitet werden."
+            "Das Foto wurde ausgewählt. Dateiname: " + target.files[0].name
           );
+        } else {
+          console.log('No file selected or user cancelled');
         }
-        document.body.removeChild(input);
+        
+        // Clean up
+        if (document.body.contains(input)) {
+          document.body.removeChild(input);
+          console.log('File input removed from DOM');
+        }
       };
       
+      input.oncancel = () => {
+        console.log('File input cancelled by user');
+        if (document.body.contains(input)) {
+          document.body.removeChild(input);
+        }
+      };
+      
+      // Add to DOM and trigger click
       document.body.appendChild(input);
-      input.click();
-    } else {
+      console.log('File input added to DOM, triggering click...');
+      
+      // Small delay to ensure DOM insertion
+      setTimeout(() => {
+        input.click();
+        console.log('File input click triggered');
+      }, 100);
+      
+    } catch (error) {
+      console.error('Error in openCameraForIOS:', error);
       alert(
-        "📸 Kamera nicht verfügbar\n\n" +
-        "Ihr Browser unterstützt keinen Kamerazugriff. Verwenden Sie einen modernen Browser wie Chrome, Firefox oder Safari."
+        "📸 Kamera-Zugriff nicht möglich\n\n" +
+        "Es gab einen Fehler beim Öffnen der Kamera. " +
+        "Fehler: " + error.message + "\n\n" +
+        "Versuchen Sie es erneut oder prüfen Sie Ihre Browser-Einstellungen."
       );
     }
-  };
-
-  const handleCameraError = (err: any) => {
-    let message = "📸 Kamera-Zugriff nicht möglich\n\n";
-
-    if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
-      message +=
-        "Die Kamera-Berechtigung wurde verweigert.\n\n" +
-        "So aktivieren Sie die Kamera:\n" +
-        "• Klicken Sie auf das Schloss-Symbol in der Adressleiste\n" +
-        "• Wählen Sie 'Zulassen' für Kamera-Zugriff\n" +
-        "• Laden Sie die Seite neu und versuchen Sie es erneut\n\n" +
-        "Auf iPhone: Gehen Sie zu Einstellungen > Safari > Kamera und erlauben Sie den Zugriff.";
-    } else if (err.name === "NotFoundError" || err.name === "DevicesNotFoundError") {
-      message +=
-        "Keine Kamera gefunden.\n\n" +
-        "Überprüfen Sie, ob eine Kamera verfügbar ist.";
-    } else if (err.name === "NotReadableError" || err.name === "TrackStartError") {
-      message +=
-        "Die Kamera wird bereits verwendet.\n\n" +
-        "Schließen Sie andere Apps, die die Kamera verwenden.";
-    } else if (err.name === "OverconstrainedError") {
-      message +=
-        "Kamera-Einstellungen werden nicht unterstützt.\n\n" +
-        "Versuchen Sie es mit anderen Kamera-Einstellungen.";
-    } else if (err.name === "NotSupportedError") {
-      message +=
-        "Kamera-Zugriff wird nicht unterstützt.\n\n" +
-        "Verwenden Sie HTTPS oder einen modernen Browser.";
-    } else if (err.name === "AbortError") {
-      message += "Kamera-Zugriff wurde abgebrochen.";
-    } else {
-      message +=
-        "Unbekannter Fehler beim Kamera-Zugriff.\n\n" +
-        "Fehler: " + (err.message || err.name || 'Unbekannt') + "\n\n" +
-        "Versuchen Sie es später erneut oder verwenden Sie einen anderen Browser.";
-    }
-
-    alert(message);
   };
 
   const openFeedbackEmail = () => {
