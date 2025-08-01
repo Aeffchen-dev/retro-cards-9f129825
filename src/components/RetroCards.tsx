@@ -118,10 +118,10 @@ const RetroCards: React.FC = () => {
       const deltaX = e.clientX - draggingMemoji.startX;
       const deltaY = e.clientY - draggingMemoji.startY;
 
-      const newX = Math.max(0, Math.min(370, draggingMemoji.initialX + deltaX));
+      const newX = Math.max(0, Math.min(436, draggingMemoji.initialX + deltaX));
       const newY = Math.max(
         -50,
-        Math.min(isMobile ? 280 : 350, draggingMemoji.initialY + deltaY),
+        Math.min(isMobile ? 650 : 700, draggingMemoji.initialY + deltaY),
       );
 
       setMemojisPositions((prev) => ({
@@ -148,10 +148,10 @@ const RetroCards: React.FC = () => {
       const deltaX = touch.clientX - draggingMemoji.startX;
       const deltaY = touch.clientY - draggingMemoji.startY;
 
-      const newX = Math.max(0, Math.min(370, draggingMemoji.initialX + deltaX));
+      const newX = Math.max(0, Math.min(436, draggingMemoji.initialX + deltaX));
       const newY = Math.max(
         -50,
-        Math.min(isMobile ? 280 : 350, draggingMemoji.initialY + deltaY),
+        Math.min(isMobile ? 650 : 700, draggingMemoji.initialY + deltaY),
       );
 
       setMemojisPositions((prev) => ({
@@ -755,11 +755,7 @@ const RetroCards: React.FC = () => {
               <SwiperSlide key={index}>
                 <div className="w-full h-full flex items-center justify-center px-4">
                   <div 
-                    className="w-full max-w-[500px] h-full flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 relative shadow-2xl"
-                    style={{
-                      minHeight: `${Math.max(viewportHeight * 0.75, 500)}px`,
-                      maxHeight: "780px",
-                    }}
+                    className="relative h-full w-full max-w-[500px] max-h-[780px] mx-auto flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl"
                   >
                     {renderCard(index)}
 
