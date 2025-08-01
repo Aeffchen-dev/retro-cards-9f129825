@@ -118,12 +118,12 @@ const RetroCards: React.FC = () => {
       const deltaX = e.clientX - draggingMemoji.startX;
       const deltaY = e.clientY - draggingMemoji.startY;
 
-      // Set proper drag boundaries based on card layout
-      const newX = Math.max(0, Math.min(436, draggingMemoji.initialX + deltaX));
-      const newY = Math.max(
-        isMobile ? 10 : 0, // Top boundary: 0px on desktop
-        Math.min(isMobile ? 420 : 440, draggingMemoji.initialY + deltaY), // Bottom boundary: within card
-      );
+      // Boundaries relative to the memoji container, not viewport
+      const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
+      const containerHeight = isMobile ? 350 : 400; // Height of the draggable area
+      
+      const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
+      const newY = Math.max(0, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // 56px = memoji height
 
       setMemojisPositions((prev) => ({
         ...prev,
@@ -149,12 +149,12 @@ const RetroCards: React.FC = () => {
       const deltaX = touch.clientX - draggingMemoji.startX;
       const deltaY = touch.clientY - draggingMemoji.startY;
 
-      // Set proper drag boundaries based on card layout
-      const newX = Math.max(0, Math.min(436, draggingMemoji.initialX + deltaX));
-      const newY = Math.max(
-        isMobile ? 10 : 0, // Top boundary: 0px on desktop
-        Math.min(isMobile ? 420 : 440, draggingMemoji.initialY + deltaY), // Bottom boundary: within card
-      );
+      // Boundaries relative to the memoji container, not viewport
+      const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
+      const containerHeight = isMobile ? 350 : 400; // Height of the draggable area
+      
+      const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
+      const newY = Math.max(0, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // 56px = memoji height
 
       setMemojisPositions((prev) => ({
         ...prev,
