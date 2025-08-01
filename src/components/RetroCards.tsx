@@ -675,6 +675,17 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setPostItTexts({ ...postItTexts, niklas: e.target.value })
                 }
+                onBlur={() => {
+                  // Fix iOS viewport restoration after keyboard close
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    setTimeout(() => {
+                      window.scrollTo(0, 0);
+                      if (window.visualViewport) {
+                        setViewportHeight(window.visualViewport.height);
+                      }
+                    }, 100);
+                  }
+                }}
                 className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                 style={{
                   borderRadius: "0px",
@@ -686,6 +697,17 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setPostItTexts({ ...postItTexts, jana: e.target.value })
                 }
+                onBlur={() => {
+                  // Fix iOS viewport restoration after keyboard close
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    setTimeout(() => {
+                      window.scrollTo(0, 0);
+                      if (window.visualViewport) {
+                        setViewportHeight(window.visualViewport.height);
+                      }
+                    }, 100);
+                  }
+                }}
                 className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                 style={{
                   borderRadius: "0px",
