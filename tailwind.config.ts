@@ -18,7 +18,18 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				inter: ['Inter', 'Arial', 'sans-serif'],
+			},
 			colors: {
+				// Retro Cards specific colors
+				retro: {
+					black: 'hsl(var(--retro-black))',
+					'card-bg': 'hsl(var(--retro-card-bg))',
+					white: 'hsl(var(--retro-white))',
+					'post-it': 'hsl(var(--retro-post-it))',
+				},
+				// Keep existing colors for compatibility
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
