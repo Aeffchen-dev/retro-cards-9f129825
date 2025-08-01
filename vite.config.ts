@@ -16,13 +16,11 @@ export default defineConfig(({ mode }) => ({
     },
   },
   server: {
-    host: "::",
+    host: "0.0.0.0",
     port: 8080,
-    strictPort: false,
-    open: false,
-    cors: true,
+    strictPort: true,
     hmr: {
-      port: 8080,
+      clientPort: 443
     }
   },
   build: {
@@ -33,5 +31,7 @@ export default defineConfig(({ mode }) => ({
       }
     }
   },
-  assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.svg'],
+  optimizeDeps: {
+    include: ['react', 'react-dom']
+  },
 }));
