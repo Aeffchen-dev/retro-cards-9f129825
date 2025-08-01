@@ -125,14 +125,9 @@ const RetroCards: React.FC = () => {
       const deltaX = e.clientX - draggingMemoji.startX;
       const deltaY = e.clientY - draggingMemoji.startY;
 
-      // Boundaries relative to the memoji container - allow dragging right after text
+      // Boundaries relative to the memoji container - keep within card bounds
       const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
-      // Calculate container height dynamically to allow dragging until instruction text
-      // Account for header (~120px), mt-10 (40px), and instruction text area (~60px)
-      const headerAndMargin = 160;
-      const instructionTextArea = 60;
-      const availableHeight = viewportHeight - headerAndMargin - instructionTextArea;
-      const containerHeight = Math.max(350, availableHeight); // Minimum 350px for usability
+      const containerHeight = isMobile ? 350 : 400; // Fixed container height to match card dimensions
       
       const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
       const newY = Math.max(-40, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // -40px allows dragging into mt-10 space
@@ -161,14 +156,10 @@ const RetroCards: React.FC = () => {
       const deltaX = touch.clientX - draggingMemoji.startX;
       const deltaY = touch.clientY - draggingMemoji.startY;
 
-      // Boundaries relative to the memoji container - allow dragging right after text
+      // Boundaries relative to the memoji container - keep within card bounds
       const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
-      // Calculate container height dynamically to allow dragging until instruction text
-      // Account for header (~120px), mt-10 (40px), and instruction text area (~60px)
-      const headerAndMargin = 160;
-      const instructionTextArea = 60;
-      const availableHeight = viewportHeight - headerAndMargin - instructionTextArea;
-      const containerHeight = Math.max(350, availableHeight); // Minimum 350px for usability
+      const containerHeight = isMobile ? 350 : 400; // Fixed container height to match card dimensions
+      
       
       const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
       const newY = Math.max(-40, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // -40px allows dragging into mt-10 space
