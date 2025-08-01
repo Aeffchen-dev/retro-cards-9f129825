@@ -249,7 +249,7 @@ const RetroCards: React.FC = () => {
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = 'image/*';
-      input.capture = 'environment'; // Try back camera first, then user can switch
+      input.capture = 'user'; // Use front camera (selfie camera) by default
       input.style.position = 'fixed';
       input.style.top = '-1000px';
       input.style.left = '-1000px';
