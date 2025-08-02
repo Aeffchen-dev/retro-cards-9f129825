@@ -27,19 +27,11 @@ export default defineConfig(({ mode }) => ({
       port: 8080
     }
   },
-  esbuild: {
-    loader: "tsx",
-    include: /src\/.*\.[tj]sx?$/,
-    exclude: []
+  define: {
+    global: 'globalThis',
   },
   optimizeDeps: {
-    esbuildOptions: {
-      loader: {
-        '.js': 'jsx',
-        '.ts': 'tsx',
-        '.tsx': 'tsx'
-      }
-    }
+    include: ['react', 'react-dom']
   },
   build: {
     assetsDir: 'assets',
