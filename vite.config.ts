@@ -11,24 +11,6 @@ export default defineConfig({
     },
   },
   server: {
-    port: 8080,
-    host: true,
-    middlewareMode: false,
-    fs: {
-      strict: false
-    }
-  },
-  esbuild: {
-    loader: 'tsx',
-    include: /src\/.*\.[tj]sx?$/,
-    exclude: []
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      loader: {
-        '.tsx': 'tsx',
-        '.ts': 'ts'
-      }
-    }
+    port: 8080
   }
 });
