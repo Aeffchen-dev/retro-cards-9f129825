@@ -7,8 +7,7 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
-    mode === 'development' &&
-    componentTagger(),
+    mode === 'development' && componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {
@@ -18,27 +17,8 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    strictPort: false,
-    fs: {
-      strict: false
-    },
-    middlewareMode: false,
-    hmr: {
-      port: 8080
-    }
-  },
-  define: {
-    global: 'globalThis',
-  },
-  optimizeDeps: {
-    include: ['react', 'react-dom']
   },
   build: {
-    assetsDir: 'assets',
-    rollupOptions: {
-      output: {
-        manualChunks: undefined
-      }
-    }
+    outDir: 'dist',
   },
 }));
