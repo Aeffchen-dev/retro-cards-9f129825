@@ -13,11 +13,21 @@ export default defineConfig({
   server: {
     port: 8080,
     host: true,
+    middlewareMode: false,
+    fs: {
+      strict: false
+    }
   },
-  build: {
-    rollupOptions: {
-      input: {
-        main: path.resolve(__dirname, 'index.html')
+  esbuild: {
+    loader: 'tsx',
+    include: /src\/.*\.[tj]sx?$/,
+    exclude: []
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: {
+        '.tsx': 'tsx',
+        '.ts': 'ts'
       }
     }
   }
