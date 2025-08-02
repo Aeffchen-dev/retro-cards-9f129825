@@ -9,6 +9,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 // Memoji images from assets folder
+import niklasMemoji from "@/assets/memoji-niklas.png";
+import janaMemoji from "@/assets/memoji-jana.png";
 
 interface MemojisPosition {
   niklas: { x: number; y: number };
@@ -533,7 +535,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "niklas")}
               >
                 <img
-                  src="assets/niklas-memoji.png"
+                  src={niklasMemoji}
                   alt="Niklas Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
@@ -550,7 +552,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "jana")}
               >
                 <img
-                  src="assets/jana-memoji.png"
+                  src={janaMemoji}
                   alt="Jana Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
@@ -594,7 +596,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "niklas")}
               >
                 <img
-                  src="assets/niklas-memoji.png"
+                  src={niklasMemoji}
                   alt="Niklas Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
@@ -611,7 +613,7 @@ const RetroCards: React.FC = () => {
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "jana")}
               >
                 <img
-                  src="assets/jana-memoji.png"
+                  src={janaMemoji}
                   alt="Jana Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
