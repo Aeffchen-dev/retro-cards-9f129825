@@ -8,9 +8,9 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-// Memoji images from assets folder
-import niklasMemoji from "@/assets/memoji-niklas.png";
-import janaMemoji from "@/assets/memoji-jana.png";
+// Memoji images from public assets folder
+const niklasMemoji = "/assets/niklas-memoji.png";
+const janaMemoji = "/assets/jana-memoji.png";
 
 interface MemojisPosition {
   niklas: { x: number; y: number };
