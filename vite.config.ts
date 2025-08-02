@@ -32,7 +32,6 @@ export default defineConfig(({ mode }) => ({
     include: /src\/.*\.[tj]sx?$/,
     exclude: []
   },
-  assetsInclude: ['**/*.tsx'],
   optimizeDeps: {
     esbuildOptions: {
       loader: {
