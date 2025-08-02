@@ -11,6 +11,14 @@ export default defineConfig({
     },
   },
   server: {
-    port: 8080
+    port: 8080,
+    host: true,
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html')
+      }
+    }
+  }
 });
