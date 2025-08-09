@@ -388,14 +388,10 @@ const RetroCards: React.FC = () => {
     // Draw the video frame to canvas
     context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
-    // Convert to blob and show success message
+    // Convert to blob
     canvas.toBlob((blob) => {
       if (blob) {
         console.log('Picture taken, blob size:', blob.size);
-        alert(
-          "📸 Foto erfolgreich aufgenommen!\n\n" +
-          "Das Foto wurde erfolgreich erstellt."
-        );
         closeCameraPreview();
       }
     }, 'image/jpeg', 0.8);
