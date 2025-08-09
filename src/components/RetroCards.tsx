@@ -392,10 +392,6 @@ const RetroCards: React.FC = () => {
     canvas.toBlob((blob) => {
       if (blob) {
         console.log('Picture taken, blob size:', blob.size);
-        alert(
-          "📸 Foto erfolgreich aufgenommen!\n\n" +
-          "Das Foto wurde erfolgreich erstellt."
-        );
         closeCameraPreview();
       }
     }, 'image/jpeg', 0.8);
