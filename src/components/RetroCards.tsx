@@ -305,10 +305,6 @@ const RetroCards: React.FC = () => {
         const target = e.target as HTMLInputElement;
         if (target.files && target.files[0]) {
           console.log('File selected:', target.files[0]);
-          alert(
-            "📸 Foto erfolgreich aufgenommen!\n\n" +
-            "Das Foto wurde ausgewählt. Dateiname: " + target.files[0].name
-          );
         } else {
           console.log('No file selected or user cancelled');
         }
