@@ -9,8 +9,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 // Memoji images from public assets folder
-const niklasMemoji = "https://github.com/Aeffchen-dev/retro-cards-9f129825/raw/main/public/assets/niklas-memoji.png";
-const janaMemoji = "https://github.com/Aeffchen-dev/retro-cards-9f129825/raw/main/public/assets/jana-memoji.png";
+const niklasMemoji = "/assets/niklas-memoji.png";
+const janaMemoji = "/assets/jana-memoji.png";
 
 interface MemojisPosition {
   niklas: { x: number; y: number };
