@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
-import { saveToStorage, loadFromStorage, clearExpiredStorage } from '@/lib/storage';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -19,28 +18,16 @@ interface MemojisPosition {
 }
 
 const RetroCards: React.FC = () => {
-  // Clear expired storage on mount
-  useEffect(() => {
-    clearExpiredStorage();
-  }, []);
-
-  // Initialize state with loaded data or defaults
-  const getDefaultMemojisPositions = () => ({
-    1: { niklas: { x: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 248 : 380) : 280), y: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 64 : 120) : 64) }, jana: { x: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 248 : 380) : 280), y: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 136 : 192) : 136) } },
-    2: { niklas: { x: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 248 : 380) : 280), y: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 64 : 120) : 64) }, jana: { x: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 248 : 380) : 280), y: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 136 : 192) : 136) } },
-  });
-
-  const [currentCard, setCurrentCard] = useState(() => {
-    return loadFromStorage<number>('retro-cards-current-card') || 0;
-  });
+  const [currentCard, setCurrentCard] = useState(0);
   const [swiperRef, setSwiperRef] = useState<SwiperType | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // State for draggable memojis on health check cards
   const [memojisPositions, setMemojisPositions] = useState<
     Record<number, MemojisPosition>
-  >(() => {
-    return loadFromStorage<Record<number, MemojisPosition>>('retro-cards-memojis-positions') || getDefaultMemojisPositions();
+  >({
+    1: { niklas: { x: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 248 : 380) : 280), y: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 64 : 120) : 64) }, jana: { x: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 248 : 380) : 280), y: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 136 : 192) : 136) } },
+    2: { niklas: { x: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 248 : 380) : 280), y: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 64 : 120) : 64) }, jana: { x: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 248 : 380) : 280), y: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 136 : 192) : 136) } },
   });
 
   // State for memoji dragging
@@ -64,11 +51,9 @@ const RetroCards: React.FC = () => {
   );
 
   // State for editable post-it notes
-  const [postItTexts, setPostItTexts] = useState(() => {
-    return loadFromStorage<{ niklas: string; jana: string }>('retro-cards-post-it-texts') || {
-      niklas: "",
-      jana: "",
-    };
+  const [postItTexts, setPostItTexts] = useState({
+    niklas: "",
+    jana: "",
   });
 
   // State for camera modal
@@ -76,19 +61,6 @@ const RetroCards: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const totalCards = 6;
-
-  // Save state to localStorage when it changes
-  useEffect(() => {
-    saveToStorage('retro-cards-current-card', currentCard);
-  }, [currentCard]);
-
-  useEffect(() => {
-    saveToStorage('retro-cards-memojis-positions', memojisPositions);
-  }, [memojisPositions]);
-
-  useEffect(() => {
-    saveToStorage('retro-cards-post-it-texts', postItTexts);
-  }, [postItTexts]);
 
   // Handle mobile Safari viewport height and card dimensions
   useEffect(() => {
