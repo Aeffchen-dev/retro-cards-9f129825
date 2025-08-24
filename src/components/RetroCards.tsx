@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
+import { saveToStorage, loadFromStorage, clearExpiredStorage, STORAGE_KEYS } from '@/lib/storage';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -61,6 +62,42 @@ const RetroCards: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const totalCards = 6;
+
+  // Load persisted state on mount
+  useEffect(() => {
+    // Clear any expired data first
+    clearExpiredStorage();
+    
+    // Load saved state
+    const savedCurrentCard = loadFromStorage<number>(STORAGE_KEYS.CURRENT_CARD);
+    const savedMemojiPositions = loadFromStorage<Record<number, MemojisPosition>>(STORAGE_KEYS.MEMOJI_POSITIONS);
+    const savedPostItTexts = loadFromStorage<{niklas: string, jana: string}>(STORAGE_KEYS.POST_IT_TEXTS);
+    
+    if (savedCurrentCard !== null) {
+      setCurrentCard(savedCurrentCard);
+    }
+    
+    if (savedMemojiPositions !== null) {
+      setMemojisPositions(savedMemojiPositions);
+    }
+    
+    if (savedPostItTexts !== null) {
+      setPostItTexts(savedPostItTexts);
+    }
+  }, []);
+
+  // Save state when it changes
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.CURRENT_CARD, currentCard);
+  }, [currentCard]);
+
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.MEMOJI_POSITIONS, memojisPositions);
+  }, [memojisPositions]);
+
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.POST_IT_TEXTS, postItTexts);
+  }, [postItTexts]);
 
   // Handle mobile Safari viewport height and card dimensions
   useEffect(() => {
@@ -768,7 +805,16 @@ const RetroCards: React.FC = () => {
             spaceBetween={0}
             slidesPerView={1}
             speed={500}
-            onSwiper={setSwiperRef}
+            onSwiper={(swiper) => {
+              setSwiperRef(swiper);
+              // Navigate to saved slide after swiper is ready
+              const savedCurrentCard = loadFromStorage<number>(STORAGE_KEYS.CURRENT_CARD);
+              if (savedCurrentCard !== null && savedCurrentCard !== 0) {
+                setTimeout(() => {
+                  swiper.slideTo(savedCurrentCard, 0); // 0 = no animation
+                }, 100);
+              }
+            }}
             onSlideChange={(swiper) => setCurrentCard(swiper.activeIndex)}
             allowTouchMove={!draggingMemoji}
             style={{ height: '100%', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}
