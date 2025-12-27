@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { RefreshCw } from "lucide-react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
@@ -146,13 +147,17 @@ const RetroCards: React.FC = () => {
           const response = await fetch(url);
           const text = await response.text();
           
-          // Parse CSV - split by newlines and clean up quotes
+          // Parse CSV - split by newlines and get second column (question)
           const rows = text.split('\n').filter(row => row.trim());
           rows.forEach(row => {
-            // Remove surrounding quotes and clean up
-            const cleaned = row.replace(/^"|"$/g, '').replace(/""/g, '"').trim();
-            if (cleaned && cleaned.length > 0) {
-              questions.push(cleaned);
+            // Parse CSV columns - handle quoted values
+            const columns = row.match(/("([^"]*("")*)*"|[^,]*)(,|$)/g);
+            if (columns && columns.length >= 2) {
+              // Get second column (index 1), remove trailing comma and quotes
+              const secondCol = columns[1]?.replace(/,$/, '').replace(/^"|"$/g, '').replace(/""/g, '"').trim();
+              if (secondCol && secondCol.length > 0) {
+                questions.push(secondCol);
+              }
             }
           });
         } catch (error) {
@@ -908,34 +913,35 @@ const RetroCards: React.FC = () => {
 
       case 6:
         return (
-          <div className="flex flex-col items-start w-full h-full">
-            <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
-                <span className="retro-label">Random Question</span>
-              </div>
-              <h2 className="retro-heading w-full">
-                {questionsLoaded && currentQuestion ? currentQuestion : "Frage wird geladen..."}
-              </h2>
-            </div>
-            <div className="flex-1 flex items-end w-full">
-              <button
-                onClick={getRandomQuestion}
-                className="w-full py-4 px-6 bg-retro-white text-retro-black rounded-lg font-medium text-lg hover:opacity-90 transition-opacity"
-              >
-                Neue Frage
-              </button>
-            </div>
-          </div>
-        );
-
-      case 7:
-        return (
           <div className="flex flex-col items-start gap-14 w-full justify-center">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Offene Beziehung</span>
               </div>
               <h2 className="retro-heading w-full">Wie stehts mit Dates?</h2>
+            </div>
+          </div>
+        );
+
+      case 7:
+        return (
+          <div className="flex flex-col items-start w-full h-full">
+            <div className="flex flex-col items-start gap-6 w-full">
+              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+                <span className="retro-label">Questions</span>
+              </div>
+              <h2 className="retro-heading w-full">
+                {questionsLoaded && currentQuestion ? currentQuestion : "Frage wird geladen..."}
+              </h2>
+            </div>
+            <div className="flex-1 flex items-end w-full">
+              <div
+                onClick={getRandomQuestion}
+                className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity"
+              >
+                <RefreshCw size={20} className="text-retro-white" />
+                <span className="retro-body">Neue Frage</span>
+              </div>
             </div>
           </div>
         );
