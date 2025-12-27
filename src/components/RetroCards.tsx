@@ -131,8 +131,33 @@ const RetroCards: React.FC = () => {
     }
   }, [currentQuestion]);
 
-  // Fetch questions from Google Sheets
+  // Fetch questions from Google Sheets - non-blocking with cache
   useEffect(() => {
+    const QUESTIONS_CACHE_KEY = 'retro-cards-questions-cache';
+    
+    // Try to load cached questions immediately for fast initial render
+    try {
+      const cached = localStorage.getItem(QUESTIONS_CACHE_KEY);
+      if (cached) {
+        const { questions: cachedQuestions, timestamp } = JSON.parse(cached);
+        const oneHour = 60 * 60 * 1000;
+        if (Date.now() - timestamp < oneHour && cachedQuestions.length > 0) {
+          setAllQuestions(cachedQuestions);
+          setQuestionsLoaded(true);
+          
+          // Set random question if none saved
+          const savedQuestion = loadFromStorage<string>(STORAGE_KEYS.CURRENT_QUESTION);
+          if (!savedQuestion) {
+            const randomIndex = Math.floor(Math.random() * cachedQuestions.length);
+            setCurrentQuestion(cachedQuestions[randomIndex]);
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to load cached questions');
+    }
+    
+    // Fetch fresh data in background
     const fetchQuestions = async () => {
       const sheetIds = [
         '1-BHUX8Zm4C2tACRJugpF_fj8TzBXnGGGUYQV3ggfKYM',
@@ -142,7 +167,8 @@ const RetroCards: React.FC = () => {
       const questions: string[] = [];
       const checkInRouletteId = '1ROCLsLu2rSJKRwkX5DkZHLHKzy_bksmHbgGqORG2DOk';
       
-      for (const sheetId of sheetIds) {
+      // Fetch all sheets in parallel
+      const fetchPromises = sheetIds.map(async (sheetId) => {
         try {
           const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
           const response = await fetch(url);
@@ -156,6 +182,7 @@ const RetroCards: React.FC = () => {
             rows = rows.slice(1);
           }
           
+          const sheetQuestions: string[] = [];
           rows.forEach(row => {
             // Parse CSV columns - handle quoted values
             const columns = row.match(/("([^"]*("")*)*"|[^,]*)(,|$)/g);
@@ -163,27 +190,49 @@ const RetroCards: React.FC = () => {
               // Get second column (index 1), remove trailing comma and quotes
               const secondCol = columns[1]?.replace(/,$/, '').replace(/^"|"$/g, '').replace(/""/g, '"').trim();
               if (secondCol && secondCol.length > 0) {
-                questions.push(secondCol);
+                sheetQuestions.push(secondCol);
               }
             }
           });
+          return sheetQuestions;
         } catch (error) {
           console.warn('Failed to fetch questions from sheet:', sheetId, error);
+          return [];
         }
-      }
+      });
       
-      setAllQuestions(questions);
-      setQuestionsLoaded(true);
+      const results = await Promise.all(fetchPromises);
+      results.forEach(sheetQuestions => questions.push(...sheetQuestions));
       
-      // If no saved question, pick a random one
-      const savedQuestion = loadFromStorage<string>(STORAGE_KEYS.CURRENT_QUESTION);
-      if (!savedQuestion && questions.length > 0) {
-        const randomIndex = Math.floor(Math.random() * questions.length);
-        setCurrentQuestion(questions[randomIndex]);
+      if (questions.length > 0) {
+        // Cache the questions
+        try {
+          localStorage.setItem(QUESTIONS_CACHE_KEY, JSON.stringify({
+            questions,
+            timestamp: Date.now()
+          }));
+        } catch (e) {
+          console.warn('Failed to cache questions');
+        }
+        
+        setAllQuestions(questions);
+        setQuestionsLoaded(true);
+        
+        // If no saved question and no current question, pick a random one
+        const savedQuestion = loadFromStorage<string>(STORAGE_KEYS.CURRENT_QUESTION);
+        if (!savedQuestion && !currentQuestion && questions.length > 0) {
+          const randomIndex = Math.floor(Math.random() * questions.length);
+          setCurrentQuestion(questions[randomIndex]);
+        }
       }
     };
     
-    fetchQuestions();
+    // Use requestIdleCallback or setTimeout to not block initial render
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => fetchQuestions());
+    } else {
+      setTimeout(fetchQuestions, 100);
+    }
   }, []);
 
   const getRandomQuestion = () => {
