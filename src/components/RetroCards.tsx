@@ -24,12 +24,18 @@ const RetroCards: React.FC = () => {
   const [swiperRef, setSwiperRef] = useState<SwiperType | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // State for draggable memojis on health check cards
+  // State for draggable memojis on health check cards - use lazy initialization
   const [memojisPositions, setMemojisPositions] = useState<
     Record<number, MemojisPosition>
-  >({
-    1: { niklas: { x: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 248 : 380) : 280), y: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 64 : 120) : 64) }, jana: { x: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 248 : 380) : 280), y: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 136 : 192) : 136) } },
-    2: { niklas: { x: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 248 : 380) : 280), y: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 64 : 120) : 64) }, jana: { x: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 248 : 380) : 280), y: (typeof window !== "undefined" ? (window.innerWidth <= 768 ? 136 : 192) : 136) } },
+  >(() => {
+    const mobile = typeof window !== "undefined" && window.innerWidth <= 768;
+    const x = mobile ? 248 : 380;
+    const yNiklas = mobile ? 64 : 120;
+    const yJana = mobile ? 136 : 192;
+    return {
+      1: { niklas: { x, y: yNiklas }, jana: { x, y: yJana } },
+      2: { niklas: { x, y: yNiklas }, jana: { x, y: yJana } },
+    };
   });
 
   // State for memoji dragging
@@ -42,14 +48,14 @@ const RetroCards: React.FC = () => {
     initialY: number;
   } | null>(null);
 
-  // State for viewport height
-  const [viewportHeight, setViewportHeight] = useState(
-    typeof window !== "undefined" ? window.innerHeight : 767,
+  // State for viewport height - use lazy initialization
+  const [viewportHeight, setViewportHeight] = useState(() =>
+    typeof window !== "undefined" ? window.innerHeight : 767
   );
 
-  // State for mobile detection
-  const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined" ? window.innerWidth <= 768 : false,
+  // State for mobile detection - use lazy initialization
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" && window.innerWidth <= 768
   );
 
   // State for editable post-it notes
@@ -241,63 +247,49 @@ const RetroCards: React.FC = () => {
     setCurrentQuestion(allQuestions[randomIndex]);
   };
 
-  // Handle mobile Safari viewport height and card dimensions
+  // Handle mobile Safari viewport height and card dimensions - debounced
   useEffect(() => {
+    let rafId: number;
+    
     const updateViewportHeight = () => {
       const height = window.innerHeight;
       const width = window.innerWidth;
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-      const isSafari = /^((?!chrome|android).)*safari/i.test(
-        navigator.userAgent,
-      );
 
       // Update mobile detection
       setIsMobile(width <= 768);
 
-      // Calculate available height for cards - improved iOS handling
-      let availableHeight;
-      if (isIOS) {
-        // For iOS (both Safari and Chrome), use visual viewport or fallback to document height
-        const visualViewport = window.visualViewport;
-        const isChrome = /Chrome/.test(navigator.userAgent);
-        
-        if (visualViewport) {
-          availableHeight = visualViewport.height;
-        } else if (isChrome) {
-          // For iOS Chrome, use document height to avoid keyboard issues
-          availableHeight = Math.max(height, document.documentElement.clientHeight, window.screen.height * 0.75);
-        } else {
-          // Fallback for older iOS versions
-          availableHeight = Math.max(height, document.documentElement.clientHeight);
-        }
-      } else {
-        availableHeight = height;
+      // Calculate available height for cards - simplified for speed
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      let availableHeight = height;
+      
+      if (isIOS && window.visualViewport) {
+        availableHeight = window.visualViewport.height;
       }
 
       // Ensure minimum height for usability
-      const minHeight = 600;
-      setViewportHeight(Math.max(availableHeight, minHeight));
+      setViewportHeight(Math.max(availableHeight, 600));
     };
 
+    // Run immediately
     updateViewportHeight();
     
-    // Set up event listeners for viewport changes
-    const events = ['resize', 'orientationchange', 'scroll'];
-    events.forEach(event => {
-      window.addEventListener(event, updateViewportHeight);
-    });
+    // Debounced handler for events
+    const handleResize = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(updateViewportHeight);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
 
-    // Handle iOS viewport changes with multiple timeouts for Safari's delayed calculation
-    const timeouts = [100, 300, 500, 1000];
-    const timeoutIds = timeouts.map(delay => 
-      setTimeout(updateViewportHeight, delay)
-    );
+    // Single delayed call for iOS Safari initial calculation
+    const timeoutId = setTimeout(updateViewportHeight, 100);
 
     return () => {
-      events.forEach(event => {
-        window.removeEventListener(event, updateViewportHeight);
-      });
-      timeoutIds.forEach(id => clearTimeout(id));
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+      cancelAnimationFrame(rafId);
+      clearTimeout(timeoutId);
     };
   }, []);
 
@@ -1051,17 +1043,12 @@ const RetroCards: React.FC = () => {
             onSlideChange={(swiper) => setCurrentCard(swiper.activeIndex)}
             allowTouchMove={!draggingMemoji}
             style={{ height: '100%', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}
-            // Friends app style smooth transition with easing
             effect="slide"
             resistance={true}
             resistanceRatio={0.3}
             touchStartPreventDefault={false}
-            simulateTouch={true}
-            watchSlidesProgress={true}
             centeredSlides={true}
-            // Enhanced momentum and easing like friends app
-            touchRatio={1}
-            threshold={10}
+            threshold={5}
             shortSwipes={true}
             longSwipes={true}
             longSwipesRatio={0.5}
