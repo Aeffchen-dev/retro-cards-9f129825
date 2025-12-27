@@ -75,5 +75,7 @@ export const clearExpiredStorage = (): void => {
 export const STORAGE_KEYS = {
   CURRENT_CARD: 'retro-cards-current-card',
   MEMOJI_POSITIONS: 'retro-cards-memoji-positions',
-  POST_IT_TEXTS: 'retro-cards-post-it-texts'
+  POST_IT_TEXTS: 'retro-cards-post-it-texts',
+  TAKEAWAY_TEXTS: 'retro-cards-takeaway-texts',
+  CURRENT_QUESTION: 'retro-cards-current-question'
 } as const;

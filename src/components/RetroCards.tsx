@@ -57,11 +57,22 @@ const RetroCards: React.FC = () => {
     jana: "",
   });
 
+  // State for takeaway post-it notes (Erkenntnisse)
+  const [takeawayTexts, setTakeawayTexts] = useState({
+    niklas: "",
+    jana: "",
+  });
+
+  // State for random questions
+  const [currentQuestion, setCurrentQuestion] = useState("");
+  const [questionsLoaded, setQuestionsLoaded] = useState(false);
+  const [allQuestions, setAllQuestions] = useState<string[]>([]);
+
   // State for camera modal
   const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const totalCards = 6;
+  const totalCards = 8;
 
   // Load persisted state on mount
   useEffect(() => {
@@ -72,6 +83,8 @@ const RetroCards: React.FC = () => {
     const savedCurrentCard = loadFromStorage<number>(STORAGE_KEYS.CURRENT_CARD);
     const savedMemojiPositions = loadFromStorage<Record<number, MemojisPosition>>(STORAGE_KEYS.MEMOJI_POSITIONS);
     const savedPostItTexts = loadFromStorage<{niklas: string, jana: string}>(STORAGE_KEYS.POST_IT_TEXTS);
+    const savedTakeawayTexts = loadFromStorage<{niklas: string, jana: string}>(STORAGE_KEYS.TAKEAWAY_TEXTS);
+    const savedQuestion = loadFromStorage<string>(STORAGE_KEYS.CURRENT_QUESTION);
     
     if (savedCurrentCard !== null) {
       setCurrentCard(savedCurrentCard);
@@ -83,6 +96,14 @@ const RetroCards: React.FC = () => {
     
     if (savedPostItTexts !== null) {
       setPostItTexts(savedPostItTexts);
+    }
+
+    if (savedTakeawayTexts !== null) {
+      setTakeawayTexts(savedTakeawayTexts);
+    }
+
+    if (savedQuestion !== null) {
+      setCurrentQuestion(savedQuestion);
     }
   }, []);
 
@@ -98,6 +119,66 @@ const RetroCards: React.FC = () => {
   useEffect(() => {
     saveToStorage(STORAGE_KEYS.POST_IT_TEXTS, postItTexts);
   }, [postItTexts]);
+
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.TAKEAWAY_TEXTS, takeawayTexts);
+  }, [takeawayTexts]);
+
+  useEffect(() => {
+    if (currentQuestion) {
+      saveToStorage(STORAGE_KEYS.CURRENT_QUESTION, currentQuestion);
+    }
+  }, [currentQuestion]);
+
+  // Fetch questions from Google Sheets
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      const sheetIds = [
+        '1-BHUX8Zm4C2tACRJugpF_fj8TzBXnGGGUYQV3ggfKYM',
+        '1ROCLsLu2rSJKRwkX5DkZHLHKzy_bksmHbgGqORG2DOk'
+      ];
+      
+      const questions: string[] = [];
+      
+      for (const sheetId of sheetIds) {
+        try {
+          const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
+          const response = await fetch(url);
+          const text = await response.text();
+          
+          // Parse CSV - split by newlines and clean up quotes
+          const rows = text.split('\n').filter(row => row.trim());
+          rows.forEach(row => {
+            // Remove surrounding quotes and clean up
+            const cleaned = row.replace(/^"|"$/g, '').replace(/""/g, '"').trim();
+            if (cleaned && cleaned.length > 0) {
+              questions.push(cleaned);
+            }
+          });
+        } catch (error) {
+          console.warn('Failed to fetch questions from sheet:', sheetId, error);
+        }
+      }
+      
+      setAllQuestions(questions);
+      setQuestionsLoaded(true);
+      
+      // If no saved question, pick a random one
+      const savedQuestion = loadFromStorage<string>(STORAGE_KEYS.CURRENT_QUESTION);
+      if (!savedQuestion && questions.length > 0) {
+        const randomIndex = Math.floor(Math.random() * questions.length);
+        setCurrentQuestion(questions[randomIndex]);
+      }
+    };
+    
+    fetchQuestions();
+  }, []);
+
+  const getRandomQuestion = () => {
+    if (allQuestions.length === 0) return;
+    const randomIndex = Math.floor(Math.random() * allQuestions.length);
+    setCurrentQuestion(allQuestions[randomIndex]);
+  };
 
   // Handle mobile Safari viewport height and card dimensions
   useEffect(() => {
@@ -758,6 +839,96 @@ const RetroCards: React.FC = () => {
         );
 
       case 5:
+        return (
+          <div className="flex flex-col items-start w-full h-full">
+            <div className="flex flex-col items-start gap-6 w-full">
+              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+                <span className="retro-label">Takeaways</span>
+              </div>
+              <h2 className="retro-heading w-full">
+                Das nehmen wir aus der Retro mit
+              </h2>
+            </div>
+            <div className="flex flex-col flex-1 w-full justify-between gap-6 mt-10">
+              <textarea
+                value={takeawayTexts.niklas}
+                onChange={(e) =>
+                  setTakeawayTexts({ ...takeawayTexts, niklas: e.target.value })
+                }
+                onBlur={() => {
+                  // Fix iOS viewport restoration after keyboard close
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    setTimeout(() => {
+                      // Force viewport to recalculate instead of scrolling to top
+                      const currentHeight = window.innerHeight;
+                      setViewportHeight(currentHeight);
+                      // Trigger a gentle reflow without scrolling
+                      document.body.style.height = `${currentHeight}px`;
+                      requestAnimationFrame(() => {
+                        document.body.style.height = '';
+                      });
+                    }, 150);
+                  }
+                }}
+                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
+                style={{
+                  borderRadius: "0px",
+                } as React.CSSProperties}
+                placeholder="Niklas' Erkenntnisse"
+              />
+              <textarea
+                value={takeawayTexts.jana}
+                onChange={(e) =>
+                  setTakeawayTexts({ ...takeawayTexts, jana: e.target.value })
+                }
+                onBlur={() => {
+                  // Fix iOS viewport restoration after keyboard close
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    setTimeout(() => {
+                      // Force viewport to recalculate instead of scrolling to top
+                      const currentHeight = window.innerHeight;
+                      setViewportHeight(currentHeight);
+                      // Trigger a gentle reflow without scrolling
+                      document.body.style.height = `${currentHeight}px`;
+                      requestAnimationFrame(() => {
+                        document.body.style.height = '';
+                      });
+                    }, 150);
+                  }
+                }}
+                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
+                style={{
+                  borderRadius: "0px",
+                } as React.CSSProperties}
+                placeholder="Jana's Erkenntnisse"
+              />
+            </div>
+          </div>
+        );
+
+      case 6:
+        return (
+          <div className="flex flex-col items-start w-full h-full">
+            <div className="flex flex-col items-start gap-6 w-full">
+              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+                <span className="retro-label">Random Question</span>
+              </div>
+              <h2 className="retro-heading w-full">
+                {questionsLoaded && currentQuestion ? currentQuestion : "Frage wird geladen..."}
+              </h2>
+            </div>
+            <div className="flex-1 flex items-end w-full">
+              <button
+                onClick={getRandomQuestion}
+                className="w-full py-4 px-6 bg-retro-white text-retro-black rounded-lg font-medium text-lg hover:opacity-90 transition-opacity"
+              >
+                Neue Frage
+              </button>
+            </div>
+          </div>
+        );
+
+      case 7:
         return (
           <div className="flex flex-col items-start gap-14 w-full justify-center">
             <div className="flex flex-col items-start gap-6 w-full">
