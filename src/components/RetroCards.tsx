@@ -140,6 +140,7 @@ const RetroCards: React.FC = () => {
       ];
       
       const questions: string[] = [];
+      const checkInRouletteId = '1ROCLsLu2rSJKRwkX5DkZHLHKzy_bksmHbgGqORG2DOk';
       
       for (const sheetId of sheetIds) {
         try {
@@ -148,7 +149,13 @@ const RetroCards: React.FC = () => {
           const text = await response.text();
           
           // Parse CSV - split by newlines and get second column (question)
-          const rows = text.split('\n').filter(row => row.trim());
+          let rows = text.split('\n').filter(row => row.trim());
+          
+          // Skip first row for Check-in Roulette sheet
+          if (sheetId === checkInRouletteId && rows.length > 0) {
+            rows = rows.slice(1);
+          }
+          
           rows.forEach(row => {
             // Parse CSV columns - handle quoted values
             const columns = row.match(/("([^"]*("")*)*"|[^,]*)(,|$)/g);
@@ -845,6 +852,18 @@ const RetroCards: React.FC = () => {
 
       case 5:
         return (
+          <div className="flex flex-col items-start gap-14 w-full justify-center">
+            <div className="flex flex-col items-start gap-6 w-full">
+              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+                <span className="retro-label">Offene Beziehung</span>
+              </div>
+              <h2 className="retro-heading w-full">Wie stehts mit Dates?</h2>
+            </div>
+          </div>
+        );
+
+      case 6:
+        return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
@@ -911,7 +930,7 @@ const RetroCards: React.FC = () => {
           </div>
         );
 
-      case 6:
+      case 7:
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
@@ -930,18 +949,6 @@ const RetroCards: React.FC = () => {
                 <RefreshCw size={20} className="text-retro-white" />
                 <span className="retro-body">Neue Frage</span>
               </div>
-            </div>
-          </div>
-        );
-
-      case 7:
-        return (
-          <div className="flex flex-col items-start gap-14 w-full justify-center">
-            <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
-                <span className="retro-label">Offene Beziehung</span>
-              </div>
-              <h2 className="retro-heading w-full">Wie stehts mit Dates?</h2>
             </div>
           </div>
         );
