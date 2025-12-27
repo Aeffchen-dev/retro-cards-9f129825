@@ -20,7 +20,11 @@ interface MemojisPosition {
 }
 
 const RetroCards: React.FC = () => {
-  const [currentCard, setCurrentCard] = useState(0);
+  // Initialize currentCard from localStorage synchronously for initialSlide
+  const [currentCard, setCurrentCard] = useState(() => {
+    const saved = loadFromStorage<number>(STORAGE_KEYS.CURRENT_CARD);
+    return saved !== null ? saved : 0;
+  });
   const [swiperRef, setSwiperRef] = useState<SwiperType | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -81,57 +85,62 @@ const RetroCards: React.FC = () => {
 
   const totalCards = 8;
 
-  // Load persisted state on mount
+  // Track if initial load is complete to avoid saving on mount
+  const isInitialMount = useRef(true);
+
+  // Load persisted state on mount - single batch to reduce re-renders
   useEffect(() => {
-    // Clear any expired data first
-    clearExpiredStorage();
+    // Defer cleanup to not block initial render
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => clearExpiredStorage());
+    } else {
+      setTimeout(clearExpiredStorage, 500);
+    }
     
-    // Load saved state
+    // Load all saved state at once
     const savedCurrentCard = loadFromStorage<number>(STORAGE_KEYS.CURRENT_CARD);
     const savedMemojiPositions = loadFromStorage<Record<number, MemojisPosition>>(STORAGE_KEYS.MEMOJI_POSITIONS);
     const savedPostItTexts = loadFromStorage<{niklas: string, jana: string}>(STORAGE_KEYS.POST_IT_TEXTS);
     const savedTakeawayTexts = loadFromStorage<{niklas: string, jana: string}>(STORAGE_KEYS.TAKEAWAY_TEXTS);
     const savedQuestion = loadFromStorage<string>(STORAGE_KEYS.CURRENT_QUESTION);
     
-    if (savedCurrentCard !== null) {
-      setCurrentCard(savedCurrentCard);
-    }
+    // Batch state updates using unstable_batchedUpdates pattern
+    // React 18 auto-batches, but we minimize by setting all at once
+    if (savedCurrentCard !== null) setCurrentCard(savedCurrentCard);
+    if (savedMemojiPositions !== null) setMemojisPositions(savedMemojiPositions);
+    if (savedPostItTexts !== null) setPostItTexts(savedPostItTexts);
+    if (savedTakeawayTexts !== null) setTakeawayTexts(savedTakeawayTexts);
+    if (savedQuestion !== null) setCurrentQuestion(savedQuestion);
     
-    if (savedMemojiPositions !== null) {
-      setMemojisPositions(savedMemojiPositions);
-    }
-    
-    if (savedPostItTexts !== null) {
-      setPostItTexts(savedPostItTexts);
-    }
-
-    if (savedTakeawayTexts !== null) {
-      setTakeawayTexts(savedTakeawayTexts);
-    }
-
-    if (savedQuestion !== null) {
-      setCurrentQuestion(savedQuestion);
-    }
+    // Mark initial mount complete after a tick
+    requestAnimationFrame(() => {
+      isInitialMount.current = false;
+    });
   }, []);
 
-  // Save state when it changes
+  // Save state when it changes - skip initial mount
   useEffect(() => {
+    if (isInitialMount.current) return;
     saveToStorage(STORAGE_KEYS.CURRENT_CARD, currentCard);
   }, [currentCard]);
 
   useEffect(() => {
+    if (isInitialMount.current) return;
     saveToStorage(STORAGE_KEYS.MEMOJI_POSITIONS, memojisPositions);
   }, [memojisPositions]);
 
   useEffect(() => {
+    if (isInitialMount.current) return;
     saveToStorage(STORAGE_KEYS.POST_IT_TEXTS, postItTexts);
   }, [postItTexts]);
 
   useEffect(() => {
+    if (isInitialMount.current) return;
     saveToStorage(STORAGE_KEYS.TAKEAWAY_TEXTS, takeawayTexts);
   }, [takeawayTexts]);
 
   useEffect(() => {
+    if (isInitialMount.current) return;
     if (currentQuestion) {
       saveToStorage(STORAGE_KEYS.CURRENT_QUESTION, currentQuestion);
     }
@@ -1030,16 +1039,8 @@ const RetroCards: React.FC = () => {
             spaceBetween={0}
             slidesPerView={1}
             speed={500}
-            onSwiper={(swiper) => {
-              setSwiperRef(swiper);
-              // Navigate to saved slide after swiper is ready
-              const savedCurrentCard = loadFromStorage<number>(STORAGE_KEYS.CURRENT_CARD);
-              if (savedCurrentCard !== null && savedCurrentCard !== 0) {
-                setTimeout(() => {
-                  swiper.slideTo(savedCurrentCard, 0); // 0 = no animation
-                }, 100);
-              }
-            }}
+            initialSlide={currentCard}
+            onSwiper={setSwiperRef}
             onSlideChange={(swiper) => setCurrentCard(swiper.activeIndex)}
             allowTouchMove={!draggingMemoji}
             style={{ height: '100%', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}
