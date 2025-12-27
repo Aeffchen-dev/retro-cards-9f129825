@@ -143,7 +143,7 @@ const RetroCards: React.FC = () => {
       
       for (const sheetId of sheetIds) {
         try {
-          const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
+          const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
           const response = await fetch(url);
           const text = await response.text();
           
@@ -913,18 +913,6 @@ const RetroCards: React.FC = () => {
 
       case 6:
         return (
-          <div className="flex flex-col items-start gap-14 w-full justify-center">
-            <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
-                <span className="retro-label">Offene Beziehung</span>
-              </div>
-              <h2 className="retro-heading w-full">Wie stehts mit Dates?</h2>
-            </div>
-          </div>
-        );
-
-      case 7:
-        return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
@@ -934,7 +922,7 @@ const RetroCards: React.FC = () => {
                 {questionsLoaded && currentQuestion ? currentQuestion : "Frage wird geladen..."}
               </h2>
             </div>
-            <div className="flex-1 flex items-end w-full">
+            <div className="flex-1 flex items-end justify-center w-full">
               <div
                 onClick={getRandomQuestion}
                 className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity"
@@ -942,6 +930,18 @@ const RetroCards: React.FC = () => {
                 <RefreshCw size={20} className="text-retro-white" />
                 <span className="retro-body">Neue Frage</span>
               </div>
+            </div>
+          </div>
+        );
+
+      case 7:
+        return (
+          <div className="flex flex-col items-start gap-14 w-full justify-center">
+            <div className="flex flex-col items-start gap-6 w-full">
+              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+                <span className="retro-label">Offene Beziehung</span>
+              </div>
+              <h2 className="retro-heading w-full">Wie stehts mit Dates?</h2>
             </div>
           </div>
         );
