@@ -100,11 +100,14 @@ export default {
 				'bubble-pop': {
 					'0%': {
 						opacity: '0',
-						transform: 'translateX(-50%) translateY(10px) scale(0.5) rotate(0deg)'
+						transform: 'translateX(-50%) translateY(8px) scale(0.6) rotate(0deg)'
 					},
-					'50%': {
+					'40%': {
 						opacity: '1',
-						transform: 'translateX(-50%) translateY(-4px) scale(1.1) rotate(8deg)'
+						transform: 'translateX(-50%) translateY(-6px) scale(1.15) rotate(8deg)'
+					},
+					'70%': {
+						transform: 'translateX(-50%) translateY(2px) scale(0.95) rotate(4deg)'
 					},
 					'100%': {
 						opacity: '1',
@@ -112,22 +115,31 @@ export default {
 					}
 				},
 				'dog-wiggle': {
-					'0%, 100%': {
-						transform: 'rotate(0deg)'
+					'0%': {
+						transform: 'rotate(0deg) scale(1)'
 					},
-					'25%': {
-						transform: 'rotate(-3deg)'
+					'20%': {
+						transform: 'rotate(-4deg) scale(1.02)'
 					},
-					'75%': {
-						transform: 'rotate(3deg)'
+					'40%': {
+						transform: 'rotate(4deg) scale(1.04)'
+					},
+					'60%': {
+						transform: 'rotate(-3deg) scale(1.02)'
+					},
+					'80%': {
+						transform: 'rotate(2deg) scale(1.01)'
+					},
+					'100%': {
+						transform: 'rotate(0deg) scale(1)'
 					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'bubble-pop': 'bubble-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
-				'dog-wiggle': 'dog-wiggle 0.4s ease-in-out'
+				'bubble-pop': 'bubble-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+				'dog-wiggle': 'dog-wiggle 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97)'
 			}
 		}
 	},
