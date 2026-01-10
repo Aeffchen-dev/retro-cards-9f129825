@@ -128,8 +128,8 @@ export default {
 					'0%': {
 						transform: 'scaleX(-1) rotate(0deg) translateY(0)'
 					},
-					'40%': {
-						transform: 'scaleX(-1) rotate(-15deg) translateY(-6px)'
+					'30%': {
+						transform: 'scaleX(-1) rotate(12deg) translateY(-4px)'
 					},
 					'100%': {
 						transform: 'scaleX(-1) rotate(0deg) translateY(0)'
@@ -141,7 +141,7 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'bubble-pop': 'bubble-pop 0.15s ease-out forwards',
 				'dog-wiggle': 'dog-wiggle 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
-				'wiggle': 'wiggle 0.5s ease-in-out'
+				'wiggle': 'wiggle 0.35s cubic-bezier(0.25, 0.1, 0.25, 1)'
 			}
 		}
 	},
