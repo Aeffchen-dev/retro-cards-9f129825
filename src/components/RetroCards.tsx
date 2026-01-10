@@ -955,10 +955,10 @@ const RetroCards: React.FC = () => {
                 <span className="retro-label">Kalle</span>
               </div>
               <h2 className="retro-heading w-full">
-                Wie geht's mir mit Kalle im Moment?
+                Wie läufts mit Kalle?
               </h2>
             </div>
-            <div className="absolute bottom-0 left-0 flex flex-col gap-4 pb-8">
+            <div className="absolute bottom-0 left-0 flex flex-col gap-4 pb-0">
               <div className="retro-body text-white">Was war schön?</div>
               <div className="retro-body text-white">Was war anstrengend?</div>
               <div className="retro-body text-white">Entlasten wir uns gegenseitig?</div>
