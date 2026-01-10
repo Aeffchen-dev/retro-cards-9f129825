@@ -1006,7 +1006,7 @@ const RetroCards: React.FC = () => {
                 🛟&nbsp;&nbsp;&nbsp;Nutzen wir externe Hilfe?
               </div>
               <div className="retro-body">
-                🗺️&nbsp;&nbsp;&nbsp;Was können wir mit Kalle unternehmen?
+                🗺️&nbsp;&nbsp;&nbsp;Gemeinsame Unternehmung
               </div>
             </div>
           </div>
