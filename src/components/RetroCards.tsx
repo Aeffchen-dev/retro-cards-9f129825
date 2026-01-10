@@ -5,7 +5,6 @@ import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { saveToStorage, loadFromStorage, clearExpiredStorage, STORAGE_KEYS } from '@/lib/storage';
 import kalleImage from '@/assets/kalle.png';
-import DogWalkIllustration from './DogWalkIllustration';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -678,7 +677,7 @@ const RetroCards: React.FC = () => {
     switch (cardIndex) {
       case 0:
         return (
-          <div className="flex flex-col items-start w-full h-full">
+          <div className="flex flex-col items-start w-full">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Memory Time</span>
@@ -687,10 +686,7 @@ const RetroCards: React.FC = () => {
                 Schießt ein paar süße Fotos zusammen
               </h2>
             </div>
-            <div className="flex-1 flex items-center justify-center w-full" style={{ marginTop: "24px" }}>
-              <DogWalkIllustration />
-            </div>
-            <div className="w-full flex justify-center" style={{ marginTop: "24px" }}>
+            <div style={{ marginTop: "40px" }}>
               <button
                 onClick={openCamera}
                 className="retro-emoji-large cursor-pointer"
