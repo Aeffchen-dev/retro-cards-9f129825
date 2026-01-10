@@ -84,6 +84,9 @@ const RetroCards: React.FC = () => {
   const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // State for Kalle speech bubble
+  const [showKalleBubble, setShowKalleBubble] = useState(false);
+
   const totalCards = 9;
 
   // Track if initial load is complete to avoid saving on mount
@@ -990,12 +993,20 @@ const RetroCards: React.FC = () => {
                 Wie geht's uns mit Kalle im Moment?
               </h2>
             </div>
-            <div className="flex flex-1 w-full items-end justify-start -mb-8 md:-mb-12">
-              <img 
-                src={kalleImage} 
-                alt="Kalle" 
-                className="max-h-[200px] md:max-h-[264px] object-contain"
-              />
+            <div className="flex flex-1 w-full items-end justify-start -mb-8 md:-mb-12 relative">
+              <div className="relative cursor-pointer" onClick={() => setShowKalleBubble(!showKalleBubble)}>
+                {showKalleBubble && (
+                  <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-black text-white px-4 py-2 rounded-full whitespace-nowrap animate-fade-in">
+                    <span className="font-bold">Wau Wau!</span>
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-black"></div>
+                  </div>
+                )}
+                <img 
+                  src={kalleImage} 
+                  alt="Kalle" 
+                  className="max-h-[200px] md:max-h-[264px] object-contain"
+                />
+              </div>
             </div>
           </div>
         );
