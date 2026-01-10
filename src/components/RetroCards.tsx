@@ -87,6 +87,14 @@ const RetroCards: React.FC = () => {
   // State for Kalle speech bubble
   const [showKalleBubble, setShowKalleBubble] = useState(false);
 
+  // Auto-hide Kalle speech bubble after 300ms
+  useEffect(() => {
+    if (showKalleBubble) {
+      const timer = setTimeout(() => setShowKalleBubble(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [showKalleBubble]);
+
   const totalCards = 9;
 
   // Track if initial load is complete to avoid saving on mount
