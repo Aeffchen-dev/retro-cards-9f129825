@@ -966,16 +966,16 @@ const RetroCards: React.FC = () => {
               <div className="retro-body text-white">Welche Fortschritte gab es?</div>
               <div className="retro-body text-white">Was sollten wir noch angehen?</div>
             </div>
-            <div className="absolute top-1/2 -translate-y-1/2 right-0 -mr-4 md:-mr-6">
+            <div className="absolute top-1/2 -translate-y-[calc(50%+24px)] right-0 -mr-4 md:-mr-6">
               <div className="relative cursor-pointer" onClick={() => {
                 const randomMessage = dogMessages[Math.floor(Math.random() * dogMessages.length)];
                 setKalleBubbleMessage(randomMessage);
                 setShowKalleBubble(!showKalleBubble);
               }}>
                 {showKalleBubble && (
-                  <div className="absolute top-[20px] right-[calc(50%+72px)] bg-black text-white px-3 py-1.5 rounded-[16px] whitespace-nowrap text-sm animate-bubble-pop">
+                  <div className="absolute top-[20px] right-[calc(50%+80px)] bg-black text-white px-3 py-1.5 rounded-[16px] whitespace-nowrap text-sm animate-bubble-pop">
                     <span className="font-bold">{kalleBubbleMessage}</span>
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-black"></div>
+                    <div className="absolute top-1/2 -translate-y-1/2 -right-[6px] w-0 h-0 border-t-[6px] border-b-[6px] border-l-[6px] border-t-transparent border-b-transparent border-l-black"></div>
                   </div>
                 )}
                 <img 
