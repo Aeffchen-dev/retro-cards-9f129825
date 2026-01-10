@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { saveToStorage, loadFromStorage, clearExpiredStorage, STORAGE_KEYS } from '@/lib/storage';
-import kalleImage from '@/assets/kalle.png';
+import kalleImage from '@/assets/kalle-edited.png';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -990,32 +990,47 @@ const RetroCards: React.FC = () => {
                 Wie läufts mit Kalle?
               </h2>
             </div>
-            <div className="relative flex-1 w-full flex items-center justify-center">
-              {/* Kalle image in center */}
-              <img 
-                src={kalleImage} 
-                alt="Kalle" 
-                className="w-32 h-32 md:w-40 md:h-40 object-contain"
-              />
-              {/* Text cloud around Kalle */}
-              <span className="absolute top-0 left-0 retro-body text-sm md:text-base">
-                Ist die Aufteilung gerecht?
-              </span>
-              <span className="absolute top-0 right-0 retro-body text-sm md:text-base text-right">
-                Das war toll
-              </span>
-              <span className="absolute top-1/2 -translate-y-1/2 left-0 retro-body text-sm md:text-base">
-                Das hat mich viel Kraft gekostet
-              </span>
-              <span className="absolute top-1/2 -translate-y-1/2 right-0 retro-body text-sm md:text-base text-right">
-                Das sollten wir angehen
-              </span>
-              <span className="absolute bottom-0 left-0 retro-body text-sm md:text-base">
-                Nutzen wir externe Hilfe?
-              </span>
-              <span className="absolute bottom-0 right-0 retro-body text-sm md:text-base text-right">
-                Gemeinsame Unternehmung
-              </span>
+            <div className="relative flex-1 w-full flex flex-col">
+              {/* Text cloud - top row */}
+              <div className="flex justify-between w-full mt-4">
+                <span className="retro-body text-sm md:text-base max-w-[45%]">
+                  Ist die Aufteilung gerecht?
+                </span>
+                <span className="retro-body text-sm md:text-base max-w-[45%] text-right">
+                  Das war toll
+                </span>
+              </div>
+              
+              {/* Text cloud - middle row */}
+              <div className="flex justify-between w-full mt-4">
+                <span className="retro-body text-sm md:text-base max-w-[40%]">
+                  Das hat mich viel Kraft gekostet
+                </span>
+                <span className="retro-body text-sm md:text-base max-w-[40%] text-right">
+                  Das sollten wir angehen
+                </span>
+              </div>
+              
+              {/* Text cloud - bottom row */}
+              <div className="flex justify-between w-full mt-4">
+                <span className="retro-body text-sm md:text-base max-w-[45%]">
+                  Nutzen wir externe Hilfe?
+                </span>
+                <span className="retro-body text-sm md:text-base max-w-[45%] text-right">
+                  Gemeinsame Unternehmung
+                </span>
+              </div>
+              
+              {/* Kalle image with green line */}
+              <div className="flex-1 flex items-end justify-center relative">
+                <div className="absolute bottom-8 left-0 right-0 h-1 bg-[#8BC34A]" style={{ marginLeft: '-1rem', marginRight: '-1rem', width: 'calc(100% + 2rem)' }}></div>
+                <img 
+                  src={kalleImage} 
+                  alt="Kalle" 
+                  className="w-40 h-40 md:w-48 md:h-48 object-contain relative z-10"
+                  style={{ marginBottom: '0' }}
+                />
+              </div>
             </div>
           </div>
         );
