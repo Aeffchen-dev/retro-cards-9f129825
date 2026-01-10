@@ -160,7 +160,7 @@ const RetroCards: React.FC = () => {
 
   // Fetch questions from Google Sheets - truly non-blocking with cache
   useEffect(() => {
-    const QUESTIONS_CACHE_KEY = 'retro-cards-questions-cache';
+    const QUESTIONS_CACHE_KEY = 'retro-cards-questions-cache-v2';
     let hasCachedData = false;
     
     // Try to load cached questions immediately for fast initial render
