@@ -958,23 +958,22 @@ const RetroCards: React.FC = () => {
                 Wie geht's mir mit Kalle im Moment?
               </h2>
             </div>
-            {/* Organic scattered questions */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              <span className="absolute text-[10px] md:text-sm opacity-40 right-2 md:right-4 top-[155px] md:top-[200px] rotate-1">Was war schön?</span>
-              <span className="absolute text-[10px] md:text-sm opacity-40 left-0 md:left-4 top-[180px] md:top-[235px] -rotate-2">Was war anstrengend?</span>
-              <span className="absolute text-[10px] md:text-sm opacity-40 left-[30%] md:left-[35%] top-[205px] md:top-[270px] rotate-2">Entlasten wir uns gegenseitig?</span>
-              <span className="absolute text-[10px] md:text-sm opacity-40 right-2 md:right-8 top-[230px] md:top-[305px] -rotate-1">Nehmen wir Hilfe an?</span>
-              <span className="absolute text-[10px] md:text-sm opacity-40 left-0 md:left-4 top-[255px] md:top-[340px] rotate-1">Welche Fortschritte gab es?</span>
-              <span className="absolute text-[10px] md:text-sm opacity-40 right-2 md:right-[15%] top-[280px] md:top-[375px] -rotate-2">Was sollten wir noch angehen?</span>
+            <div className="flex flex-col gap-4 w-full flex-1 justify-end pb-[180px] md:pb-[240px]">
+              <div className="retro-body opacity-60">Was war schön?</div>
+              <div className="retro-body opacity-60">Was war anstrengend?</div>
+              <div className="retro-body opacity-60">Entlasten wir uns gegenseitig?</div>
+              <div className="retro-body opacity-60">Nehmen wir Hilfe an?</div>
+              <div className="retro-body opacity-60">Welche Fortschritte gab es?</div>
+              <div className="retro-body opacity-60">Was sollten wir noch angehen?</div>
             </div>
-            <div className="flex flex-1 w-full items-end justify-start -mb-8 md:-mb-12 relative">
+            <div className="absolute bottom-0 right-0 -mb-8 md:-mb-12 -mr-4 md:-mr-6">
               <div className="relative cursor-pointer" onClick={() => {
                 const randomMessage = dogMessages[Math.floor(Math.random() * dogMessages.length)];
                 setKalleBubbleMessage(randomMessage);
                 setShowKalleBubble(!showKalleBubble);
               }}>
                 {showKalleBubble && (
-                  <div className="absolute top-[-28px] left-[calc(50%+56px)] bg-black text-white px-3 py-1.5 rounded-[16px] whitespace-nowrap text-sm animate-bubble-pop">
+                  <div className="absolute top-[-28px] right-[calc(50%+56px)] bg-black text-white px-3 py-1.5 rounded-[16px] whitespace-nowrap text-sm animate-bubble-pop">
                     <span className="font-bold">{kalleBubbleMessage}</span>
                     <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-black"></div>
                   </div>
@@ -983,6 +982,7 @@ const RetroCards: React.FC = () => {
                   src={kalleImage} 
                   alt="Kalle" 
                   className={`max-h-[200px] md:max-h-[264px] object-contain transition-transform ${showKalleBubble ? 'animate-dog-wiggle' : ''}`}
+                  style={{ transform: 'scaleX(-1)' }}
                 />
               </div>
             </div>
