@@ -211,8 +211,8 @@ const RetroCards: React.FC = () => {
           // Parse CSV - split by newlines and get second column (question)
           let rows = text.split('\n').filter(row => row.trim());
           
-          // Skip first row for Check-in Roulette sheet
-          if (sheetId === checkInRouletteId && rows.length > 0) {
+          // Skip first row (header) for both sheets
+          if (rows.length > 0) {
             rows = rows.slice(1);
           }
           
