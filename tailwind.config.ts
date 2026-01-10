@@ -109,13 +109,19 @@ export default {
 				},
 				'dog-wiggle': {
 					'0%': {
-						transform: 'translateY(0)'
+						transform: 'translateY(0) scaleX(1) scaleY(1)'
 					},
-					'30%': {
-						transform: 'translateY(-6px)'
+					'15%': {
+						transform: 'translateY(2px) scaleX(1.08) scaleY(0.92)'
+					},
+					'45%': {
+						transform: 'translateY(-8px) scaleX(0.94) scaleY(1.08)'
+					},
+					'70%': {
+						transform: 'translateY(0) scaleX(1.04) scaleY(0.96)'
 					},
 					'100%': {
-						transform: 'translateY(0)'
+						transform: 'translateY(0) scaleX(1) scaleY(1)'
 					}
 				}
 			},
@@ -123,7 +129,7 @@ export default {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'bubble-pop': 'bubble-pop 0.15s ease-out forwards',
-				'dog-wiggle': 'dog-wiggle 0.25s ease-out'
+				'dog-wiggle': 'dog-wiggle 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)'
 			}
 		}
 	},
