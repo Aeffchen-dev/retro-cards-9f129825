@@ -973,7 +973,7 @@ const RetroCards: React.FC = () => {
                 setShowKalleBubble(!showKalleBubble);
               }}>
                 {showKalleBubble && (
-                  <div className="absolute top-[-28px] right-[calc(50%+56px)] bg-black text-white px-3 py-1.5 rounded-[16px] whitespace-nowrap text-sm animate-bubble-pop">
+                  <div className="absolute top-[20px] right-[calc(50%+56px)] bg-black text-white px-3 py-1.5 rounded-[16px] whitespace-nowrap text-sm animate-bubble-pop">
                     <span className="font-bold">{kalleBubbleMessage}</span>
                     <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-black"></div>
                   </div>
