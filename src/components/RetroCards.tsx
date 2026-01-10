@@ -990,11 +990,11 @@ const RetroCards: React.FC = () => {
                 Wie läufts mit Kalle?
               </h2>
             </div>
-            <div className="flex flex-1 w-full items-center justify-center">
+            <div className="flex flex-1 w-full items-end justify-center -mb-8 md:-mb-12">
               <img 
                 src={kalleImage} 
                 alt="Kalle" 
-                className="max-h-[300px] md:max-h-[400px] object-contain"
+                className="max-h-[180px] md:max-h-[240px] object-contain"
               />
             </div>
           </div>
