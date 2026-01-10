@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { saveToStorage, loadFromStorage, clearExpiredStorage, STORAGE_KEYS } from '@/lib/storage';
-import KalleDog from '@/components/KalleDog';
+import kalleImage from '@/assets/kalle.png';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -952,8 +952,10 @@ const RetroCards: React.FC = () => {
                     <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-black"></div>
                   </div>
                 )}
-                <KalleDog 
-                  className={`max-h-[200px] md:max-h-[264px] w-auto transition-transform ${showKalleBubble ? 'animate-dog-wiggle' : ''}`}
+                <img 
+                  src={kalleImage} 
+                  alt="Kalle" 
+                  className={`max-h-[200px] md:max-h-[264px] object-contain transition-transform ${showKalleBubble ? 'animate-dog-wiggle' : ''}`}
                 />
               </div>
             </div>
