@@ -100,11 +100,11 @@ export default {
 				'bubble-pop': {
 					'0%': {
 						opacity: '0',
-						transform: 'translateX(-50%) translateY(4px) scale(0.8) rotate(3deg)'
+						transform: 'translateX(-30px) scale(0.8)'
 					},
 					'100%': {
 						opacity: '1',
-						transform: 'translateX(-50%) translateY(0) scale(1) rotate(6deg)'
+						transform: 'translateX(0) scale(1)'
 					}
 				},
 				'dog-wiggle': {
