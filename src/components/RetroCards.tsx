@@ -1213,7 +1213,7 @@ const RetroCards: React.FC = () => {
               <SwiperSlide key={index}>
                 <div className="w-full h-full flex items-center justify-center px-4">
                   <div 
-                    className="relative h-full w-full max-w-[500px] max-h-[780px] mx-auto flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl"
+                    className={`relative h-full w-full max-w-[500px] max-h-[780px] mx-auto flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl ${index === 7 ? 'overflow-visible' : ''}`}
                   >
                     {renderCard(index)}
 
