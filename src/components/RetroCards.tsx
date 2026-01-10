@@ -991,12 +991,47 @@ const RetroCards: React.FC = () => {
 
       case 7:
         return (
-          <div className="flex flex-col items-start gap-14 w-full justify-center">
+          <div className="flex flex-col items-start gap-14 w-full justify-center relative">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Intimität</span>
               </div>
               <h2 className="retro-heading w-full">Sind wir uns körperlich nah?</h2>
+            </div>
+            {/* Fire animation at bottom */}
+            <div className="absolute -bottom-32 left-0 right-0 h-32 overflow-hidden pointer-events-none">
+              <div className="absolute inset-0 flex justify-center items-end">
+                {[...Array(12)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute animate-flame"
+                    style={{
+                      left: `${8 + i * 8}%`,
+                      animationDelay: `${i * 0.1}s`,
+                      animationDuration: `${0.8 + Math.random() * 0.4}s`,
+                    }}
+                  >
+                    <div className="w-8 h-16 bg-gradient-to-t from-orange-600 via-orange-400 to-yellow-300 rounded-full blur-sm opacity-90 animate-flicker" 
+                      style={{ animationDelay: `${i * 0.15}s` }} 
+                    />
+                  </div>
+                ))}
+                {[...Array(8)].map((_, i) => (
+                  <div
+                    key={`inner-${i}`}
+                    className="absolute animate-flame"
+                    style={{
+                      left: `${15 + i * 10}%`,
+                      animationDelay: `${i * 0.12 + 0.05}s`,
+                      animationDuration: `${0.6 + Math.random() * 0.3}s`,
+                    }}
+                  >
+                    <div className="w-6 h-20 bg-gradient-to-t from-red-600 via-orange-500 to-yellow-400 rounded-full blur-md opacity-80 animate-flicker"
+                      style={{ animationDelay: `${i * 0.2}s` }}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         );
