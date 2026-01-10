@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { saveToStorage, loadFromStorage, clearExpiredStorage, STORAGE_KEYS } from '@/lib/storage';
-import kalleImage from '@/assets/kalle-edited.png';
+import kalleImage from '@/assets/kalle-transparent.png';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -1022,13 +1022,11 @@ const RetroCards: React.FC = () => {
               </div>
               
               {/* Kalle image with green line */}
-              <div className="flex-1 flex items-end justify-center relative">
-                <div className="absolute bottom-8 left-0 right-0 h-1 bg-[#8BC34A]" style={{ marginLeft: '-1rem', marginRight: '-1rem', width: 'calc(100% + 2rem)' }}></div>
+              <div className="flex-1 flex items-end justify-center">
                 <img 
                   src={kalleImage} 
                   alt="Kalle" 
-                  className="w-40 h-40 md:w-48 md:h-48 object-contain relative z-10"
-                  style={{ marginBottom: '0' }}
+                  className="w-full max-w-md object-contain"
                 />
               </div>
             </div>
