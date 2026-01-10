@@ -991,77 +991,12 @@ const RetroCards: React.FC = () => {
 
       case 7:
         return (
-          <div className="flex flex-col items-start gap-14 w-full justify-center relative h-full">
+          <div className="flex flex-col items-start gap-14 w-full justify-center">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Intimität</span>
               </div>
               <h2 className="retro-heading w-full">Sind wir uns körperlich nah?</h2>
-            </div>
-            {/* Fire animation at bottom - full width */}
-            <div className="absolute -bottom-8 -left-8 -right-8 h-40 overflow-visible pointer-events-none">
-              {/* Base glow */}
-              <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-orange-500/40 via-orange-400/20 to-transparent blur-xl" />
-              
-              {/* Flame layer 1 - back flames */}
-              <div className="absolute bottom-0 left-0 right-0 flex justify-between">
-                {[...Array(20)].map((_, i) => (
-                  <div
-                    key={`back-${i}`}
-                    className="animate-flame-wave"
-                    style={{
-                      animationDelay: `${i * 0.08}s`,
-                      animationDuration: '1.2s',
-                    }}
-                  >
-                    <div 
-                      className="w-10 bg-gradient-to-t from-red-700 via-orange-500 to-yellow-400/0 rounded-t-full blur-[2px]"
-                      style={{ height: `${60 + Math.sin(i * 0.8) * 20}px` }}
-                    />
-                  </div>
-                ))}
-              </div>
-              
-              {/* Flame layer 2 - middle flames */}
-              <div className="absolute bottom-0 left-0 right-0 flex justify-between px-2">
-                {[...Array(16)].map((_, i) => (
-                  <div
-                    key={`mid-${i}`}
-                    className="animate-flame-dance"
-                    style={{
-                      animationDelay: `${i * 0.1 + 0.05}s`,
-                      animationDuration: '0.9s',
-                    }}
-                  >
-                    <div 
-                      className="w-8 bg-gradient-to-t from-orange-600 via-yellow-500 to-yellow-300/0 rounded-t-full blur-[1px]"
-                      style={{ height: `${50 + Math.cos(i * 0.7) * 18}px` }}
-                    />
-                  </div>
-                ))}
-              </div>
-              
-              {/* Flame layer 3 - front bright flames */}
-              <div className="absolute bottom-0 left-0 right-0 flex justify-between px-4">
-                {[...Array(12)].map((_, i) => (
-                  <div
-                    key={`front-${i}`}
-                    className="animate-flame-flicker"
-                    style={{
-                      animationDelay: `${i * 0.12}s`,
-                      animationDuration: '0.7s',
-                    }}
-                  >
-                    <div 
-                      className="w-6 bg-gradient-to-t from-yellow-500 via-yellow-300 to-white/0 rounded-t-full"
-                      style={{ height: `${35 + Math.sin(i * 1.2) * 12}px` }}
-                    />
-                  </div>
-                ))}
-              </div>
-              
-              {/* Hot core glow */}
-              <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-yellow-400/60 via-orange-500/30 to-transparent" />
             </div>
           </div>
         );
@@ -1213,7 +1148,7 @@ const RetroCards: React.FC = () => {
               <SwiperSlide key={index}>
                 <div className="w-full h-full flex items-center justify-center px-4">
                   <div 
-                    className={`relative h-full w-full max-w-[500px] max-h-[780px] mx-auto flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl ${index === 7 ? 'overflow-visible' : ''}`}
+                    className="relative h-full w-full max-w-[500px] max-h-[780px] mx-auto flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl"
                   >
                     {renderCard(index)}
 

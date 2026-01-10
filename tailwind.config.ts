@@ -134,44 +134,6 @@ export default {
 					'100%': {
 						transform: 'scaleX(-1) rotate(0deg) translateY(0)'
 					}
-				},
-				'flame-wave': {
-					'0%, 100%': {
-						transform: 'scaleY(1) scaleX(1)',
-						opacity: '0.9'
-					},
-					'50%': {
-						transform: 'scaleY(1.3) scaleX(0.85)',
-						opacity: '1'
-					}
-				},
-				'flame-dance': {
-					'0%, 100%': {
-						transform: 'scaleY(1) translateX(0) skewX(0deg)',
-						opacity: '0.95'
-					},
-					'25%': {
-						transform: 'scaleY(1.2) translateX(-2px) skewX(-3deg)',
-						opacity: '1'
-					},
-					'75%': {
-						transform: 'scaleY(1.15) translateX(2px) skewX(3deg)',
-						opacity: '0.9'
-					}
-				},
-				'flame-flicker': {
-					'0%, 100%': {
-						transform: 'scaleY(1) scaleX(1)',
-						opacity: '0.85'
-					},
-					'33%': {
-						transform: 'scaleY(1.25) scaleX(0.9)',
-						opacity: '1'
-					},
-					'66%': {
-						transform: 'scaleY(0.9) scaleX(1.1)',
-						opacity: '0.9'
-					}
 				}
 			},
 			animation: {
@@ -179,10 +141,7 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'bubble-pop': 'bubble-pop 0.15s ease-out forwards',
 				'dog-wiggle': 'dog-wiggle 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
-				'wiggle': 'wiggle 0.35s cubic-bezier(0.25, 0.1, 0.25, 1)',
-				'flame-wave': 'flame-wave 1.2s ease-in-out infinite',
-				'flame-dance': 'flame-dance 0.9s ease-in-out infinite',
-				'flame-flicker': 'flame-flicker 0.7s ease-in-out infinite'
+				'wiggle': 'wiggle 0.35s cubic-bezier(0.25, 0.1, 0.25, 1)'
 			}
 		}
 	},
