@@ -125,14 +125,29 @@ export default {
 					}
 				},
 				'wiggle': {
-					'0%, 100%': {
-						transform: 'scaleX(-1) rotate(0deg)'
+					'0%': {
+						transform: 'scaleX(-1) rotate(0deg) translateY(0)'
 					},
-					'25%': {
-						transform: 'scaleX(-1) rotate(-8deg)'
+					'15%': {
+						transform: 'scaleX(-1) rotate(-12deg) translateY(-4px)'
+					},
+					'30%': {
+						transform: 'scaleX(-1) rotate(-10deg) translateY(-2px)'
+					},
+					'45%': {
+						transform: 'scaleX(-1) rotate(-12deg) translateY(-4px)'
+					},
+					'60%': {
+						transform: 'scaleX(-1) rotate(-8deg) translateY(-2px)'
 					},
 					'75%': {
-						transform: 'scaleX(-1) rotate(8deg)'
+						transform: 'scaleX(-1) rotate(-10deg) translateY(-3px)'
+					},
+					'90%': {
+						transform: 'scaleX(-1) rotate(-4deg) translateY(-1px)'
+					},
+					'100%': {
+						transform: 'scaleX(-1) rotate(0deg) translateY(0)'
 					}
 				}
 			},
