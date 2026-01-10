@@ -930,7 +930,7 @@ const RetroCards: React.FC = () => {
                 <span className="retro-label">Kalle</span>
               </div>
               <h2 className="retro-heading w-full">
-                Wie geht's uns mit Kalle im Moment?
+                Wie geht's mir mit Kalle im Moment?
               </h2>
             </div>
             <div className="flex flex-1 w-full items-end justify-start -mb-8 md:-mb-12 relative">
