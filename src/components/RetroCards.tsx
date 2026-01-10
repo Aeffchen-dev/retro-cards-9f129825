@@ -96,8 +96,8 @@ const RetroCards: React.FC = () => {
     "Wau wau!",
     "Yip yip!",
     "Bork!",
-    "Howl! 🐺",
-    "🦴 Treat?",
+    "Howl!",
+    "Treat?",
     "Pet me!",
   ];
 
