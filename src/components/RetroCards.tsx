@@ -83,7 +83,7 @@ const RetroCards: React.FC = () => {
   const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const totalCards = 8;
+  const totalCards = 9;
 
   // Track if initial load is complete to avoid saving on mount
   const isInitialMount = useRef(true);
@@ -979,6 +979,40 @@ const RetroCards: React.FC = () => {
         );
 
       case 7:
+        return (
+          <div className="flex flex-col items-start w-full h-full">
+            <div className="flex flex-col items-start gap-6 w-full">
+              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+                <span className="retro-label">Kalle</span>
+              </div>
+              <h2 className="retro-heading w-full">
+                Wie läufts mit Kalle?
+              </h2>
+            </div>
+            <div className="flex flex-col gap-4 w-full flex-1 justify-end">
+              <div className="retro-body">
+                ⚖️&nbsp;&nbsp;&nbsp;Ist die Aufteilung gerecht?
+              </div>
+              <div className="retro-body">
+                😍&nbsp;&nbsp;&nbsp;Das war toll
+              </div>
+              <div className="retro-body">
+                😕&nbsp;&nbsp;&nbsp;Das hat mich viel Kraft gekostet
+              </div>
+              <div className="retro-body">
+                🚧&nbsp;&nbsp;&nbsp;Das sollten wir angehen
+              </div>
+              <div className="retro-body">
+                🛟&nbsp;&nbsp;&nbsp;Nutzen wir externe Hilfe?
+              </div>
+              <div className="retro-body">
+                🗺️&nbsp;&nbsp;&nbsp;Was können wir mit Kalle unternehmen?
+              </div>
+            </div>
+          </div>
+        );
+
+      case 8:
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
