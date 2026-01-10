@@ -160,7 +160,7 @@ const RetroCards: React.FC = () => {
 
   // Fetch questions from Google Sheets - truly non-blocking with cache
   useEffect(() => {
-    const QUESTIONS_CACHE_KEY = 'retro-cards-questions-cache-v3';
+    const QUESTIONS_CACHE_KEY = 'retro-cards-questions-cache-v4';
     let hasCachedData = false;
     
     // Try to load cached questions immediately for fast initial render
@@ -230,7 +230,10 @@ const RetroCards: React.FC = () => {
               
               // Get second column (index 1), remove trailing comma and quotes
               const secondCol = columns[1]?.replace(/,$/, '').replace(/^"|"$/g, '').replace(/""/g, '"').trim();
-              if (secondCol && secondCol.length > 0) {
+              
+              // Skip one-word questions
+              const wordCount = secondCol?.split(/\s+/).filter(word => word.length > 0).length || 0;
+              if (secondCol && secondCol.length > 0 && wordCount > 1) {
                 questions.push(secondCol);
               }
             }
