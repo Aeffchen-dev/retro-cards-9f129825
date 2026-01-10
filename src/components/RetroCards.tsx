@@ -958,7 +958,7 @@ const RetroCards: React.FC = () => {
                 Wie geht's mir mit Kalle im Moment?
               </h2>
             </div>
-            <div className="flex flex-col gap-4 w-full flex-1 justify-end pb-[180px] md:pb-[240px] mt-12">
+            <div className="absolute bottom-0 left-0 flex flex-col gap-4 pb-8">
               <div className="retro-body text-white">Was war schön?</div>
               <div className="retro-body text-white">Was war anstrengend?</div>
               <div className="retro-body text-white">Entlasten wir uns gegenseitig?</div>
@@ -966,14 +966,14 @@ const RetroCards: React.FC = () => {
               <div className="retro-body text-white">Welche Fortschritte gab es?</div>
               <div className="retro-body text-white">Was sollten wir noch angehen?</div>
             </div>
-            <div className="absolute bottom-0 right-0 -mb-8 md:-mb-12 -mr-4 md:-mr-6">
+            <div className="absolute bottom-[160px] right-0 -mr-4 md:-mr-6">
               <div className="relative cursor-pointer" onClick={() => {
                 const randomMessage = dogMessages[Math.floor(Math.random() * dogMessages.length)];
                 setKalleBubbleMessage(randomMessage);
                 setShowKalleBubble(!showKalleBubble);
               }}>
                 {showKalleBubble && (
-                  <div className="absolute top-[20px] right-[calc(50%+56px)] bg-black text-white px-3 py-1.5 rounded-[16px] whitespace-nowrap text-sm animate-bubble-pop">
+                  <div className="absolute top-[20px] right-[calc(50%+72px)] bg-black text-white px-3 py-1.5 rounded-[16px] whitespace-nowrap text-sm animate-bubble-pop">
                     <span className="font-bold">{kalleBubbleMessage}</span>
                     <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-black"></div>
                   </div>
