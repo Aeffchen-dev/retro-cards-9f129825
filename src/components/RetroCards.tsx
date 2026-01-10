@@ -949,7 +949,7 @@ const RetroCards: React.FC = () => {
 
       case 6:
         return (
-          <div className="flex flex-col items-start w-full h-full">
+          <div className="flex flex-col items-start w-full h-full relative">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Kalle</span>
@@ -957,6 +957,15 @@ const RetroCards: React.FC = () => {
               <h2 className="retro-heading w-full">
                 Wie geht's mir mit Kalle im Moment?
               </h2>
+            </div>
+            {/* Organic scattered questions */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              <span className="absolute text-[10px] md:text-xs opacity-60 right-4 top-[140px] md:top-[160px] rotate-2">Was war schön?</span>
+              <span className="absolute text-[10px] md:text-xs opacity-60 right-8 top-[180px] md:top-[210px] -rotate-3">Was war anstrengend?</span>
+              <span className="absolute text-[10px] md:text-xs opacity-60 right-2 top-[220px] md:top-[260px] rotate-1">Entlasten wir uns gegenseitig?</span>
+              <span className="absolute text-[10px] md:text-xs opacity-60 right-12 top-[260px] md:top-[310px] -rotate-2">Nehmen wir Hilfe an?</span>
+              <span className="absolute text-[10px] md:text-xs opacity-60 right-4 top-[300px] md:top-[360px] rotate-3">Welche Fortschritte gab es?</span>
+              <span className="absolute text-[10px] md:text-xs opacity-60 right-8 top-[340px] md:top-[410px] -rotate-1">Was sollten wir noch angehen?</span>
             </div>
             <div className="flex flex-1 w-full items-end justify-start -mb-8 md:-mb-12 relative">
               <div className="relative cursor-pointer" onClick={() => {
