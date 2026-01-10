@@ -86,6 +86,20 @@ const RetroCards: React.FC = () => {
 
   // State for Kalle speech bubble
   const [showKalleBubble, setShowKalleBubble] = useState(false);
+  const [kalleBubbleMessage, setKalleBubbleMessage] = useState("Woof!");
+  
+  const dogMessages = [
+    "Woof!",
+    "Bark!",
+    "Ruff!",
+    "Arf arf!",
+    "Wau wau!",
+    "Yip yip!",
+    "Bork!",
+    "Howl! 🐺",
+    "🦴 Treat?",
+    "Pet me!",
+  ];
 
   // Auto-hide Kalle speech bubble after 300ms
   useEffect(() => {
@@ -945,10 +959,14 @@ const RetroCards: React.FC = () => {
               </h2>
             </div>
             <div className="flex flex-1 w-full items-end justify-start -mb-8 md:-mb-12 relative">
-              <div className="relative cursor-pointer" onClick={() => setShowKalleBubble(!showKalleBubble)}>
+              <div className="relative cursor-pointer" onClick={() => {
+                const randomMessage = dogMessages[Math.floor(Math.random() * dogMessages.length)];
+                setKalleBubbleMessage(randomMessage);
+                setShowKalleBubble(!showKalleBubble);
+              }}>
                 {showKalleBubble && (
                   <div className="absolute top-[-28px] left-[calc(50%+56px)] bg-black text-white px-3 py-1.5 rounded-[16px] whitespace-nowrap text-sm animate-bubble-pop">
-                    <span className="font-bold">Woof</span>
+                    <span className="font-bold">{kalleBubbleMessage}</span>
                     <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-black"></div>
                   </div>
                 )}
