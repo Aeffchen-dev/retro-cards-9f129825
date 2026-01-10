@@ -96,11 +96,38 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'bubble-pop': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateX(-50%) translateY(10px) scale(0.5) rotate(0deg)'
+					},
+					'50%': {
+						opacity: '1',
+						transform: 'translateX(-50%) translateY(-4px) scale(1.1) rotate(8deg)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateX(-50%) translateY(0) scale(1) rotate(6deg)'
+					}
+				},
+				'dog-wiggle': {
+					'0%, 100%': {
+						transform: 'rotate(0deg)'
+					},
+					'25%': {
+						transform: 'rotate(-3deg)'
+					},
+					'75%': {
+						transform: 'rotate(3deg)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'bubble-pop': 'bubble-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+				'dog-wiggle': 'dog-wiggle 0.4s ease-in-out'
 			}
 		}
 	},
