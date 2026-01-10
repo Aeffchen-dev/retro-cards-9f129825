@@ -966,7 +966,7 @@ const RetroCards: React.FC = () => {
               <div className="retro-body text-white">Welche Fortschritte gab es?</div>
               <div className="retro-body text-white">Was sollten wir noch angehen?</div>
             </div>
-            <div className="absolute bottom-[160px] right-0 -mr-4 md:-mr-6">
+            <div className="absolute bottom-[128px] right-0 -mr-4 md:-mr-6">
               <div className="relative cursor-pointer" onClick={() => {
                 const randomMessage = dogMessages[Math.floor(Math.random() * dogMessages.length)];
                 setKalleBubbleMessage(randomMessage);
