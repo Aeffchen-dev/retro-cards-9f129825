@@ -109,7 +109,7 @@ const RetroCards: React.FC = () => {
     }
   }, [showKalleBubble]);
 
-  const totalCards = 9;
+  const totalCards = 10;
 
   // Track if initial load is complete to avoid saving on mount
   const isInitialMount = useRef(true);
@@ -991,6 +991,18 @@ const RetroCards: React.FC = () => {
 
       case 7:
         return (
+          <div className="flex flex-col items-start gap-14 w-full justify-center">
+            <div className="flex flex-col items-start gap-6 w-full">
+              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+                <span className="retro-label">Intimität</span>
+              </div>
+              <h2 className="retro-heading w-full">Sind wir uns körperlich nah?</h2>
+            </div>
+          </div>
+        );
+
+      case 8:
+        return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
@@ -1057,7 +1069,7 @@ const RetroCards: React.FC = () => {
           </div>
         );
 
-      case 8:
+      case 9:
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
