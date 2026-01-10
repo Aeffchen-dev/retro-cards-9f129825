@@ -90,7 +90,7 @@ const RetroCards: React.FC = () => {
   // Auto-hide Kalle speech bubble after 300ms
   useEffect(() => {
     if (showKalleBubble) {
-      const timer = setTimeout(() => setShowKalleBubble(false), 300);
+      const timer = setTimeout(() => setShowKalleBubble(false), 600);
       return () => clearTimeout(timer);
     }
   }, [showKalleBubble]);
