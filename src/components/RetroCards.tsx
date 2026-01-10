@@ -960,12 +960,12 @@ const RetroCards: React.FC = () => {
             </div>
             {/* Organic scattered questions */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              <span className="absolute text-[10px] md:text-xs opacity-60 right-4 top-[140px] md:top-[160px] rotate-2">Was war schön?</span>
-              <span className="absolute text-[10px] md:text-xs opacity-60 right-8 top-[180px] md:top-[210px] -rotate-3">Was war anstrengend?</span>
-              <span className="absolute text-[10px] md:text-xs opacity-60 right-2 top-[220px] md:top-[260px] rotate-1">Entlasten wir uns gegenseitig?</span>
-              <span className="absolute text-[10px] md:text-xs opacity-60 right-12 top-[260px] md:top-[310px] -rotate-2">Nehmen wir Hilfe an?</span>
-              <span className="absolute text-[10px] md:text-xs opacity-60 right-4 top-[300px] md:top-[360px] rotate-3">Welche Fortschritte gab es?</span>
-              <span className="absolute text-[10px] md:text-xs opacity-60 right-8 top-[340px] md:top-[410px] -rotate-1">Was sollten wir noch angehen?</span>
+              <span className="absolute text-[10px] md:text-xs opacity-50 right-4 md:right-8 top-[130px] md:top-[140px] rotate-2">Was war schön?</span>
+              <span className="absolute text-[10px] md:text-xs opacity-50 right-[40%] md:right-[35%] top-[160px] md:top-[180px] -rotate-1">Was war anstrengend?</span>
+              <span className="absolute text-[10px] md:text-xs opacity-50 right-2 md:right-16 top-[200px] md:top-[240px] rotate-3">Entlasten wir uns gegenseitig?</span>
+              <span className="absolute text-[10px] md:text-xs opacity-50 right-[30%] md:right-[25%] top-[250px] md:top-[300px] -rotate-2">Nehmen wir Hilfe an?</span>
+              <span className="absolute text-[10px] md:text-xs opacity-50 right-6 md:right-12 top-[300px] md:top-[360px] rotate-1">Welche Fortschritte gab es?</span>
+              <span className="absolute text-[10px] md:text-xs opacity-50 right-[35%] md:right-[40%] top-[350px] md:top-[420px] -rotate-3">Was sollten wir noch angehen?</span>
             </div>
             <div className="flex flex-1 w-full items-end justify-start -mb-8 md:-mb-12 relative">
               <div className="relative cursor-pointer" onClick={() => {
