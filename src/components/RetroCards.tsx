@@ -958,13 +958,13 @@ const RetroCards: React.FC = () => {
                 Wie geht's mir mit Kalle im Moment?
               </h2>
             </div>
-            <div className="flex flex-col gap-4 w-full flex-1 justify-end pb-[180px] md:pb-[240px]">
-              <div className="retro-body opacity-60">Was war schön?</div>
-              <div className="retro-body opacity-60">Was war anstrengend?</div>
-              <div className="retro-body opacity-60">Entlasten wir uns gegenseitig?</div>
-              <div className="retro-body opacity-60">Nehmen wir Hilfe an?</div>
-              <div className="retro-body opacity-60">Welche Fortschritte gab es?</div>
-              <div className="retro-body opacity-60">Was sollten wir noch angehen?</div>
+            <div className="flex flex-col gap-4 w-full flex-1 justify-end pb-[180px] md:pb-[240px] mt-12">
+              <div className="retro-body text-white">Was war schön?</div>
+              <div className="retro-body text-white">Was war anstrengend?</div>
+              <div className="retro-body text-white">Entlasten wir uns gegenseitig?</div>
+              <div className="retro-body text-white">Nehmen wir Hilfe an?</div>
+              <div className="retro-body text-white">Welche Fortschritte gab es?</div>
+              <div className="retro-body text-white">Was sollten wir noch angehen?</div>
             </div>
             <div className="absolute bottom-0 right-0 -mb-8 md:-mb-12 -mr-4 md:-mr-6">
               <div className="relative cursor-pointer" onClick={() => {
@@ -981,8 +981,8 @@ const RetroCards: React.FC = () => {
                 <img 
                   src={kalleImage} 
                   alt="Kalle" 
-                  className={`max-h-[200px] md:max-h-[264px] object-contain transition-transform ${showKalleBubble ? 'animate-dog-wiggle' : ''}`}
-                  style={{ transform: 'scaleX(-1)' }}
+                  className={`max-h-[200px] md:max-h-[264px] object-contain transition-transform`}
+                  style={{ transform: `scaleX(-1) ${showKalleBubble ? 'rotate(-5deg)' : ''}` }}
                 />
               </div>
             </div>
