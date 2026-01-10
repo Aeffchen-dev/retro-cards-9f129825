@@ -4,7 +4,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { saveToStorage, loadFromStorage, clearExpiredStorage, STORAGE_KEYS } from '@/lib/storage';
-import kalleImage from '@/assets/kalle.png';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -990,58 +989,24 @@ const RetroCards: React.FC = () => {
                 Wie läufts mit Kalle?
               </h2>
             </div>
-            <div className="relative flex-1 w-full flex flex-col">
-              {/* Text cloud - top row */}
-              <div className="flex justify-between w-full mt-4">
-                <span className="retro-body text-sm md:text-base max-w-[45%]">
-                  Ist die Aufteilung gerecht?
-                </span>
-                <span className="retro-body text-sm md:text-base max-w-[45%] text-right">
-                  Das war toll
-                </span>
+            <div className="flex flex-col gap-4 w-full flex-1 justify-end">
+              <div className="retro-body">
+                ⚖️&nbsp;&nbsp;&nbsp;Ist die Aufteilung gerecht?
               </div>
-              
-              {/* Text cloud - middle row */}
-              <div className="flex justify-between w-full mt-4">
-                <span className="retro-body text-sm md:text-base max-w-[40%]">
-                  Das hat mich viel Kraft gekostet
-                </span>
-                <span className="retro-body text-sm md:text-base max-w-[40%] text-right">
-                  Das sollten wir angehen
-                </span>
+              <div className="retro-body">
+                😍&nbsp;&nbsp;&nbsp;Das war toll
               </div>
-              
-              {/* Text cloud - bottom row */}
-              <div className="flex justify-between w-full mt-4">
-                <span className="retro-body text-sm md:text-base max-w-[45%]">
-                  Nutzen wir externe Hilfe?
-                </span>
-                <span className="retro-body text-sm md:text-base max-w-[45%] text-right">
-                  Gemeinsame Unternehmung
-                </span>
+              <div className="retro-body">
+                😕&nbsp;&nbsp;&nbsp;Das hat mich viel Kraft gekostet
               </div>
-              
-              {/* Kalle image with green line */}
-              <div className="flex-1 flex items-end justify-center relative">
-                {/* Full-width green line */}
-                <div 
-                  className="absolute h-1 bg-[#8BC34A]" 
-                  style={{ 
-                    bottom: '2rem', 
-                    left: 'calc(-50vw + 50%)', 
-                    right: 'calc(-50vw + 50%)',
-                    width: '100vw'
-                  }}
-                ></div>
-                <img 
-                  src={kalleImage} 
-                  alt="Kalle" 
-                  className="w-48 h-48 md:w-56 md:h-56 object-contain relative z-10"
-                  style={{ 
-                    mixBlendMode: 'multiply',
-                    marginBottom: '-0.5rem'
-                  }}
-                />
+              <div className="retro-body">
+                🚧&nbsp;&nbsp;&nbsp;Das sollten wir angehen
+              </div>
+              <div className="retro-body">
+                🛟&nbsp;&nbsp;&nbsp;Nutzen wir externe Hilfe?
+              </div>
+              <div className="retro-body">
+                🗺️&nbsp;&nbsp;&nbsp;Gemeinsame Unternehmung
               </div>
             </div>
           </div>
