@@ -123,13 +123,25 @@ export default {
 					'100%': {
 						transform: 'translateY(0) scaleX(1) scaleY(1)'
 					}
+				},
+				'wiggle': {
+					'0%, 100%': {
+						transform: 'scaleX(-1) rotate(0deg)'
+					},
+					'25%': {
+						transform: 'scaleX(-1) rotate(-8deg)'
+					},
+					'75%': {
+						transform: 'scaleX(-1) rotate(8deg)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'bubble-pop': 'bubble-pop 0.15s ease-out forwards',
-				'dog-wiggle': 'dog-wiggle 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)'
+				'dog-wiggle': 'dog-wiggle 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+				'wiggle': 'wiggle 0.5s ease-in-out'
 			}
 		}
 	},

@@ -981,8 +981,8 @@ const RetroCards: React.FC = () => {
                 <img 
                   src={kalleImage} 
                   alt="Kalle" 
-                  className={`max-h-[200px] md:max-h-[264px] object-contain transition-transform`}
-                  style={{ transform: `scaleX(-1) ${showKalleBubble ? 'rotate(-5deg)' : ''}` }}
+                  className={`max-h-[200px] md:max-h-[264px] object-contain transition-transform duration-300 ease-out hover:scale-105 active:scale-95 ${showKalleBubble ? 'animate-[wiggle_0.5s_ease-in-out]' : ''}`}
+                  style={{ transform: 'scaleX(-1)' }}
                 />
               </div>
             </div>
