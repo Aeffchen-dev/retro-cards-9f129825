@@ -160,7 +160,7 @@ const RetroCards: React.FC = () => {
 
   // Fetch questions from Google Sheets - truly non-blocking with cache
   useEffect(() => {
-    const QUESTIONS_CACHE_KEY = 'retro-cards-questions-cache-v2';
+    const QUESTIONS_CACHE_KEY = 'retro-cards-questions-cache-v3';
     let hasCachedData = false;
     
     // Try to load cached questions immediately for fast initial render
@@ -220,6 +220,14 @@ const RetroCards: React.FC = () => {
             // Parse CSV columns - handle quoted values
             const columns = row.match(/("([^"]*("")*)*"|[^,]*)(,|$)/g);
             if (columns && columns.length >= 2) {
+              // Get first column (category) and check if it's "intro"
+              const firstCol = columns[0]?.replace(/,$/, '').replace(/^"|"$/g, '').replace(/""/g, '"').trim().toLowerCase();
+              
+              // Skip intro category questions
+              if (firstCol === 'intro') {
+                return;
+              }
+              
               // Get second column (index 1), remove trailing comma and quotes
               const secondCol = columns[1]?.replace(/,$/, '').replace(/^"|"$/g, '').replace(/""/g, '"').trim();
               if (secondCol && secondCol.length > 0) {
