@@ -991,22 +991,22 @@ const RetroCards: React.FC = () => {
             </div>
             <div className="flex flex-col gap-4 w-full flex-1 justify-end">
               <div className="retro-body">
-                ⚖️&nbsp;&nbsp;&nbsp;Ist die Aufteilung gerecht?
+                Ist die Aufteilung gerecht?
               </div>
               <div className="retro-body">
-                😍&nbsp;&nbsp;&nbsp;Das war toll
+                Das war toll
               </div>
               <div className="retro-body">
-                😕&nbsp;&nbsp;&nbsp;Das hat mich viel Kraft gekostet
+                Das hat mich viel Kraft gekostet
               </div>
               <div className="retro-body">
-                🚧&nbsp;&nbsp;&nbsp;Das sollten wir angehen
+                Das sollten wir angehen
               </div>
               <div className="retro-body">
-                🛟&nbsp;&nbsp;&nbsp;Nutzen wir externe Hilfe?
+                Nutzen wir externe Hilfe?
               </div>
               <div className="retro-body">
-                🗺️&nbsp;&nbsp;&nbsp;Gemeinsame Unternehmung
+                Gemeinsame Unternehmung
               </div>
             </div>
           </div>
