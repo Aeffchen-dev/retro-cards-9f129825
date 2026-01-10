@@ -1004,7 +1004,7 @@ const RetroCards: React.FC = () => {
             <div className="flex flex-1 w-full items-end justify-start -mb-8 md:-mb-12 relative">
               <div className="relative cursor-pointer" onClick={() => setShowKalleBubble(!showKalleBubble)}>
                 {showKalleBubble && (
-                  <div className="absolute top-[-32px] left-[calc(50%+80px)] bg-black text-white px-5 py-2.5 rounded-[24px] whitespace-nowrap animate-bubble-pop">
+                  <div className="absolute top-[-32px] left-[calc(50%+80px)] bg-black text-white px-5 py-2.5 rounded-[24px] whitespace-nowrap opacity-0 animate-bubble-pop">
                     <span className="font-bold">Woof</span>
                     <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-black"></div>
                   </div>
