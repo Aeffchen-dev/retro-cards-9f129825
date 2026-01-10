@@ -122,7 +122,7 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'bubble-pop': 'bubble-pop 0.25s ease-out 0.25s forwards',
+				'bubble-pop': 'bubble-pop 0.15s ease-out forwards',
 				'dog-wiggle': 'dog-wiggle 0.25s ease-out'
 			}
 		}
