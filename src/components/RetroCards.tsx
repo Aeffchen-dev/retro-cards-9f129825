@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { saveToStorage, loadFromStorage, clearExpiredStorage, STORAGE_KEYS } from '@/lib/storage';
+import kalleImage from '@/assets/kalle.png';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -989,25 +990,12 @@ const RetroCards: React.FC = () => {
                 Wie läufts mit Kalle?
               </h2>
             </div>
-            <div className="flex flex-col gap-4 w-full flex-1 justify-end">
-              <div className="retro-body">
-                Ist die Aufteilung gerecht?
-              </div>
-              <div className="retro-body">
-                Das war toll
-              </div>
-              <div className="retro-body">
-                Das hat mich viel Kraft gekostet
-              </div>
-              <div className="retro-body">
-                Das sollten wir angehen
-              </div>
-              <div className="retro-body">
-                Nutzen wir externe Hilfe?
-              </div>
-              <div className="retro-body">
-                Gemeinsame Unternehmung
-              </div>
+            <div className="flex flex-1 w-full items-center justify-center">
+              <img 
+                src={kalleImage} 
+                alt="Kalle" 
+                className="max-h-[300px] md:max-h-[400px] object-contain"
+              />
             </div>
           </div>
         );
