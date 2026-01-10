@@ -987,14 +987,14 @@ const RetroCards: React.FC = () => {
                 <span className="retro-label">Kalle</span>
               </div>
               <h2 className="retro-heading w-full">
-                Wie läufts mit Kalle?
+                Wie geht's uns mit Kalle im Moment?
               </h2>
             </div>
-            <div className="flex flex-1 w-full items-end justify-center -mb-8 md:-mb-12">
+            <div className="flex flex-1 w-full items-end justify-start -mb-8 md:-mb-12">
               <img 
                 src={kalleImage} 
                 alt="Kalle" 
-                className="max-h-[180px] md:max-h-[240px] object-contain"
+                className="max-h-[200px] md:max-h-[264px] object-contain"
               />
             </div>
           </div>
