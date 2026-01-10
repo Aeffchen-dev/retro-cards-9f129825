@@ -7,10 +7,13 @@ interface KalleDogProps {
 const KalleDog: React.FC<KalleDogProps> = ({ className = "" }) => {
   return (
     <svg
+      width="200"
+      height="190"
       viewBox="20 30 200 190"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      style={{ minWidth: '150px', minHeight: '150px' }}
     >
       {/* Body */}
       <ellipse cx="100" cy="140" rx="55" ry="45" fill="white" stroke="black" strokeWidth="2" />
