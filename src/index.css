@@ -376,11 +376,10 @@ button {
   .retro-card-container {
     max-width: 700px !important;
     width: 700px !important;
-    height: auto !important;
-    min-height: 600px !important;
-    max-height: 85vh !important;
+    height: 75vh !important;
+    min-height: 750px !important;
     margin: auto !important;
-    padding: 56px 40px 48px 40px !important;
+    padding: 60px 40px 52px 40px !important;
     background: #e8e8e8 !important;
   }
 
