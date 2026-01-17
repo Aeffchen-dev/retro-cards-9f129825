@@ -300,16 +300,16 @@ button {
     visibility: visible !important;
   }
 
-  /* Card styling for print - fill page exactly with top margin */
+  /* Card styling for print - fill page with more top margin */
   .bg-retro-card-bg {
     background: #e8e8e8 !important;
     box-shadow: none !important;
     height: 100vh !important;
     min-height: 100vh !important;
     max-height: 100vh !important;
-    padding: 48px 32px 32px 32px !important;
+    padding: 64px 32px 32px 32px !important;
     box-sizing: border-box !important;
-    overflow: hidden !important;
+    overflow: visible !important;
   }
 
   /* Text colors for print */
@@ -371,7 +371,7 @@ button {
   /* Slide 2-3: Memoji container - properly sized for print */
   .print-memoji-container {
     position: relative !important;
-    height: 55vh !important;
+    height: 50vh !important;
     margin-top: 24px !important;
     overflow: visible !important;
   }
@@ -386,29 +386,18 @@ button {
     line-height: 1.2 !important;
   }
 
-  /* Memojis - fix positioning for print by using percentage-based positioning */
+  /* Memojis - keep inline positioning from dragging, just ensure visibility */
   .print-memoji {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 60px !important;
-    height: 60px !important;
+    width: 56px !important;
+    height: 56px !important;
     position: absolute !important;
     z-index: 1000 !important;
-    left: auto !important;
-    right: 20% !important;
     border-radius: 50% !important;
-    overflow: hidden !important;
-  }
-
-  /* Position first memoji (Niklas) */
-  .print-memoji:first-of-type {
-    top: 15% !important;
-  }
-
-  /* Position second memoji (Jana) */
-  .print-memoji:last-of-type {
-    top: 35% !important;
+    overflow: visible !important;
+    /* Do NOT override left/top - keep the inline styles from dragging */
   }
 
   .print-memoji img {
@@ -423,7 +412,7 @@ button {
 
   /* Ensure flex containers maintain proper height */
   .swiper-slide .h-full {
-    height: calc(100vh - 80px) !important;
+    height: calc(100vh - 96px) !important;
   }
 
   .swiper-slide .flex-1 {
