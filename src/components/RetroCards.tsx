@@ -1016,12 +1016,20 @@ const RetroCards: React.FC = () => {
 
       case 7:
         return (
-          <div className="flex flex-col items-start gap-14 w-full justify-center">
+          <div className="flex flex-col items-start w-full h-full relative">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Intimacy</span>
               </div>
               <h2 className="retro-heading w-full">Sind wir uns körperlich nah?</h2>
+            </div>
+            {/* Dog image - print only, on right side */}
+            <div className="hidden print-only absolute top-1/2 -translate-y-1/2 right-0 -mr-4">
+              <img
+                src={kalleImage}
+                alt="Kalle"
+                className="w-32 h-32 object-contain"
+              />
             </div>
           </div>
         );
