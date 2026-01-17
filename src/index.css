@@ -375,16 +375,13 @@ button {
     font-size: 1rem !important;
   }
 
-  /* Slide 2-3: Memoji container - scale to fit print while preserving relative positions */
+  /* Slide 2-3: Memoji container - match frontend proportions */
   .print-memoji-container {
     position: relative !important;
-    height: 50vh !important;
+    height: 65vh !important;
     margin-top: 8px !important;
     overflow: visible !important;
-    /* Scale the entire container including memoji positions proportionally */
-    /* Desktop container is ~520px tall, print is ~50vh. Scale factor ~0.65 */
-    transform: scale(0.65) !important;
-    transform-origin: top left !important;
+    transform: none !important;
   }
 
   .print-emoji-scale {
@@ -399,17 +396,17 @@ button {
     line-height: 1 !important;
   }
 
-  /* Memojis - preserve aspect ratio and ensure circular display */
+  /* Memojis - match frontend size ratio to emojis */
   .print-memoji {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 112px !important;
-    height: 112px !important;
-    min-width: 112px !important;
-    min-height: 112px !important;
-    max-width: 112px !important;
-    max-height: 112px !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+    max-width: 56px !important;
+    max-height: 56px !important;
     position: absolute !important;
     z-index: 9999 !important;
     border-radius: 50% !important;
@@ -424,12 +421,12 @@ button {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 112px !important;
-    height: 112px !important;
-    min-width: 112px !important;
-    min-height: 112px !important;
-    max-width: 112px !important;
-    max-height: 112px !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+    max-width: 56px !important;
+    max-height: 56px !important;
     object-fit: cover !important;
     border-radius: 50% !important;
     -webkit-print-color-adjust: exact !important;
