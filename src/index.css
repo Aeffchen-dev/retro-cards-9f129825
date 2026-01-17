@@ -243,17 +243,24 @@ button {
   .swiper-slide {
     display: block !important;
     width: 100% !important;
-    height: 110vh !important;
-    min-height: 110vh !important;
-    max-height: 110vh !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    page-break-before: always !important;
     page-break-inside: avoid !important;
-    page-break-after: always !important;
+    page-break-after: auto !important;
+    break-before: page !important;
     break-inside: avoid !important;
-    break-after: page !important;
+    break-after: auto !important;
     margin: 0 !important;
     padding: 0 !important;
     box-sizing: border-box !important;
-    overflow: visible !important;
+    overflow: hidden !important;
+  }
+
+  .swiper-slide:first-child {
+    page-break-before: avoid !important;
+    break-before: avoid !important;
   }
 
   /* Hide slides 10 and 11 (Archive and Questions) */
@@ -304,12 +311,12 @@ button {
   .bg-retro-card-bg {
     background: #e8e8e8 !important;
     box-shadow: none !important;
-    height: 110vh !important;
-    min-height: 110vh !important;
-    max-height: 110vh !important;
-    padding: 151px 32px 32px 32px !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    padding: 120px 32px 32px 32px !important;
     box-sizing: border-box !important;
-    overflow: visible !important;
+    overflow: hidden !important;
   }
 
   /* Text colors for print */
@@ -371,19 +378,20 @@ button {
   /* Slide 2-3: Memoji container */
   .print-memoji-container {
     position: relative !important;
-    height: 40vh !important;
-    margin-top: 16px !important;
+    height: 50vh !important;
+    margin-top: 8px !important;
     overflow: visible !important;
   }
 
   .print-emoji-scale {
     height: 100% !important;
-    gap: 0 !important;
+    gap: 8px !important;
+    justify-content: space-evenly !important;
   }
 
   .print-memoji-container .text-4xl {
-    font-size: 2rem !important;
-    line-height: 1.2 !important;
+    font-size: 2.5rem !important;
+    line-height: 1 !important;
   }
 
   /* Memojis - force visible in print */
@@ -419,7 +427,7 @@ button {
 
   /* Ensure flex containers maintain proper height */
   .swiper-slide .h-full {
-    height: calc(110vh - 183px) !important;
+    height: calc(100vh - 152px) !important;
   }
 
   .swiper-slide .flex-1 {
