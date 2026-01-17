@@ -375,13 +375,17 @@ button {
     font-size: 1rem !important;
   }
 
-  /* Slide 2-3: Memoji container - match frontend proportions */
+  /* Slide 2-3: Memoji container - scale container to match pixel positions from frontend */
   .print-memoji-container {
     position: relative !important;
-    height: 65vh !important;
+    /* Frontend container is ~520px tall. We set same height and scale down to fit print */
+    height: 520px !important;
+    width: 480px !important;
     margin-top: 8px !important;
     overflow: visible !important;
-    transform: none !important;
+    /* Scale to fit print page - 520px * 0.7 = 364px which fits well */
+    transform: scale(0.7) !important;
+    transform-origin: top left !important;
   }
 
   .print-emoji-scale {
@@ -392,11 +396,11 @@ button {
   }
 
   .print-memoji-container .text-4xl {
-    font-size: 3rem !important;
+    font-size: 3.5rem !important;
     line-height: 1 !important;
   }
 
-  /* Memojis - match frontend size ratio to emojis */
+  /* Memojis - keep frontend size (w-14 h-14 = 56px) */
   .print-memoji {
     display: block !important;
     visibility: visible !important;
