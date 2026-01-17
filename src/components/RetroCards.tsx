@@ -1221,7 +1221,7 @@ const RetroCards: React.FC = () => {
                             }
                             className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                             style={{ borderRadius: "0px" }}
-                            placeholder="Notiz 1..."
+                            placeholder="Niklas Notizen"
                           />
                           <textarea
                             value={editModeNotes[index]?.note2 || ""}
@@ -1233,7 +1233,7 @@ const RetroCards: React.FC = () => {
                             }
                             className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                             style={{ borderRadius: "0px" }}
-                            placeholder="Notiz 2..."
+                            placeholder="Jana's Notizen"
                           />
                         </div>
                       </div>
