@@ -257,6 +257,12 @@ button {
   .swiper-slide:nth-child(10),
   .swiper-slide:nth-child(11) {
     display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
   }
 
   .swiper-slide:nth-child(9) {
@@ -264,8 +270,8 @@ button {
     break-after: avoid !important;
   }
 
-  /* Show all slides */
-  .swiper-slide {
+  /* Show all visible slides */
+  .swiper-slide:not(:nth-child(10)):not(:nth-child(11)) {
     opacity: 1 !important;
     visibility: visible !important;
   }
@@ -313,5 +319,11 @@ button {
   /* Hide screen-only content in print */
   .screen-only {
     display: none !important;
+  }
+
+  /* Post-it text areas - maintain frontend layout */
+  textarea {
+    min-height: 120px !important;
+    background: #f4e5a3 !important;
   }
 }
