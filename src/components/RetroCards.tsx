@@ -711,7 +711,7 @@ const RetroCards: React.FC = () => {
     switch (cardIndex) {
       case 0:
         return (
-          <div className="flex flex-col items-start w-full h-full">
+          <div className="flex flex-col items-start justify-center w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white" style={{ paddingTop: '6px', paddingBottom: '4px' }}>
                 <span className="retro-label" style={{ lineHeight: 1, display: 'flex', alignItems: 'center' }}>Memory Time</span>
