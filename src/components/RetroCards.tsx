@@ -1106,20 +1106,20 @@ const RetroCards: React.FC = () => {
 
       case 9:
         return (
-          <div className="flex flex-col items-center justify-center w-full h-full">
-            <div className="flex flex-col items-center gap-6 w-full text-center">
+          <div className="flex flex-col items-center w-full h-full">
+            <div className="flex flex-col items-center gap-6 w-full text-center flex-1 justify-center">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Archive</span>
               </div>
               <h2 className="retro-heading w-full">Sichert eure Inhalte</h2>
-              <button
-                onClick={() => window.print()}
-                className="flex items-center gap-3 py-3 px-6 rounded-full bg-transparent hover:bg-retro-white/10 transition-colors cursor-pointer mt-4"
-              >
-                <Download size={20} className="text-retro-white" />
-                <span className="retro-body">Ergebnisse sichern</span>
-              </button>
             </div>
+            <button
+              onClick={() => window.print()}
+              className="flex items-center gap-3 py-3 px-6 rounded-full bg-transparent hover:bg-retro-white/10 transition-colors cursor-pointer mb-8"
+            >
+              <Download size={20} className="text-retro-white" />
+              <span className="retro-body">Ergebnisse sichern</span>
+            </button>
           </div>
         );
 
