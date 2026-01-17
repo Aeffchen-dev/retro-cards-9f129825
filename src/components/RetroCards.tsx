@@ -713,17 +713,17 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
-                <span className="retro-label">Memory Time</span>
+              <div className="flex py-1.5 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+                <span className="retro-label leading-none flex items-center">Memory Time</span>
               </div>
               <h2 className="retro-heading w-full">
                 Schießt ein paar süße Fotos zusammen
               </h2>
             </div>
-            <div style={{ marginTop: "40px" }} className="screen-only">
+            <div style={{ marginTop: "40px" }} className="screen-only flex items-center">
               <button
                 onClick={openCamera}
-                className="retro-emoji-large cursor-pointer"
+                className="retro-emoji-large cursor-pointer leading-none flex items-center justify-center"
               >
                 📸
               </button>
