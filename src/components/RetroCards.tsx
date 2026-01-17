@@ -919,19 +919,22 @@ const RetroCards: React.FC = () => {
                   setPostItTexts({ ...postItTexts, niklas: e.target.value })
                 }
                 onFocus={(e) => {
-                  // iOS: ensure textarea is visible when switching between textareas
+                  // iOS: only scroll when keyboard is first opening, not when switching textareas
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    setTimeout(() => {
-                      const rect = e.target.getBoundingClientRect();
-                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
-                      // Only scroll if element is above viewport or too close to keyboard
-                      if (rect.top < 100 || rect.bottom > viewportHeight - 50) {
-                        window.scrollTo({
-                          top: window.scrollY + rect.top - 150,
-                          behavior: 'smooth'
-                        });
-                      }
-                    }, 350);
+                    const keyboardAlreadyOpen = window.visualViewport.height < window.innerHeight * 0.75;
+                    if (!keyboardAlreadyOpen) {
+                      // Keyboard is opening - wait for it and then ensure visibility
+                      setTimeout(() => {
+                        const rect = e.target.getBoundingClientRect();
+                        const viewportHeight = window.visualViewport?.height || window.innerHeight;
+                        if (rect.bottom > viewportHeight - 20) {
+                          window.scrollTo({
+                            top: window.scrollY + (rect.bottom - viewportHeight + 80),
+                            behavior: 'smooth'
+                          });
+                        }
+                      }, 400);
+                    }
                   }
                 }}
                 onBlur={() => {
@@ -961,19 +964,22 @@ const RetroCards: React.FC = () => {
                   setPostItTexts({ ...postItTexts, jana: e.target.value })
                 }
                 onFocus={(e) => {
-                  // iOS: ensure textarea is visible when switching between textareas
+                  // iOS: only scroll when keyboard is first opening, not when switching textareas
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    setTimeout(() => {
-                      const rect = e.target.getBoundingClientRect();
-                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
-                      // Only scroll if element is above viewport or too close to keyboard
-                      if (rect.top < 100 || rect.bottom > viewportHeight - 50) {
-                        window.scrollTo({
-                          top: window.scrollY + rect.top - 150,
-                          behavior: 'smooth'
-                        });
-                      }
-                    }, 350);
+                    const keyboardAlreadyOpen = window.visualViewport.height < window.innerHeight * 0.75;
+                    if (!keyboardAlreadyOpen) {
+                      // Keyboard is opening - wait for it and then ensure visibility
+                      setTimeout(() => {
+                        const rect = e.target.getBoundingClientRect();
+                        const viewportHeight = window.visualViewport?.height || window.innerHeight;
+                        if (rect.bottom > viewportHeight - 20) {
+                          window.scrollTo({
+                            top: window.scrollY + (rect.bottom - viewportHeight + 80),
+                            behavior: 'smooth'
+                          });
+                        }
+                      }, 400);
+                    }
                   }
                 }}
                 onBlur={() => {
@@ -1094,19 +1100,22 @@ const RetroCards: React.FC = () => {
                   setTakeawayTexts({ ...takeawayTexts, niklas: e.target.value })
                 }
                 onFocus={(e) => {
-                  // iOS: ensure textarea is visible when switching between textareas
+                  // iOS: only scroll when keyboard is first opening, not when switching textareas
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    setTimeout(() => {
-                      const rect = e.target.getBoundingClientRect();
-                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
-                      // Only scroll if element is above viewport or too close to keyboard
-                      if (rect.top < 100 || rect.bottom > viewportHeight - 50) {
-                        window.scrollTo({
-                          top: window.scrollY + rect.top - 150,
-                          behavior: 'smooth'
-                        });
-                      }
-                    }, 350);
+                    const keyboardAlreadyOpen = window.visualViewport.height < window.innerHeight * 0.75;
+                    if (!keyboardAlreadyOpen) {
+                      // Keyboard is opening - wait for it and then ensure visibility
+                      setTimeout(() => {
+                        const rect = e.target.getBoundingClientRect();
+                        const viewportHeight = window.visualViewport?.height || window.innerHeight;
+                        if (rect.bottom > viewportHeight - 20) {
+                          window.scrollTo({
+                            top: window.scrollY + (rect.bottom - viewportHeight + 80),
+                            behavior: 'smooth'
+                          });
+                        }
+                      }, 400);
+                    }
                   }
                 }}
                 onBlur={() => {
@@ -1136,19 +1145,22 @@ const RetroCards: React.FC = () => {
                   setTakeawayTexts({ ...takeawayTexts, jana: e.target.value })
                 }
                 onFocus={(e) => {
-                  // iOS: ensure textarea is visible when switching between textareas
+                  // iOS: only scroll when keyboard is first opening, not when switching textareas
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    setTimeout(() => {
-                      const rect = e.target.getBoundingClientRect();
-                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
-                      // Only scroll if element is above viewport or too close to keyboard
-                      if (rect.top < 100 || rect.bottom > viewportHeight - 50) {
-                        window.scrollTo({
-                          top: window.scrollY + rect.top - 150,
-                          behavior: 'smooth'
-                        });
-                      }
-                    }, 350);
+                    const keyboardAlreadyOpen = window.visualViewport.height < window.innerHeight * 0.75;
+                    if (!keyboardAlreadyOpen) {
+                      // Keyboard is opening - wait for it and then ensure visibility
+                      setTimeout(() => {
+                        const rect = e.target.getBoundingClientRect();
+                        const viewportHeight = window.visualViewport?.height || window.innerHeight;
+                        if (rect.bottom > viewportHeight - 20) {
+                          window.scrollTo({
+                            top: window.scrollY + (rect.bottom - viewportHeight + 80),
+                            behavior: 'smooth'
+                          });
+                        }
+                      }, 400);
+                    }
                   }
                 }}
                 onBlur={() => {
