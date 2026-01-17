@@ -368,15 +368,12 @@ button {
     font-size: 1rem !important;
   }
 
-  /* Slide 2-3: Memoji container - use transform scale to maintain proportions */
+  /* Slide 2-3: Memoji container - no transform, use relative positioning */
   .print-memoji-container {
     position: relative !important;
-    height: 40vh !important;
+    height: 45vh !important;
     margin-top: 16px !important;
     overflow: visible !important;
-    transform-origin: top left !important;
-    transform: scale(0.7) !important;
-    width: 143% !important; /* compensate for scale: 1/0.7 ≈ 1.43 */
   }
 
   .print-emoji-scale {
@@ -389,27 +386,32 @@ button {
     line-height: 1.2 !important;
   }
 
-  /* Memojis - visible in print with scaled container */
-  .print-memoji {
+  /* Memojis - force visibility in print */
+  .print-memoji,
+  .print-memoji-container .absolute.w-14.h-14 {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 56px !important;
-    height: 56px !important;
+    width: 50px !important;
+    height: 50px !important;
     position: absolute !important;
-    z-index: 1000 !important;
+    z-index: 9999 !important;
     border-radius: 50% !important;
-    overflow: hidden !important;
+    overflow: visible !important;
+    background: transparent !important;
   }
 
-  .print-memoji img {
+  .print-memoji img,
+  .print-memoji-container .absolute.w-14.h-14 img {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 100% !important;
-    height: 100% !important;
+    width: 50px !important;
+    height: 50px !important;
     object-fit: cover !important;
     border-radius: 50% !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   /* Ensure flex containers maintain proper height */
@@ -430,6 +432,13 @@ button {
   /* Preserve line breaks in post-its */
   .whitespace-pre-wrap {
     white-space: pre-wrap !important;
+  }
+
+  /* Force all images to be visible in print */
+  img {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
 
   /* Remove any extra spacing that could cause blank pages */
