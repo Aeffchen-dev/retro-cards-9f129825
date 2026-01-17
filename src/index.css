@@ -425,7 +425,7 @@ button {
     aspect-ratio: 1 / 1 !important;
     /* Override inline positions - use CSS custom properties */
     left: calc(var(--print-left-percent) * 0.6 + 8px) !important;
-    top: calc(var(--print-top-percent) + 30mm + 60px) !important;
+    top: calc(var(--print-top-percent) + 30mm + 10px) !important;
   }
 
   .print-memoji img {
