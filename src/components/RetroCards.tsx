@@ -926,20 +926,6 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setPostItTexts({ ...postItTexts, niklas: e.target.value })
                 }
-                onFocus={(e) => {
-                  // iOS: minimal scroll adjustment - only if textarea is hidden behind keyboard
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    setTimeout(() => {
-                      const rect = e.target.getBoundingClientRect();
-                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
-                      // Only scroll if bottom of textarea is below visible area
-                      if (rect.bottom > viewportHeight) {
-                        const scrollAmount = rect.bottom - viewportHeight + 20;
-                        window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
-                      }
-                    }, 300);
-                  }
-                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
@@ -966,20 +952,6 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setPostItTexts({ ...postItTexts, jana: e.target.value })
                 }
-                onFocus={(e) => {
-                  // iOS: minimal scroll adjustment - only if textarea is hidden behind keyboard
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    setTimeout(() => {
-                      const rect = e.target.getBoundingClientRect();
-                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
-                      // Only scroll if bottom of textarea is below visible area
-                      if (rect.bottom > viewportHeight) {
-                        const scrollAmount = rect.bottom - viewportHeight + 20;
-                        window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
-                      }
-                    }, 300);
-                  }
-                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
@@ -1097,20 +1069,6 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setTakeawayTexts({ ...takeawayTexts, niklas: e.target.value })
                 }
-                onFocus={(e) => {
-                  // iOS: minimal scroll adjustment - only if textarea is hidden behind keyboard
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    setTimeout(() => {
-                      const rect = e.target.getBoundingClientRect();
-                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
-                      // Only scroll if bottom of textarea is below visible area
-                      if (rect.bottom > viewportHeight) {
-                        const scrollAmount = rect.bottom - viewportHeight + 20;
-                        window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
-                      }
-                    }, 300);
-                  }
-                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
@@ -1137,20 +1095,6 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setTakeawayTexts({ ...takeawayTexts, jana: e.target.value })
                 }
-                onFocus={(e) => {
-                  // iOS: minimal scroll adjustment - only if textarea is hidden behind keyboard
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    setTimeout(() => {
-                      const rect = e.target.getBoundingClientRect();
-                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
-                      // Only scroll if bottom of textarea is below visible area
-                      if (rect.bottom > viewportHeight) {
-                        const scrollAmount = rect.bottom - viewportHeight + 20;
-                        window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
-                      }
-                    }, 300);
-                  }
-                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
