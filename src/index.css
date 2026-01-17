@@ -375,46 +375,40 @@ button {
     font-size: 1rem !important;
   }
 
-  /* Slide 2-3: Memoji container */
+  /* Slide 2-3: Memoji container - scale to fit print while preserving relative positions */
   .print-memoji-container {
     position: relative !important;
-    height: 50vh !important;
-    margin-top: 12px !important;
+    height: 55vh !important;
+    margin-top: 8px !important;
     overflow: visible !important;
+    /* Scale container to translate pixel positions proportionally */
+    /* Desktop container is 480x520, we scale to fit print */
+    transform-origin: top left !important;
   }
 
   .print-emoji-scale {
     height: 100% !important;
     gap: 0 !important;
     justify-content: space-between !important;
-    padding: 8px 0 !important;
+    padding: 0 !important;
   }
 
-  /* Emoji scale items - consistent sizing with memojis */
-  .print-memoji-container .text-4xl,
-  .print-emoji-scale .text-4xl {
-    font-size: 2.5rem !important;
-    line-height: 1 !important;
-    width: 40px !important;
-    height: 40px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+  .print-memoji-container .text-4xl {
+    font-size: 2.2rem !important;
+    line-height: 1.2 !important;
   }
 
-  /* Memojis - match emoji size and preserve aspect ratio */
+  /* Memojis - preserve aspect ratio and ensure circular display */
   .print-memoji {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
-    max-width: 40px !important;
-    max-height: 40px !important;
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    min-height: 50px !important;
+    max-width: 50px !important;
+    max-height: 50px !important;
     position: absolute !important;
     z-index: 9999 !important;
     border-radius: 50% !important;
@@ -423,6 +417,7 @@ button {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     aspect-ratio: 1 / 1 !important;
+    /* Remove any transforms that could distort */
     transform: none !important;
   }
 
@@ -430,12 +425,12 @@ button {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
-    max-width: 40px !important;
-    max-height: 40px !important;
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    min-height: 50px !important;
+    max-width: 50px !important;
+    max-height: 50px !important;
     object-fit: cover !important;
     border-radius: 50% !important;
     -webkit-print-color-adjust: exact !important;
