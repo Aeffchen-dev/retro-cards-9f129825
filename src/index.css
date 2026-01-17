@@ -283,7 +283,9 @@ button {
   }
 
   .print-slide-page {
-    display: block !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     width: 100% !important;
     height: 100vh !important;
     page-break-after: always !important;
@@ -293,6 +295,7 @@ button {
     box-sizing: border-box !important;
     overflow: hidden !important;
     position: relative !important;
+    padding: 20px !important;
   }
 
   .print-slide-page:last-child {
@@ -371,19 +374,28 @@ button {
 
   /* Card container - wider and taller for print */
   .retro-card-container {
-    max-width: 90% !important;
-    width: 90% !important;
-    height: calc(100vh - 40px) !important;
-    max-height: none !important;
-    margin: 20px auto !important;
+    max-width: 700px !important;
+    width: 700px !important;
+    height: auto !important;
+    min-height: 500px !important;
+    max-height: 80vh !important;
+    margin: auto !important;
     padding: 48px 40px 40px 40px !important;
     background: #e8e8e8 !important;
   }
 
   .print-slide-page .retro-card-container {
-    max-width: 90% !important;
-    width: 90% !important;
+    max-width: 700px !important;
+    width: 700px !important;
     background: #e8e8e8 !important;
+  }
+
+  .print-slide-page > div {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 
   /* Post-it text areas - maintain frontend layout */
