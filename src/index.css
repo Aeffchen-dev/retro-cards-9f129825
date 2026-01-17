@@ -259,9 +259,13 @@ button {
     display: none !important;
     height: 0 !important;
     min-height: 0 !important;
+    max-height: 0 !important;
     padding: 0 !important;
     margin: 0 !important;
+    overflow: hidden !important;
+    page-break-before: avoid !important;
     page-break-after: avoid !important;
+    break-before: avoid !important;
     break-after: avoid !important;
   }
 
@@ -270,7 +274,11 @@ button {
     break-after: avoid !important;
   }
 
-  /* Show all visible slides */
+  /* Prevent any trailing blank pages */
+  .swiper-wrapper::after {
+    content: none !important;
+    display: none !important;
+  }
   .swiper-slide:not(:nth-child(10)):not(:nth-child(11)) {
     opacity: 1 !important;
     visibility: visible !important;
