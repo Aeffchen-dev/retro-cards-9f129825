@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Download } from "lucide-react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
@@ -109,7 +109,7 @@ const RetroCards: React.FC = () => {
     }
   }, [showKalleBubble]);
 
-  const totalCards = 10;
+  const totalCards = 11;
 
   // Track if initial load is complete to avoid saving on mount
   const isInitialMount = useRef(true);
@@ -1070,6 +1070,24 @@ const RetroCards: React.FC = () => {
         );
 
       case 9:
+        return (
+          <div className="flex flex-col items-center justify-center w-full h-full">
+            <div className="flex flex-col items-center gap-8 w-full">
+              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+                <span className="retro-label">Archive</span>
+              </div>
+              <button
+                onClick={() => window.print()}
+                className="flex items-center gap-3 py-3 px-6 rounded-full border border-retro-white bg-transparent hover:bg-retro-white/10 transition-colors cursor-pointer"
+              >
+                <Download size={20} className="text-retro-white" />
+                <span className="retro-body">Ergebnisse sichern</span>
+              </button>
+            </div>
+          </div>
+        );
+
+      case 10:
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
