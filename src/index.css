@@ -192,3 +192,81 @@ button {
 .bg-retro-post-it::placeholder {
   color: #b29f71 !important;
 }
+
+/* Print styles for archiving all slides */
+@media print {
+  body {
+    position: static !important;
+    overflow: visible !important;
+    height: auto !important;
+    background: white !important;
+    padding: 0 !important;
+  }
+
+  #root {
+    height: auto !important;
+  }
+
+  .swiper {
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  .swiper-wrapper {
+    display: block !important;
+    transform: none !important;
+  }
+
+  .swiper-slide {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    page-break-after: always;
+    margin-bottom: 20px;
+  }
+
+  .swiper-slide:last-child {
+    page-break-after: avoid;
+  }
+
+  /* Show all slides */
+  .swiper-slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Card styling for print */
+  .bg-retro-card-bg {
+    background: #f0f0f0 !important;
+    box-shadow: none !important;
+    min-height: 500px !important;
+    max-height: none !important;
+  }
+
+  /* Text colors for print */
+  .text-retro-white {
+    color: #000000 !important;
+  }
+
+  .retro-title,
+  .retro-label,
+  .retro-heading,
+  .retro-body {
+    color: #000000 !important;
+  }
+
+  .border-retro-white {
+    border-color: #000000 !important;
+  }
+
+  /* Hide navigation elements */
+  .cursor-pointer.z-20 {
+    display: none !important;
+  }
+
+  /* Hide header and footer */
+  body > div > div:first-child,
+  body > div > div:last-child {
+    display: none !important;
+  }
+}
