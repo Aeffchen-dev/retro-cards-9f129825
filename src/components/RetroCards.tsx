@@ -756,9 +756,9 @@ const RetroCards: React.FC = () => {
                 <div className="text-4xl">🙁</div>
                 <div className="text-4xl">😩</div>
               </div>
-              {/* Draggable Memojis - screen only */}
+              {/* Draggable Memojis */}
               <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none screen-only"
+                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji"
                 style={{
                   left: memojisPositions[1]?.niklas.x || (isMobile ? 248 : 380),
                   top: memojisPositions[1]?.niklas.y || (isMobile ? 64 : 120),
@@ -775,7 +775,7 @@ const RetroCards: React.FC = () => {
                 />
               </div>
               <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none screen-only"
+                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji"
                 style={{
                   left: memojisPositions[1]?.jana.x || (isMobile ? 248 : 380),
                   top: memojisPositions[1]?.jana.y || (isMobile ? 136 : 192),
@@ -789,21 +789,6 @@ const RetroCards: React.FC = () => {
                   alt="Jana Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
-                />
-              </div>
-              {/* Print-only memojis with percentage positioning */}
-              <div className="hidden print-only absolute w-14 h-14 print-memoji-niklas">
-                <img
-                  src={niklasMemoji}
-                  alt="Niklas Memoji"
-                  className="w-full h-full object-cover rounded-full"
-                />
-              </div>
-              <div className="hidden print-only absolute w-14 h-14 print-memoji-jana">
-                <img
-                  src={janaMemoji}
-                  alt="Jana Memoji"
-                  className="w-full h-full object-cover rounded-full"
                 />
               </div>
             </div>
@@ -832,9 +817,9 @@ const RetroCards: React.FC = () => {
                 <div className="text-4xl">🙁</div>
                 <div className="text-4xl">😩</div>
               </div>
-              {/* Draggable Memojis - screen only */}
+              {/* Draggable Memojis */}
               <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none screen-only"
+                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji"
                 style={{
                   left: memojisPositions[2]?.niklas.x || (isMobile ? 248 : 380),
                   top: memojisPositions[2]?.niklas.y || (isMobile ? 64 : 120),
@@ -851,7 +836,7 @@ const RetroCards: React.FC = () => {
                 />
               </div>
               <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none screen-only"
+                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji"
                 style={{
                   left: memojisPositions[2]?.jana.x || (isMobile ? 248 : 380),
                   top: memojisPositions[2]?.jana.y || (isMobile ? 136 : 192),
@@ -865,21 +850,6 @@ const RetroCards: React.FC = () => {
                   alt="Jana Memoji"
                   className="w-full h-full object-cover rounded-full pointer-events-none"
                   draggable={false}
-                />
-              </div>
-              {/* Print-only memojis with percentage positioning */}
-              <div className="hidden print-only absolute w-14 h-14 print-memoji-niklas">
-                <img
-                  src={niklasMemoji}
-                  alt="Niklas Memoji"
-                  className="w-full h-full object-cover rounded-full"
-                />
-              </div>
-              <div className="hidden print-only absolute w-14 h-14 print-memoji-jana">
-                <img
-                  src={janaMemoji}
-                  alt="Jana Memoji"
-                  className="w-full h-full object-cover rounded-full"
                 />
               </div>
             </div>
