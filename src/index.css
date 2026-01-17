@@ -300,14 +300,14 @@ button {
     visibility: visible !important;
   }
 
-  /* Card styling for print - fill page with more top margin */
+  /* Card styling for print - fill page with more top margin (+2cm ≈ 76px) */
   .bg-retro-card-bg {
     background: #e8e8e8 !important;
     box-shadow: none !important;
     height: 100vh !important;
     min-height: 100vh !important;
     max-height: 100vh !important;
-    padding: 64px 32px 32px 32px !important;
+    padding: 100px 32px 32px 32px !important;
     box-sizing: border-box !important;
     overflow: visible !important;
   }
@@ -371,39 +371,50 @@ button {
   /* Slide 2-3: Memoji container - properly sized for print */
   .print-memoji-container {
     position: relative !important;
-    height: 50vh !important;
-    margin-top: 24px !important;
+    height: 45vh !important;
+    margin-top: 20px !important;
     overflow: visible !important;
   }
 
-  .print-memoji-container .flex.flex-col.items-start.justify-between.h-full {
+  .print-emoji-scale {
     height: 100% !important;
     gap: 0 !important;
   }
 
   .print-memoji-container .text-4xl {
-    font-size: 2.5rem !important;
+    font-size: 2rem !important;
     line-height: 1.2 !important;
   }
 
-  /* Memojis - keep inline positioning from dragging, just ensure visibility */
-  .print-memoji {
-    display: block !important;
+  /* Print-only memojis with proper circular shape and positioning */
+  .print-memoji-niklas {
+    display: flex !important;
     visibility: visible !important;
     opacity: 1 !important;
     width: 56px !important;
     height: 56px !important;
     position: absolute !important;
-    z-index: 1000 !important;
+    right: 30% !important;
+    top: 10% !important;
     border-radius: 50% !important;
-    overflow: visible !important;
-    /* Do NOT override left/top - keep the inline styles from dragging */
+    overflow: hidden !important;
   }
 
-  .print-memoji img {
-    display: block !important;
+  .print-memoji-jana {
+    display: flex !important;
     visibility: visible !important;
     opacity: 1 !important;
+    width: 56px !important;
+    height: 56px !important;
+    position: absolute !important;
+    right: 30% !important;
+    top: 30% !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+  }
+
+  .print-memoji-niklas img,
+  .print-memoji-jana img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
@@ -412,7 +423,7 @@ button {
 
   /* Ensure flex containers maintain proper height */
   .swiper-slide .h-full {
-    height: calc(100vh - 96px) !important;
+    height: calc(100vh - 132px) !important;
   }
 
   .swiper-slide .flex-1 {
