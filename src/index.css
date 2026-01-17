@@ -378,11 +378,12 @@ button {
   /* Slide 2-3: Memoji container - scale to fit print while preserving relative positions */
   .print-memoji-container {
     position: relative !important;
-    height: 55vh !important;
+    height: 50vh !important;
     margin-top: 8px !important;
     overflow: visible !important;
-    /* Scale container to translate pixel positions proportionally */
-    /* Desktop container is 480x520, we scale to fit print */
+    /* Scale the entire container including memoji positions proportionally */
+    /* Desktop container is ~520px tall, print is ~50vh. Scale factor ~0.65 */
+    transform: scale(0.65) !important;
     transform-origin: top left !important;
   }
 
@@ -394,7 +395,7 @@ button {
   }
 
   .print-memoji-container .text-4xl {
-    font-size: 2.2rem !important;
+    font-size: 3rem !important;
     line-height: 1.2 !important;
   }
 
@@ -403,12 +404,12 @@ button {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 50px !important;
-    height: 50px !important;
-    min-width: 50px !important;
-    min-height: 50px !important;
-    max-width: 50px !important;
-    max-height: 50px !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+    max-width: 56px !important;
+    max-height: 56px !important;
     position: absolute !important;
     z-index: 9999 !important;
     border-radius: 50% !important;
@@ -417,20 +418,18 @@ button {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     aspect-ratio: 1 / 1 !important;
-    /* Remove any transforms that could distort */
-    transform: none !important;
   }
 
   .print-memoji img {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 50px !important;
-    height: 50px !important;
-    min-width: 50px !important;
-    min-height: 50px !important;
-    max-width: 50px !important;
-    max-height: 50px !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+    max-width: 56px !important;
+    max-height: 56px !important;
     object-fit: cover !important;
     border-radius: 50% !important;
     -webkit-print-color-adjust: exact !important;
