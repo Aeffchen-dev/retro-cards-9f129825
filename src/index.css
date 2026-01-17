@@ -231,6 +231,11 @@ button {
 
 /* Print styles for archiving all slides */
 @media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -279,21 +284,21 @@ button {
 
   .print-slide-page {
     display: block !important;
-    width: 100% !important;
+    width: 100vw !important;
     height: 100vh !important;
     min-height: 100vh !important;
     max-height: 100vh !important;
-    page-break-before: always !important;
+    page-break-after: always !important;
     page-break-inside: avoid !important;
-    break-before: page !important;
+    break-after: page !important;
     break-inside: avoid !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
   }
 
-  .print-slide-page:first-child {
-    page-break-before: avoid !important;
-    break-before: avoid !important;
+  .print-slide-page:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
   }
 
   /* Last visible slide - no page break after */

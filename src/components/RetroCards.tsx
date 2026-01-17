@@ -1217,7 +1217,10 @@ const RetroCards: React.FC = () => {
             speed={500}
             initialSlide={currentCard}
             onSwiper={setSwiperRef}
-            onSlideChange={(swiper) => setCurrentCard(swiper.activeIndex)}
+            onSlideChange={(swiper) => {
+              setCurrentCard(swiper.activeIndex);
+              setEditModeSlides({});
+            }}
             allowTouchMove={!draggingMemoji}
             style={{ height: '100%', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}
             effect="slide"
