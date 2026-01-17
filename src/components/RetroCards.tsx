@@ -720,15 +720,16 @@ const RetroCards: React.FC = () => {
                 📸
               </button>
             </div>
-            {/* Print-only: Show captured photos in original aspect ratio */}
+            {/* Print-only: Show captured photos in a single row */}
             {capturedPhotos.length > 0 && (
-              <div className="hidden print-only flex-wrap gap-4 mt-8 w-full">
+              <div className="hidden print-only gap-2 mt-8 w-full flex-row items-center">
                 {capturedPhotos.map((photo, index) => (
                   <img
                     key={index}
                     src={photo}
                     alt={`Captured photo ${index + 1}`}
-                    className="max-w-[45%] max-h-[300px] object-contain rounded-lg"
+                    className="h-[120px] object-contain rounded-lg flex-shrink"
+                    style={{ maxWidth: `${Math.floor(100 / Math.max(capturedPhotos.length, 1)) - 2}%` }}
                   />
                 ))}
               </div>
@@ -957,12 +958,12 @@ const RetroCards: React.FC = () => {
                 placeholder="Jana's Themen"
               />
             </div>
-            {/* Print-only: post-it notes bottom right */}
-            <div className="hidden print-only absolute bottom-0 right-0 flex-col gap-4 max-w-[60%]">
-              <div className="p-4 bg-retro-post-it text-black text-lg min-h-[100px]">
+            {/* Print-only: post-it notes like takeaways */}
+            <div className="hidden print-only flex-col flex-1 w-full justify-between gap-6 mt-10">
+              <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px]">
                 {postItTexts.niklas || "Niklas' Themen"}
               </div>
-              <div className="p-4 bg-retro-post-it text-black text-lg min-h-[100px]">
+              <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px]">
                 {postItTexts.jana || "Jana's Themen"}
               </div>
             </div>
