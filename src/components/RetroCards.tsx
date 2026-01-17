@@ -918,6 +918,14 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setPostItTexts({ ...postItTexts, niklas: e.target.value })
                 }
+                onFocus={(e) => {
+                  // iOS: scroll textarea into view when keyboard opens or switching between textareas
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    setTimeout(() => {
+                      e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                  }
+                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
@@ -944,6 +952,14 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setPostItTexts({ ...postItTexts, jana: e.target.value })
                 }
+                onFocus={(e) => {
+                  // iOS: scroll textarea into view when keyboard opens or switching between textareas
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    setTimeout(() => {
+                      e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                  }
+                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
@@ -1061,6 +1077,14 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setTakeawayTexts({ ...takeawayTexts, niklas: e.target.value })
                 }
+                onFocus={(e) => {
+                  // iOS: scroll textarea into view when keyboard opens or switching between textareas
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    setTimeout(() => {
+                      e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                  }
+                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
@@ -1087,6 +1111,14 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setTakeawayTexts({ ...takeawayTexts, jana: e.target.value })
                 }
+                onFocus={(e) => {
+                  // iOS: scroll textarea into view when keyboard opens or switching between textareas
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    setTimeout(() => {
+                      e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                  }
+                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
