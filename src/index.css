@@ -129,6 +129,19 @@
   }
 }
 
+/* iOS Safari - prevent page scroll on textarea focus */
+@supports (-webkit-touch-callout: none) {
+  textarea {
+    /* Prevent iOS from scrolling to center focused element */
+    scroll-margin: 0 !important;
+  }
+  
+  html, body {
+    /* Ensure no scroll position changes */
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Retro Cards specific styles */
 .retro-title {
   font-family: "Kokoro", Arial, sans-serif;
