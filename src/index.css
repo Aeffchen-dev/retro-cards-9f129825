@@ -243,9 +243,9 @@ button {
   .swiper-slide {
     display: block !important;
     width: 100% !important;
-    height: 130vh !important;
-    min-height: 130vh !important;
-    max-height: 130vh !important;
+    height: 95vh !important;
+    min-height: 95vh !important;
+    max-height: 95vh !important;
     page-break-inside: avoid !important;
     page-break-after: always !important;
     break-inside: avoid !important;
@@ -304,9 +304,9 @@ button {
   .bg-retro-card-bg {
     background: #e8e8e8 !important;
     box-shadow: none !important;
-    height: 130vh !important;
-    min-height: 130vh !important;
-    max-height: 130vh !important;
+    height: 95vh !important;
+    min-height: 95vh !important;
+    max-height: 95vh !important;
     padding: 151px 32px 32px 32px !important;
     box-sizing: border-box !important;
     overflow: visible !important;
@@ -371,7 +371,7 @@ button {
   /* Slide 2-3: Memoji container */
   .print-memoji-container {
     position: relative !important;
-    height: 55vh !important;
+    height: 40vh !important;
     margin-top: 16px !important;
     overflow: visible !important;
   }
@@ -382,42 +382,39 @@ button {
   }
 
   .print-memoji-container .text-4xl {
-    font-size: 2.5rem !important;
+    font-size: 2rem !important;
     line-height: 1.2 !important;
   }
 
-  /* Memojis - override inline positions with percentage-based positioning for print */
+  /* Memojis - visible in print with fixed positioning next to smileys */
   .print-memoji {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 50px !important;
-    height: 50px !important;
+    width: 45px !important;
+    height: 45px !important;
     position: absolute !important;
     z-index: 9999 !important;
     border-radius: 50% !important;
-    overflow: visible !important;
+    overflow: hidden !important;
     background: transparent !important;
-    /* Override inline left/top with percentage positioning */
-    left: 60% !important;
+    left: 50% !important;
   }
 
-  /* Position first memoji (Niklas) at top area */
   .print-memoji:first-of-type {
-    top: 15% !important;
+    top: 10% !important;
   }
 
-  /* Position second memoji (Jana) below */
   .print-memoji:nth-of-type(2) {
-    top: 35% !important;
+    top: 30% !important;
   }
 
   .print-memoji img {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 50px !important;
-    height: 50px !important;
+    width: 100% !important;
+    height: 100% !important;
     object-fit: cover !important;
     border-radius: 50% !important;
     -webkit-print-color-adjust: exact !important;
@@ -426,7 +423,7 @@ button {
 
   /* Ensure flex containers maintain proper height */
   .swiper-slide .h-full {
-    height: calc(130vh - 183px) !important;
+    height: calc(95vh - 183px) !important;
   }
 
   .swiper-slide .flex-1 {
