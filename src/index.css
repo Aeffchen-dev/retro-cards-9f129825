@@ -243,9 +243,9 @@ button {
   .swiper-slide {
     display: block !important;
     width: 100% !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    max-height: 100vh !important;
+    height: 130vh !important;
+    min-height: 130vh !important;
+    max-height: 130vh !important;
     page-break-inside: avoid !important;
     page-break-after: always !important;
     break-inside: avoid !important;
@@ -253,7 +253,7 @@ button {
     margin: 0 !important;
     padding: 0 !important;
     box-sizing: border-box !important;
-    overflow: hidden !important;
+    overflow: visible !important;
   }
 
   /* Hide slides 10 and 11 (Archive and Questions) */
@@ -300,13 +300,13 @@ button {
     visibility: visible !important;
   }
 
-  /* Card styling for print - fill page with 4cm top margin (≈151px) */
+  /* Card styling for print - 4cm top margin (≈151px) */
   .bg-retro-card-bg {
     background: #e8e8e8 !important;
     box-shadow: none !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    max-height: 100vh !important;
+    height: 130vh !important;
+    min-height: 130vh !important;
+    max-height: 130vh !important;
     padding: 151px 32px 32px 32px !important;
     box-sizing: border-box !important;
     overflow: visible !important;
@@ -368,10 +368,10 @@ button {
     font-size: 1rem !important;
   }
 
-  /* Slide 2-3: Memoji container - no transform, use relative positioning */
+  /* Slide 2-3: Memoji container */
   .print-memoji-container {
     position: relative !important;
-    height: 45vh !important;
+    height: 55vh !important;
     margin-top: 16px !important;
     overflow: visible !important;
   }
@@ -382,13 +382,12 @@ button {
   }
 
   .print-memoji-container .text-4xl {
-    font-size: 2.25rem !important;
+    font-size: 2.5rem !important;
     line-height: 1.2 !important;
   }
 
-  /* Memojis - force visibility in print */
-  .print-memoji,
-  .print-memoji-container .absolute.w-14.h-14 {
+  /* Memojis - override inline positions with percentage-based positioning for print */
+  .print-memoji {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -399,10 +398,21 @@ button {
     border-radius: 50% !important;
     overflow: visible !important;
     background: transparent !important;
+    /* Override inline left/top with percentage positioning */
+    left: 60% !important;
   }
 
-  .print-memoji img,
-  .print-memoji-container .absolute.w-14.h-14 img {
+  /* Position first memoji (Niklas) at top area */
+  .print-memoji:first-of-type {
+    top: 15% !important;
+  }
+
+  /* Position second memoji (Jana) below */
+  .print-memoji:nth-of-type(2) {
+    top: 35% !important;
+  }
+
+  .print-memoji img {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -416,7 +426,7 @@ button {
 
   /* Ensure flex containers maintain proper height */
   .swiper-slide .h-full {
-    height: calc(100vh - 183px) !important;
+    height: calc(130vh - 183px) !important;
   }
 
   .swiper-slide .flex-1 {
