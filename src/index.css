@@ -386,8 +386,9 @@ button {
   .print-emoji-scale {
     height: 100% !important;
     gap: 0 !important;
-    justify-content: space-between !important;
+    justify-content: space-evenly !important;
     padding: 0 !important;
+    margin: 0 !important;
   }
 
   .print-memoji-container .text-4xl {
@@ -416,7 +417,7 @@ button {
     aspect-ratio: 1 / 1 !important;
     /* Override inline positions - use CSS custom properties */
     left: calc(var(--print-left-percent) * 0.6) !important;
-    top: var(--print-top-percent) !important;
+    top: calc(var(--print-top-percent) + 30mm) !important;
   }
 
   .print-memoji img {
