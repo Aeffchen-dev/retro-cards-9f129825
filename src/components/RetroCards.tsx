@@ -918,31 +918,6 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setPostItTexts({ ...postItTexts, niklas: e.target.value })
                 }
-                onTouchStart={(e) => {
-                  // iOS scroll prevention: temporarily hide element before focus
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                    const target = e.currentTarget;
-                    target.style.opacity = '0';
-                    requestAnimationFrame(() => {
-                      target.style.opacity = '1';
-                    });
-                  }
-                }}
-                onFocus={() => {
-                  // Multiple attempts to reset scroll on iOS
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                    const resetScroll = () => {
-                      window.scrollTo(0, 0);
-                      document.documentElement.scrollTop = 0;
-                      document.body.scrollTop = 0;
-                    };
-                    resetScroll();
-                    requestAnimationFrame(resetScroll);
-                    setTimeout(resetScroll, 50);
-                    setTimeout(resetScroll, 100);
-                    setTimeout(resetScroll, 200);
-                  }
-                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
@@ -969,31 +944,6 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setPostItTexts({ ...postItTexts, jana: e.target.value })
                 }
-                onTouchStart={(e) => {
-                  // iOS scroll prevention: temporarily hide element before focus
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                    const target = e.currentTarget;
-                    target.style.opacity = '0';
-                    requestAnimationFrame(() => {
-                      target.style.opacity = '1';
-                    });
-                  }
-                }}
-                onFocus={() => {
-                  // Multiple attempts to reset scroll on iOS
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                    const resetScroll = () => {
-                      window.scrollTo(0, 0);
-                      document.documentElement.scrollTop = 0;
-                      document.body.scrollTop = 0;
-                    };
-                    resetScroll();
-                    requestAnimationFrame(resetScroll);
-                    setTimeout(resetScroll, 50);
-                    setTimeout(resetScroll, 100);
-                    setTimeout(resetScroll, 200);
-                  }
-                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
@@ -1111,31 +1061,6 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setTakeawayTexts({ ...takeawayTexts, niklas: e.target.value })
                 }
-                onTouchStart={(e) => {
-                  // iOS scroll prevention: temporarily hide element before focus
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                    const target = e.currentTarget;
-                    target.style.opacity = '0';
-                    requestAnimationFrame(() => {
-                      target.style.opacity = '1';
-                    });
-                  }
-                }}
-                onFocus={() => {
-                  // Multiple attempts to reset scroll on iOS
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                    const resetScroll = () => {
-                      window.scrollTo(0, 0);
-                      document.documentElement.scrollTop = 0;
-                      document.body.scrollTop = 0;
-                    };
-                    resetScroll();
-                    requestAnimationFrame(resetScroll);
-                    setTimeout(resetScroll, 50);
-                    setTimeout(resetScroll, 100);
-                    setTimeout(resetScroll, 200);
-                  }
-                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
@@ -1162,31 +1087,6 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setTakeawayTexts({ ...takeawayTexts, jana: e.target.value })
                 }
-                onTouchStart={(e) => {
-                  // iOS scroll prevention: temporarily hide element before focus
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                    const target = e.currentTarget;
-                    target.style.opacity = '0';
-                    requestAnimationFrame(() => {
-                      target.style.opacity = '1';
-                    });
-                  }
-                }}
-                onFocus={() => {
-                  // Multiple attempts to reset scroll on iOS
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                    const resetScroll = () => {
-                      window.scrollTo(0, 0);
-                      document.documentElement.scrollTop = 0;
-                      document.body.scrollTop = 0;
-                    };
-                    resetScroll();
-                    requestAnimationFrame(resetScroll);
-                    setTimeout(resetScroll, 50);
-                    setTimeout(resetScroll, 100);
-                    setTimeout(resetScroll, 200);
-                  }
-                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
