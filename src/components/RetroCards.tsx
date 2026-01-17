@@ -1200,17 +1200,17 @@ const RetroCards: React.FC = () => {
                   >
                     {/* Edit Mode View */}
                     {editModeSlides[index] && slidesWithEditButton.includes(index) ? (
-                      <div className="absolute inset-0 p-8 flex flex-col animate-fade-in z-30 bg-retro-card-bg">
+                      <div className="absolute inset-0 p-8 flex flex-col z-30 bg-retro-card-bg">
                         {/* Question text - animated to top left, smaller */}
                         <h2 
-                          className="retro-body text-retro-white/80 mb-6 transition-all duration-300"
+                          className="retro-body text-retro-white/80 mb-6 animate-[slideUp_0.3s_ease-out_forwards]"
                           style={{ fontSize: isMobile ? '14px' : '16px' }}
                         >
                           {getSlideQuestion(index)}
                         </h2>
                         
                         {/* Two post-it notes */}
-                        <div className="flex flex-col flex-1 gap-4 w-full">
+                        <div className="flex flex-col flex-1 gap-4 w-full animate-[fadeInUp_0.4s_ease-out_0.1s_both]">
                           <textarea
                             value={editModeNotes[index]?.note1 || ""}
                             onChange={(e) =>
@@ -1251,7 +1251,7 @@ const RetroCards: React.FC = () => {
                         style={{ touchAction: 'manipulation' }}
                       >
                         {editModeSlides[index] ? (
-                          <X size={24} strokeWidth={1} className="text-retro-white" />
+                          <X size={32} strokeWidth={1} className="text-retro-white" />
                         ) : (
                           <Pencil size={24} strokeWidth={1} className="text-retro-white" />
                         )}
