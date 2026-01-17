@@ -927,22 +927,17 @@ const RetroCards: React.FC = () => {
                   setPostItTexts({ ...postItTexts, niklas: e.target.value })
                 }
                 onFocus={(e) => {
-                  // iOS: only scroll when keyboard is first opening, not when switching textareas
+                  // iOS: minimal scroll adjustment - only if textarea is hidden behind keyboard
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    const keyboardAlreadyOpen = window.visualViewport.height < window.innerHeight * 0.75;
-                    if (!keyboardAlreadyOpen) {
-                      // Keyboard is opening - wait for it and then ensure visibility
-                      setTimeout(() => {
-                        const rect = e.target.getBoundingClientRect();
-                        const viewportHeight = window.visualViewport?.height || window.innerHeight;
-                        if (rect.bottom > viewportHeight - 20) {
-                          window.scrollTo({
-                            top: window.scrollY + (rect.bottom - viewportHeight + 80),
-                            behavior: 'smooth'
-                          });
-                        }
-                      }, 400);
-                    }
+                    setTimeout(() => {
+                      const rect = e.target.getBoundingClientRect();
+                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+                      // Only scroll if bottom of textarea is below visible area
+                      if (rect.bottom > viewportHeight) {
+                        const scrollAmount = rect.bottom - viewportHeight + 20;
+                        window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                      }
+                    }, 300);
                   }
                 }}
                 onBlur={() => {
@@ -972,22 +967,17 @@ const RetroCards: React.FC = () => {
                   setPostItTexts({ ...postItTexts, jana: e.target.value })
                 }
                 onFocus={(e) => {
-                  // iOS: only scroll when keyboard is first opening, not when switching textareas
+                  // iOS: minimal scroll adjustment - only if textarea is hidden behind keyboard
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    const keyboardAlreadyOpen = window.visualViewport.height < window.innerHeight * 0.75;
-                    if (!keyboardAlreadyOpen) {
-                      // Keyboard is opening - wait for it and then ensure visibility
-                      setTimeout(() => {
-                        const rect = e.target.getBoundingClientRect();
-                        const viewportHeight = window.visualViewport?.height || window.innerHeight;
-                        if (rect.bottom > viewportHeight - 20) {
-                          window.scrollTo({
-                            top: window.scrollY + (rect.bottom - viewportHeight + 80),
-                            behavior: 'smooth'
-                          });
-                        }
-                      }, 400);
-                    }
+                    setTimeout(() => {
+                      const rect = e.target.getBoundingClientRect();
+                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+                      // Only scroll if bottom of textarea is below visible area
+                      if (rect.bottom > viewportHeight) {
+                        const scrollAmount = rect.bottom - viewportHeight + 20;
+                        window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                      }
+                    }, 300);
                   }
                 }}
                 onBlur={() => {
@@ -1108,22 +1098,17 @@ const RetroCards: React.FC = () => {
                   setTakeawayTexts({ ...takeawayTexts, niklas: e.target.value })
                 }
                 onFocus={(e) => {
-                  // iOS: only scroll when keyboard is first opening, not when switching textareas
+                  // iOS: minimal scroll adjustment - only if textarea is hidden behind keyboard
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    const keyboardAlreadyOpen = window.visualViewport.height < window.innerHeight * 0.75;
-                    if (!keyboardAlreadyOpen) {
-                      // Keyboard is opening - wait for it and then ensure visibility
-                      setTimeout(() => {
-                        const rect = e.target.getBoundingClientRect();
-                        const viewportHeight = window.visualViewport?.height || window.innerHeight;
-                        if (rect.bottom > viewportHeight - 20) {
-                          window.scrollTo({
-                            top: window.scrollY + (rect.bottom - viewportHeight + 80),
-                            behavior: 'smooth'
-                          });
-                        }
-                      }, 400);
-                    }
+                    setTimeout(() => {
+                      const rect = e.target.getBoundingClientRect();
+                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+                      // Only scroll if bottom of textarea is below visible area
+                      if (rect.bottom > viewportHeight) {
+                        const scrollAmount = rect.bottom - viewportHeight + 20;
+                        window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                      }
+                    }, 300);
                   }
                 }}
                 onBlur={() => {
@@ -1153,22 +1138,17 @@ const RetroCards: React.FC = () => {
                   setTakeawayTexts({ ...takeawayTexts, jana: e.target.value })
                 }
                 onFocus={(e) => {
-                  // iOS: only scroll when keyboard is first opening, not when switching textareas
+                  // iOS: minimal scroll adjustment - only if textarea is hidden behind keyboard
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    const keyboardAlreadyOpen = window.visualViewport.height < window.innerHeight * 0.75;
-                    if (!keyboardAlreadyOpen) {
-                      // Keyboard is opening - wait for it and then ensure visibility
-                      setTimeout(() => {
-                        const rect = e.target.getBoundingClientRect();
-                        const viewportHeight = window.visualViewport?.height || window.innerHeight;
-                        if (rect.bottom > viewportHeight - 20) {
-                          window.scrollTo({
-                            top: window.scrollY + (rect.bottom - viewportHeight + 80),
-                            behavior: 'smooth'
-                          });
-                        }
-                      }, 400);
-                    }
+                    setTimeout(() => {
+                      const rect = e.target.getBoundingClientRect();
+                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+                      // Only scroll if bottom of textarea is below visible area
+                      if (rect.bottom > viewportHeight) {
+                        const scrollAmount = rect.bottom - viewportHeight + 20;
+                        window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                      }
+                    }, 300);
                   }
                 }}
                 onBlur={() => {
