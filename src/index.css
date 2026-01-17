@@ -404,6 +404,12 @@ button {
     break-inside: avoid !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .print-notes-page .retro-card-container {
+    background: #e8e8e8 !important;
   }
 
   /* Card container consistent aspect ratio */
