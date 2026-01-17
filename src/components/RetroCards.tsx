@@ -98,8 +98,8 @@ const RetroCards: React.FC = () => {
     return saved || {};
   });
 
-  // Slides that should have the edit button (all except 0, 4, 5, 8, 9, 10)
-  const slidesWithEditButton = [1, 2, 3, 6, 7];
+  // Slides that should have the edit button (all except 0, 4, 8, 9, 10)
+  const slidesWithEditButton = [1, 2, 3, 5, 6, 7];
   
   const dogMessages = [
     "Woof!",
@@ -205,6 +205,7 @@ const RetroCards: React.FC = () => {
       2: "Wie geht's mir in der Beziehung?",
       3: "Wie waren die letzten 4 Wochen? Was war los?",
       4: "Darüber möchte ich mit dir sprechen",
+      5: "Wie stehts mit Dates?",
       6: "Wie läufts mit Kalle?",
       7: "Sind wir uns körperlich nah?",
       8: "Das nehmen wir aus der Retro mit"
