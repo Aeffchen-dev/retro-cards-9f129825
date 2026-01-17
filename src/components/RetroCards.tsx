@@ -748,7 +748,7 @@ const RetroCards: React.FC = () => {
                 {isMobile ? "Wie geht's mir persönlich?" : "Wie geht's mir persönlich in letzter Zeit?"}
               </h2>
             </div>
-            <div className="relative w-full flex-1 mt-10">
+            <div className="relative w-full flex-1 mt-10 print-memoji-container">
               <div className="flex flex-col items-start justify-between h-full">
                 <div className="text-4xl">🤩</div>
                 <div className="text-4xl">🙂</div>
@@ -758,7 +758,7 @@ const RetroCards: React.FC = () => {
               </div>
               {/* Draggable Memojis */}
               <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none"
+                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji"
                 style={{
                   left: memojisPositions[1]?.niklas.x || (isMobile ? 248 : 380),
                   top: memojisPositions[1]?.niklas.y || (isMobile ? 64 : 120),
@@ -775,7 +775,7 @@ const RetroCards: React.FC = () => {
                 />
               </div>
               <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none"
+                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji"
                 style={{
                   left: memojisPositions[1]?.jana.x || (isMobile ? 248 : 380),
                   top: memojisPositions[1]?.jana.y || (isMobile ? 136 : 192),
@@ -809,7 +809,7 @@ const RetroCards: React.FC = () => {
                 Wie geht's mir in der Beziehung?
               </h2>
             </div>
-            <div className="relative w-full flex-1 mt-10">
+            <div className="relative w-full flex-1 mt-10 print-memoji-container">
               <div className="flex flex-col items-start justify-between h-full">
                 <div className="text-4xl">🤩</div>
                 <div className="text-4xl">🙂</div>
@@ -819,7 +819,7 @@ const RetroCards: React.FC = () => {
               </div>
               {/* Draggable Memojis */}
               <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none"
+                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji"
                 style={{
                   left: memojisPositions[2]?.niklas.x || (isMobile ? 248 : 380),
                   top: memojisPositions[2]?.niklas.y || (isMobile ? 64 : 120),
@@ -836,7 +836,7 @@ const RetroCards: React.FC = () => {
                 />
               </div>
               <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none"
+                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji"
                 style={{
                   left: memojisPositions[2]?.jana.x || (isMobile ? 248 : 380),
                   top: memojisPositions[2]?.jana.y || (isMobile ? 136 : 192),
@@ -958,12 +958,12 @@ const RetroCards: React.FC = () => {
                 placeholder="Jana's Themen"
               />
             </div>
-            {/* Print-only: post-it notes like takeaways */}
+            {/* Print-only: post-it notes like takeaways with line breaks */}
             <div className="hidden print-only flex-col flex-1 w-full justify-between gap-6 mt-10">
-              <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px]">
+              <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
                 {postItTexts.niklas || "Niklas' Themen"}
               </div>
-              <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px]">
+              <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
                 {postItTexts.jana || "Jana's Themen"}
               </div>
             </div>
