@@ -84,6 +84,9 @@ const RetroCards: React.FC = () => {
   const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // State for captured photos
+  const [capturedPhotos, setCapturedPhotos] = useState<string[]>([]);
+
   // State for Kalle speech bubble
   const [showKalleBubble, setShowKalleBubble] = useState(false);
   const [kalleBubbleMessage, setKalleBubbleMessage] = useState("Woof!");
@@ -520,6 +523,15 @@ const RetroCards: React.FC = () => {
         const target = e.target as HTMLInputElement;
         if (target.files && target.files[0]) {
           console.log('File selected:', target.files[0]);
+          // Convert file to data URL and save
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            if (event.target?.result) {
+              setCapturedPhotos(prev => [...prev, event.target!.result as string]);
+              console.log('Photo saved to state');
+            }
+          };
+          reader.readAsDataURL(target.files[0]);
         } else {
           console.log('No file selected or user cancelled');
         }
@@ -691,7 +703,7 @@ const RetroCards: React.FC = () => {
     switch (cardIndex) {
       case 0:
         return (
-          <div className="flex flex-col items-start w-full">
+          <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Memory Time</span>
@@ -700,7 +712,7 @@ const RetroCards: React.FC = () => {
                 Schießt ein paar süße Fotos zusammen
               </h2>
             </div>
-            <div style={{ marginTop: "40px" }}>
+            <div style={{ marginTop: "40px" }} className="screen-only">
               <button
                 onClick={openCamera}
                 className="retro-emoji-large cursor-pointer"
@@ -708,6 +720,19 @@ const RetroCards: React.FC = () => {
                 📸
               </button>
             </div>
+            {/* Print-only: Show captured photos */}
+            {capturedPhotos.length > 0 && (
+              <div className="hidden print-only flex-wrap gap-4 mt-8 w-full justify-center">
+                {capturedPhotos.map((photo, index) => (
+                  <img
+                    key={index}
+                    src={photo}
+                    alt={`Captured photo ${index + 1}`}
+                    className="w-32 h-32 object-cover rounded-lg"
+                  />
+                ))}
+              </div>
+            )}
           </div>
         );
 
@@ -1071,17 +1096,15 @@ const RetroCards: React.FC = () => {
 
       case 9:
         return (
-          <div className="flex flex-col items-start w-full h-full">
-            <div className="flex flex-col items-start gap-6 w-full">
+          <div className="flex flex-col items-center justify-center w-full h-full">
+            <div className="flex flex-col items-center gap-6 w-full text-center">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Archive</span>
               </div>
               <h2 className="retro-heading w-full">Sichert eure Inhalte</h2>
-            </div>
-            <div className="flex-1 flex items-center justify-center w-full">
               <button
                 onClick={() => window.print()}
-                className="flex items-center gap-3 py-3 px-6 rounded-full bg-transparent hover:bg-retro-white/10 transition-colors cursor-pointer"
+                className="flex items-center gap-3 py-3 px-6 rounded-full bg-transparent hover:bg-retro-white/10 transition-colors cursor-pointer mt-4"
               >
                 <Download size={20} className="text-retro-white" />
                 <span className="retro-body">Ergebnisse sichern</span>
