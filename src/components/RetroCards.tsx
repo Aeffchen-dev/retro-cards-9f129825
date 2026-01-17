@@ -720,15 +720,15 @@ const RetroCards: React.FC = () => {
                 📸
               </button>
             </div>
-            {/* Print-only: Show captured photos */}
+            {/* Print-only: Show captured photos in original aspect ratio */}
             {capturedPhotos.length > 0 && (
-              <div className="hidden print-only flex-wrap gap-4 mt-8 w-full justify-center">
+              <div className="hidden print-only flex-wrap gap-4 mt-8 w-full">
                 {capturedPhotos.map((photo, index) => (
                   <img
                     key={index}
                     src={photo}
                     alt={`Captured photo ${index + 1}`}
-                    className="w-32 h-32 object-cover rounded-lg"
+                    className="max-w-[45%] max-h-[300px] object-contain rounded-lg"
                   />
                 ))}
               </div>
