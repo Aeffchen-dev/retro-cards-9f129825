@@ -395,7 +395,7 @@ button {
   }
 
   .print-memoji-container .text-4xl {
-    font-size: 1.5rem !important;
+    font-size: 3rem !important;
     line-height: 1 !important;
   }
 
@@ -404,12 +404,12 @@ button {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
-    max-width: 56px !important;
-    max-height: 56px !important;
+    width: 112px !important;
+    height: 112px !important;
+    min-width: 112px !important;
+    min-height: 112px !important;
+    max-width: 112px !important;
+    max-height: 112px !important;
     position: absolute !important;
     z-index: 9999 !important;
     border-radius: 50% !important;
@@ -424,12 +424,12 @@ button {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
-    max-width: 56px !important;
-    max-height: 56px !important;
+    width: 112px !important;
+    height: 112px !important;
+    min-width: 112px !important;
+    min-height: 112px !important;
+    max-width: 112px !important;
+    max-height: 112px !important;
     object-fit: cover !important;
     border-radius: 50% !important;
     -webkit-print-color-adjust: exact !important;
