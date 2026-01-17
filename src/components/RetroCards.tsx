@@ -926,34 +926,6 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setPostItTexts({ ...postItTexts, niklas: e.target.value })
                 }
-                onFocus={(e) => {
-                  // iOS: when switching textareas with keyboard open, use visualViewport height
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    setTimeout(() => {
-                      const rect = e.target.getBoundingClientRect();
-                      const visibleHeight = window.visualViewport?.height || window.innerHeight;
-                      // If textarea top is above visible area, scroll up
-                      if (rect.top < 80) {
-                        window.scrollBy({ top: rect.top - 100, behavior: 'smooth' });
-                      }
-                    }, 100);
-                  }
-                }}
-                onBlur={() => {
-                  // Fix iOS viewport restoration after keyboard close
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                    setTimeout(() => {
-                      // Force viewport to recalculate instead of scrolling to top
-                      const currentHeight = window.innerHeight;
-                      setViewportHeight(currentHeight);
-                      // Trigger a gentle reflow without scrolling
-                      document.body.style.height = `${currentHeight}px`;
-                      requestAnimationFrame(() => {
-                        document.body.style.height = '';
-                      });
-                    }, 150);
-                  }
-                }}
                 className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                 style={{
                   borderRadius: "0px",
@@ -965,34 +937,6 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setPostItTexts({ ...postItTexts, jana: e.target.value })
                 }
-                onFocus={(e) => {
-                  // iOS: when switching textareas with keyboard open, use visualViewport height
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    setTimeout(() => {
-                      const rect = e.target.getBoundingClientRect();
-                      const visibleHeight = window.visualViewport?.height || window.innerHeight;
-                      // If textarea bottom is below visible area, scroll down minimally
-                      if (rect.bottom > visibleHeight - 20) {
-                        window.scrollBy({ top: rect.bottom - visibleHeight + 40, behavior: 'smooth' });
-                      }
-                    }, 100);
-                  }
-                }}
-                onBlur={() => {
-                  // Fix iOS viewport restoration after keyboard close
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                    setTimeout(() => {
-                      // Force viewport to recalculate instead of scrolling to top
-                      const currentHeight = window.innerHeight;
-                      setViewportHeight(currentHeight);
-                      // Trigger a gentle reflow without scrolling
-                      document.body.style.height = `${currentHeight}px`;
-                      requestAnimationFrame(() => {
-                        document.body.style.height = '';
-                      });
-                    }, 150);
-                  }
-                }}
                 className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                 style={{
                   borderRadius: "0px",
@@ -1095,33 +1039,6 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setTakeawayTexts({ ...takeawayTexts, niklas: e.target.value })
                 }
-                onFocus={(e) => {
-                  // iOS: when switching textareas with keyboard open, use visualViewport height
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    setTimeout(() => {
-                      const rect = e.target.getBoundingClientRect();
-                      // If textarea top is above visible area, scroll up
-                      if (rect.top < 80) {
-                        window.scrollBy({ top: rect.top - 100, behavior: 'smooth' });
-                      }
-                    }, 100);
-                  }
-                }}
-                onBlur={() => {
-                  // Fix iOS viewport restoration after keyboard close
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                    setTimeout(() => {
-                      // Force viewport to recalculate instead of scrolling to top
-                      const currentHeight = window.innerHeight;
-                      setViewportHeight(currentHeight);
-                      // Trigger a gentle reflow without scrolling
-                      document.body.style.height = `${currentHeight}px`;
-                      requestAnimationFrame(() => {
-                        document.body.style.height = '';
-                      });
-                    }, 150);
-                  }
-                }}
                 className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                 style={{
                   borderRadius: "0px",
@@ -1133,34 +1050,6 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setTakeawayTexts({ ...takeawayTexts, jana: e.target.value })
                 }
-                onFocus={(e) => {
-                  // iOS: when switching textareas with keyboard open, use visualViewport height
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
-                    setTimeout(() => {
-                      const rect = e.target.getBoundingClientRect();
-                      const visibleHeight = window.visualViewport?.height || window.innerHeight;
-                      // If textarea bottom is below visible area, scroll down minimally
-                      if (rect.bottom > visibleHeight - 20) {
-                        window.scrollBy({ top: rect.bottom - visibleHeight + 40, behavior: 'smooth' });
-                      }
-                    }, 100);
-                  }
-                }}
-                onBlur={() => {
-                  // Fix iOS viewport restoration after keyboard close
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                    setTimeout(() => {
-                      // Force viewport to recalculate instead of scrolling to top
-                      const currentHeight = window.innerHeight;
-                      setViewportHeight(currentHeight);
-                      // Trigger a gentle reflow without scrolling
-                      document.body.style.height = `${currentHeight}px`;
-                      requestAnimationFrame(() => {
-                        document.body.style.height = '';
-                      });
-                    }, 150);
-                  }
-                }}
                 className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                 style={{
                   borderRadius: "0px",

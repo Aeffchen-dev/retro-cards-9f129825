@@ -122,6 +122,18 @@
       env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
 
+  /* iOS Safari: Prevent auto-scroll when focusing inputs/textareas */
+  @supports (-webkit-touch-callout: none) {
+    textarea:focus {
+      animation: ios-prevent-scroll 0.01s;
+    }
+  }
+
+  @keyframes ios-prevent-scroll {
+    0% { opacity: 0.99; }
+    100% { opacity: 1; }
+  }
+
   #root {
     height: 100%;
     height: calc(var(--vh, 1vh) * 100);
