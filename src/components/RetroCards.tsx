@@ -1346,9 +1346,9 @@ const RetroCards: React.FC = () => {
                 </div>
               )}
               
-              {/* Notes page right after its slide */}
+              {/* Notes page right after its slide - on its own page */}
               {slidesWithEditButton.includes(index) && (editModeNotes[index]?.note1 || editModeNotes[index]?.note2) && (
-                <div className="print-slide-page" style={{ order: index * 2 + 1 }}>
+                <div className="print-slide-page print-notes-page" style={{ order: index * 2 + 1 }}>
                   <div className="w-full h-full flex items-center justify-center px-4">
                     <div className="retro-card-container relative h-full w-full max-w-[500px] mx-auto flex flex-col items-start bg-retro-card-bg rounded-2xl p-8">
                       {/* Question text */}
@@ -1356,7 +1356,7 @@ const RetroCards: React.FC = () => {
                         className="retro-body mb-6"
                         style={{ fontSize: '16px', lineHeight: 1.4 }}
                       >
-                        {getSlideQuestion(index)}
+                        {getSlideQuestion(index)} — Notizen
                       </h2>
                       
                       {/* Post-it notes */}

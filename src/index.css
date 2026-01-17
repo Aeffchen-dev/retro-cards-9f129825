@@ -498,6 +498,14 @@ button {
     color-adjust: exact !important;
   }
 
+  /* Notes page - ensure it's on its own page */
+  .print-notes-page {
+    page-break-before: always !important;
+    break-before: page !important;
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
   /* Remove any extra spacing that could cause blank pages */
   * {
     -webkit-print-color-adjust: exact !important;
