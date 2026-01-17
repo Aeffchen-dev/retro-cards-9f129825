@@ -370,17 +370,20 @@ button {
     display: none !important;
   }
 
-  /* Card container - taller for print */
+  /* Card container - wider and taller for print */
   .retro-card-container {
-    max-width: 500px !important;
-    height: calc(100vh - 60px) !important;
+    max-width: 90% !important;
+    width: 90% !important;
+    height: calc(100vh - 40px) !important;
     max-height: none !important;
-    margin: 30px auto !important;
-    padding: 48px 32px 32px 32px !important;
+    margin: 20px auto !important;
+    padding: 48px 40px 40px 40px !important;
     background: #e8e8e8 !important;
   }
 
   .print-slide-page .retro-card-container {
+    max-width: 90% !important;
+    width: 90% !important;
     background: #e8e8e8 !important;
   }
 
