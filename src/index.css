@@ -391,6 +391,31 @@ button {
     display: none !important;
   }
 
+  /* Print notes page styling */
+  .print-notes-page {
+    display: block !important;
+    width: 100% !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    page-break-before: always !important;
+    page-break-inside: avoid !important;
+    break-before: page !important;
+    break-inside: avoid !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  /* Card container consistent aspect ratio */
+  .retro-card-container {
+    aspect-ratio: 500 / 780 !important;
+    max-width: 500px !important;
+    max-height: 780px !important;
+    width: auto !important;
+    height: calc(100vh - 40px) !important;
+    margin: 20px auto !important;
+  }
+
   /* Post-it text areas - maintain frontend layout */
   textarea {
     min-height: 120px !important;
