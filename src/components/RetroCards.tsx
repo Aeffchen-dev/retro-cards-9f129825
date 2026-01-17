@@ -1251,9 +1251,9 @@ const RetroCards: React.FC = () => {
                         style={{ touchAction: 'manipulation' }}
                       >
                         {editModeSlides[index] ? (
-                          <X size={24} strokeWidth={2} className="text-retro-white" />
+                          <X size={24} strokeWidth={1} className="text-retro-white" />
                         ) : (
-                          <Pencil size={24} strokeWidth={2} className="text-retro-white" />
+                          <Pencil size={24} strokeWidth={1} className="text-retro-white" />
                         )}
                       </button>
                     )}
