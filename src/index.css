@@ -287,8 +287,8 @@ button {
     align-items: center !important;
     justify-content: center !important;
     width: 100% !important;
-    height: calc(100vh - 20mm) !important;
-    max-height: calc(100vh - 20mm) !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
     page-break-after: always !important;
     page-break-inside: avoid !important;
     break-after: page !important;
@@ -375,8 +375,8 @@ button {
 
   /* Card container - wider and taller for print */
   .retro-card-container {
-    max-width: 343px !important;
-    width: 343px !important;
+    max-width: 395px !important;
+    width: 395px !important;
     height: 85vh !important;
     min-height: 85vh !important;
     max-height: 85vh !important;
@@ -387,8 +387,8 @@ button {
   }
 
   .print-slide-page .retro-card-container {
-    max-width: 343px !important;
-    width: 343px !important;
+    max-width: 395px !important;
+    width: 395px !important;
     background: #e8e8e8 !important;
   }
 
