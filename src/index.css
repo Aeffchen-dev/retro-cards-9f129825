@@ -264,19 +264,20 @@ button {
   }
 
   .swiper {
-    overflow: visible !important;
-    height: auto !important;
-    width: 100% !important;
-    margin: 0 !important;
+    display: none !important;
   }
 
   .swiper-wrapper {
-    display: block !important;
-    transform: none !important;
-    height: auto !important;
+    display: none !important;
   }
 
-  .swiper-slide {
+  /* Print slides container - show in print */
+  .print-slides-container {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .print-slide-page {
     display: block !important;
     width: 100% !important;
     height: 100vh !important;
@@ -284,39 +285,19 @@ button {
     max-height: 100vh !important;
     page-break-before: always !important;
     page-break-inside: avoid !important;
-    page-break-after: auto !important;
     break-before: page !important;
     break-inside: avoid !important;
-    break-after: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
   }
 
-  .swiper-slide:first-child {
+  .print-slide-page:first-child {
     page-break-before: avoid !important;
     break-before: avoid !important;
-  }
-
-  /* Hide slides 10 and 11 (Archive and Questions) */
-  .swiper-slide:nth-child(10),
-  .swiper-slide:nth-child(11) {
-    display: none !important;
-    height: 0 !important;
-    min-height: 0 !important;
-    max-height: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    overflow: hidden !important;
-    page-break-before: avoid !important;
-    page-break-after: avoid !important;
-    break-before: avoid !important;
-    break-after: avoid !important;
   }
 
   /* Last visible slide - no page break after */
-  .swiper-slide:nth-child(9) {
+  .print-slide-page:last-child {
     page-break-after: avoid !important;
     break-after: avoid !important;
   }
@@ -338,25 +319,18 @@ button {
     padding: 0 !important;
   }
 
-  .swiper-slide:not(:nth-child(10)):not(:nth-child(11)) {
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-
-  /* Card styling for print - 4cm top margin (≈151px) */
+  /* Card styling for print */
   .bg-retro-card-bg {
     background: #e8e8e8 !important;
     box-shadow: none !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    max-height: 100vh !important;
-    padding: 120px 32px 32px 32px !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
   }
 
   /* Text colors for print */
   .text-retro-white {
+    color: #000000 !important;
+  }
+
+  .text-retro-white\/80 {
     color: #000000 !important;
   }
 
@@ -391,35 +365,18 @@ button {
     display: none !important;
   }
 
-  /* Print notes page styling */
-  .print-notes-page {
-    display: block !important;
-    width: 100% !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    max-height: 100vh !important;
-    page-break-before: always !important;
-    page-break-inside: avoid !important;
-    break-before: page !important;
-    break-inside: avoid !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-
-  .print-notes-page .retro-card-container {
+  /* Card container - taller for print */
+  .retro-card-container {
+    max-width: 500px !important;
+    height: calc(100vh - 60px) !important;
+    max-height: none !important;
+    margin: 30px auto !important;
+    padding: 48px 32px 32px 32px !important;
     background: #e8e8e8 !important;
   }
 
-  /* Card container consistent aspect ratio */
-  .retro-card-container {
-    aspect-ratio: 500 / 780 !important;
-    max-width: 500px !important;
-    max-height: 780px !important;
-    width: auto !important;
-    height: calc(100vh - 40px) !important;
-    margin: 20px auto !important;
+  .print-slide-page .retro-card-container {
+    background: #e8e8e8 !important;
   }
 
   /* Post-it text areas - maintain frontend layout */
@@ -445,24 +402,20 @@ button {
   /* Slide 2-3: Memoji container */
   .print-memoji-container {
     position: relative !important;
-    height: 55vh !important;
-    margin-top: 8px !important;
+    height: 60% !important;
+    margin-top: 16px !important;
     overflow: visible !important;
   }
 
   .print-emoji-scale {
     height: 100% !important;
     gap: 0 !important;
-    justify-content: space-evenly !important;
+    justify-content: space-between !important;
     padding: 0 !important;
     margin: 0 !important;
   }
 
   .print-emoji-scale > * {
-    margin-top: -16px !important;
-  }
-
-  .print-emoji-scale > *:first-child {
     margin-top: 0 !important;
   }
 
@@ -476,12 +429,12 @@ button {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 60px !important;
-    height: 60px !important;
-    min-width: 60px !important;
-    min-height: 60px !important;
-    max-width: 60px !important;
-    max-height: 60px !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+    max-width: 56px !important;
+    max-height: 56px !important;
     position: absolute !important;
     z-index: 9999 !important;
     border-radius: 50% !important;
@@ -490,21 +443,21 @@ button {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     aspect-ratio: 1 / 1 !important;
-    /* Override inline positions - use CSS custom properties */
-    left: calc(var(--print-left-percent) * 0.6 + 8px) !important;
-    top: calc(var(--print-top-percent) + 30mm + 10px) !important;
+    /* Use CSS custom properties for percentage-based positioning */
+    left: var(--print-left-percent, 70%) !important;
+    top: var(--print-top-percent, 20%) !important;
   }
 
   .print-memoji img {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 60px !important;
-    height: 60px !important;
-    min-width: 60px !important;
-    min-height: 60px !important;
-    max-width: 60px !important;
-    max-height: 60px !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+    max-width: 56px !important;
+    max-height: 56px !important;
     object-fit: cover !important;
     border-radius: 50% !important;
     -webkit-print-color-adjust: exact !important;
@@ -514,11 +467,11 @@ button {
   }
 
   /* Ensure flex containers maintain proper height */
-  .swiper-slide .h-full {
-    height: calc(100vh - 152px) !important;
+  .print-slide-page .h-full {
+    height: 100% !important;
   }
 
-  .swiper-slide .flex-1 {
+  .print-slide-page .flex-1 {
     flex: 1 !important;
   }
 
