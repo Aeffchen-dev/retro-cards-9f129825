@@ -243,9 +243,9 @@ button {
   .swiper-slide {
     display: block !important;
     width: 100% !important;
-    height: 95vh !important;
-    min-height: 95vh !important;
-    max-height: 95vh !important;
+    height: 110vh !important;
+    min-height: 110vh !important;
+    max-height: 110vh !important;
     page-break-inside: avoid !important;
     page-break-after: always !important;
     break-inside: avoid !important;
@@ -304,9 +304,9 @@ button {
   .bg-retro-card-bg {
     background: #e8e8e8 !important;
     box-shadow: none !important;
-    height: 95vh !important;
-    min-height: 95vh !important;
-    max-height: 95vh !important;
+    height: 110vh !important;
+    min-height: 110vh !important;
+    max-height: 110vh !important;
     padding: 151px 32px 32px 32px !important;
     box-sizing: border-box !important;
     overflow: visible !important;
@@ -386,44 +386,40 @@ button {
     line-height: 1.2 !important;
   }
 
-  /* Memojis - visible in print with fixed positioning next to smileys */
-  .print-memoji {
+  /* Memojis - force visible in print */
+  .print-memoji,
+  .absolute.w-14.h-14 {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 45px !important;
-    height: 45px !important;
+    width: 50px !important;
+    height: 50px !important;
     position: absolute !important;
     z-index: 9999 !important;
     border-radius: 50% !important;
-    overflow: hidden !important;
+    overflow: visible !important;
     background: transparent !important;
-    left: 50% !important;
-  }
-
-  .print-memoji:first-of-type {
-    top: 10% !important;
-  }
-
-  .print-memoji:nth-of-type(2) {
-    top: 30% !important;
-  }
-
-  .print-memoji img {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    border-radius: 50% !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
+  .print-memoji img,
+  .absolute.w-14.h-14 img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 50px !important;
+    height: 50px !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
   /* Ensure flex containers maintain proper height */
   .swiper-slide .h-full {
-    height: calc(95vh - 183px) !important;
+    height: calc(110vh - 183px) !important;
   }
 
   .swiper-slide .flex-1 {
