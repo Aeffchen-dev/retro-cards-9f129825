@@ -375,8 +375,8 @@ button {
 
   /* Card container - wider and taller for print */
   .retro-card-container {
-    max-width: 490px !important;
-    width: 490px !important;
+    max-width: 343px !important;
+    width: 343px !important;
     height: 85vh !important;
     min-height: 85vh !important;
     max-height: 85vh !important;
@@ -387,8 +387,8 @@ button {
   }
 
   .print-slide-page .retro-card-container {
-    max-width: 490px !important;
-    width: 490px !important;
+    max-width: 343px !important;
+    width: 343px !important;
     background: #e8e8e8 !important;
   }
 
