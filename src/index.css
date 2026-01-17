@@ -243,14 +243,16 @@ button {
   .swiper-slide {
     display: block !important;
     width: 100% !important;
-    height: auto !important;
-    min-height: 153vh !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
     page-break-inside: avoid !important;
     page-break-after: always !important;
     break-inside: avoid !important;
     break-after: page !important;
     margin: 0 !important;
-    padding: 40px 20px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
   }
 
   /* Hide slides 10 and 11 (Archive and Questions) */
@@ -269,6 +271,7 @@ button {
     break-after: avoid !important;
   }
 
+  /* Last visible slide - no page break after */
   .swiper-slide:nth-child(9) {
     page-break-after: avoid !important;
     break-after: avoid !important;
@@ -279,18 +282,26 @@ button {
     content: none !important;
     display: none !important;
   }
+
+  html, body {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
   .swiper-slide:not(:nth-child(10)):not(:nth-child(11)) {
     opacity: 1 !important;
     visibility: visible !important;
   }
 
-  /* Card styling for print */
+  /* Card styling for print - match frontend exactly */
   .bg-retro-card-bg {
     background: #e8e8e8 !important;
     box-shadow: none !important;
-    min-height: 136vh !important;
-    max-height: none !important;
-    height: auto !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    padding: 40px 24px !important;
+    box-sizing: border-box !important;
   }
 
   /* Text colors for print */
@@ -335,24 +346,39 @@ button {
     background: #f4e5a3 !important;
   }
 
-  /* Slide 2-3: Scale emojis and memojis properly for print */
+  /* Match frontend font sizes and spacing */
+  .retro-heading {
+    font-size: 2.5rem !important;
+    line-height: 1.1 !important;
+  }
+
+  .retro-label {
+    font-size: 0.875rem !important;
+  }
+
+  .retro-body {
+    font-size: 1rem !important;
+  }
+
+  /* Slide 2-3: Match frontend emoji and memoji sizes */
   .swiper-slide:nth-child(2) .text-4xl,
   .swiper-slide:nth-child(3) .text-4xl {
-    font-size: 3rem !important;
-    line-height: 1.2 !important;
+    font-size: 2.25rem !important;
+    line-height: 1 !important;
   }
 
   .swiper-slide:nth-child(2) .w-14,
   .swiper-slide:nth-child(3) .w-14 {
-    width: 4.5rem !important;
-    height: 4.5rem !important;
+    width: 3.5rem !important;
+    height: 3.5rem !important;
   }
 
-  /* Slide 8: vertically center content */
-  .swiper-slide:nth-child(9) > div > div {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    min-height: 100% !important;
+  /* Ensure flex containers maintain proper height */
+  .swiper-slide .h-full {
+    height: calc(100vh - 80px) !important;
+  }
+
+  .swiper-slide .flex-1 {
+    flex: 1 !important;
   }
 }
