@@ -918,6 +918,15 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setPostItTexts({ ...postItTexts, niklas: e.target.value })
                 }
+                onFocus={(e) => {
+                  // Prevent page jump on mobile when switching between textareas
+                  e.target.scrollIntoView({ behavior: 'instant', block: 'nearest' });
+                  // Prevent iOS from scrolling the page
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    e.preventDefault();
+                    window.scrollTo(0, 0);
+                  }
+                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
@@ -944,6 +953,15 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setPostItTexts({ ...postItTexts, jana: e.target.value })
                 }
+                onFocus={(e) => {
+                  // Prevent page jump on mobile when switching between textareas
+                  e.target.scrollIntoView({ behavior: 'instant', block: 'nearest' });
+                  // Prevent iOS from scrolling the page
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    e.preventDefault();
+                    window.scrollTo(0, 0);
+                  }
+                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
@@ -1061,6 +1079,15 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setTakeawayTexts({ ...takeawayTexts, niklas: e.target.value })
                 }
+                onFocus={(e) => {
+                  // Prevent page jump on mobile when switching between textareas
+                  e.target.scrollIntoView({ behavior: 'instant', block: 'nearest' });
+                  // Prevent iOS from scrolling the page
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    e.preventDefault();
+                    window.scrollTo(0, 0);
+                  }
+                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
@@ -1087,6 +1114,15 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setTakeawayTexts({ ...takeawayTexts, jana: e.target.value })
                 }
+                onFocus={(e) => {
+                  // Prevent page jump on mobile when switching between textareas
+                  e.target.scrollIntoView({ behavior: 'instant', block: 'nearest' });
+                  // Prevent iOS from scrolling the page
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    e.preventDefault();
+                    window.scrollTo(0, 0);
+                  }
+                }}
                 onBlur={() => {
                   // Fix iOS viewport restoration after keyboard close
                   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
