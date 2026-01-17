@@ -195,38 +195,62 @@ button {
 
 /* Print styles for archiving all slides */
 @media print {
-  body {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html, body {
     position: static !important;
     overflow: visible !important;
     height: auto !important;
+    width: 100% !important;
     background: white !important;
     padding: 0 !important;
+    margin: 0 !important;
   }
 
   #root {
     height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+
+  #root > div {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
   }
 
   .swiper {
     overflow: visible !important;
     height: auto !important;
+    width: 100% !important;
+    margin: 0 !important;
   }
 
   .swiper-wrapper {
     display: block !important;
     transform: none !important;
+    height: auto !important;
   }
 
   .swiper-slide {
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    page-break-after: always;
-    margin-bottom: 20px;
+    min-height: 90vh !important;
+    page-break-inside: avoid !important;
+    page-break-after: always !important;
+    break-inside: avoid !important;
+    break-after: page !important;
+    margin: 0 !important;
+    padding: 20px !important;
   }
 
   .swiper-slide:last-child {
-    page-break-after: avoid;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
   }
 
   /* Show all slides */
@@ -237,10 +261,11 @@ button {
 
   /* Card styling for print */
   .bg-retro-card-bg {
-    background: #f0f0f0 !important;
+    background: #e8e8e8 !important;
     box-shadow: none !important;
-    min-height: 500px !important;
+    min-height: 80vh !important;
     max-height: none !important;
+    height: auto !important;
   }
 
   /* Text colors for print */
@@ -264,9 +289,8 @@ button {
     display: none !important;
   }
 
-  /* Hide header and footer */
-  body > div > div:first-child,
-  body > div > div:last-child {
+  /* Hide header and footer for cleaner print */
+  [class*="px-4 py-3"] {
     display: none !important;
   }
 }
