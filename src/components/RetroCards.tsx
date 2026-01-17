@@ -919,11 +919,19 @@ const RetroCards: React.FC = () => {
                   setPostItTexts({ ...postItTexts, niklas: e.target.value })
                 }
                 onFocus={(e) => {
-                  // iOS: scroll textarea into view when keyboard opens or switching between textareas
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                  // iOS: ensure textarea is visible when switching between textareas
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
                     setTimeout(() => {
-                      e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 300);
+                      const rect = e.target.getBoundingClientRect();
+                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+                      // Only scroll if element is above viewport or too close to keyboard
+                      if (rect.top < 100 || rect.bottom > viewportHeight - 50) {
+                        window.scrollTo({
+                          top: window.scrollY + rect.top - 150,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }, 350);
                   }
                 }}
                 onBlur={() => {
@@ -953,11 +961,19 @@ const RetroCards: React.FC = () => {
                   setPostItTexts({ ...postItTexts, jana: e.target.value })
                 }
                 onFocus={(e) => {
-                  // iOS: scroll textarea into view when keyboard opens or switching between textareas
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                  // iOS: ensure textarea is visible when switching between textareas
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
                     setTimeout(() => {
-                      e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 300);
+                      const rect = e.target.getBoundingClientRect();
+                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+                      // Only scroll if element is above viewport or too close to keyboard
+                      if (rect.top < 100 || rect.bottom > viewportHeight - 50) {
+                        window.scrollTo({
+                          top: window.scrollY + rect.top - 150,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }, 350);
                   }
                 }}
                 onBlur={() => {
@@ -1078,11 +1094,19 @@ const RetroCards: React.FC = () => {
                   setTakeawayTexts({ ...takeawayTexts, niklas: e.target.value })
                 }
                 onFocus={(e) => {
-                  // iOS: scroll textarea into view when keyboard opens or switching between textareas
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                  // iOS: ensure textarea is visible when switching between textareas
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
                     setTimeout(() => {
-                      e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 300);
+                      const rect = e.target.getBoundingClientRect();
+                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+                      // Only scroll if element is above viewport or too close to keyboard
+                      if (rect.top < 100 || rect.bottom > viewportHeight - 50) {
+                        window.scrollTo({
+                          top: window.scrollY + rect.top - 150,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }, 350);
                   }
                 }}
                 onBlur={() => {
@@ -1112,11 +1136,19 @@ const RetroCards: React.FC = () => {
                   setTakeawayTexts({ ...takeawayTexts, jana: e.target.value })
                 }
                 onFocus={(e) => {
-                  // iOS: scroll textarea into view when keyboard opens or switching between textareas
-                  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                  // iOS: ensure textarea is visible when switching between textareas
+                  if (/iPad|iPhone|iPod/.test(navigator.userAgent) && window.visualViewport) {
                     setTimeout(() => {
-                      e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 300);
+                      const rect = e.target.getBoundingClientRect();
+                      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+                      // Only scroll if element is above viewport or too close to keyboard
+                      if (rect.top < 100 || rect.bottom > viewportHeight - 50) {
+                        window.scrollTo({
+                          top: window.scrollY + rect.top - 150,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }, 350);
                   }
                 }}
                 onBlur={() => {
