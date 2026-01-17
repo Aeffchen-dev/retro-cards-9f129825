@@ -295,6 +295,9 @@ const RetroCards: React.FC = () => {
   };
 
   // Handle mobile Safari viewport height and card dimensions - debounced
+  // Store initial height to avoid resizing when keyboard opens
+  const initialViewportHeight = useRef<number>(typeof window !== "undefined" ? window.innerHeight : 767);
+  
   useEffect(() => {
     let rafId: number;
     
@@ -305,16 +308,21 @@ const RetroCards: React.FC = () => {
       // Update mobile detection
       setIsMobile(width <= 768);
 
-      // Calculate available height for cards - simplified for speed
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-      let availableHeight = height;
       
+      // On iOS, don't adjust height when keyboard is open (height significantly reduced)
       if (isIOS && window.visualViewport) {
-        availableHeight = window.visualViewport.height;
+        const keyboardLikelyOpen = window.visualViewport.height < initialViewportHeight.current * 0.75;
+        if (keyboardLikelyOpen) {
+          // Keyboard is open - don't adjust anything
+          return;
+        }
+        // Keyboard closed - update the initial height reference
+        initialViewportHeight.current = height;
       }
 
       // Ensure minimum height for usability
-      setViewportHeight(Math.max(availableHeight, 600));
+      setViewportHeight(Math.max(height, 600));
     };
 
     // Run immediately
