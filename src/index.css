@@ -233,7 +233,7 @@ button {
 @media print {
   @page {
     size: A4 portrait;
-    margin: 0;
+    margin: 10mm;
   }
 
   * {
@@ -287,7 +287,8 @@ button {
     align-items: center !important;
     justify-content: center !important;
     width: 100% !important;
-    height: 100vh !important;
+    height: calc(100vh - 20mm) !important;
+    max-height: calc(100vh - 20mm) !important;
     page-break-after: always !important;
     page-break-inside: avoid !important;
     break-after: page !important;
@@ -295,7 +296,7 @@ button {
     box-sizing: border-box !important;
     overflow: hidden !important;
     position: relative !important;
-    padding: 20px !important;
+    padding: 0 !important;
   }
 
   .print-slide-page:last-child {
@@ -376,11 +377,13 @@ button {
   .retro-card-container {
     max-width: 700px !important;
     width: 700px !important;
-    height: 75vh !important;
-    min-height: 750px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: calc(100vh - 40mm) !important;
     margin: auto !important;
-    padding: 60px 40px 52px 40px !important;
+    padding: 40px 40px 40px 40px !important;
     background: #e8e8e8 !important;
+    overflow: visible !important;
   }
 
   .print-slide-page .retro-card-container {
