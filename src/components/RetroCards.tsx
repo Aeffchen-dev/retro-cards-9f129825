@@ -1326,38 +1326,54 @@ const RetroCards: React.FC = () => {
               </SwiperSlide>
             ))}
           </Swiper>
+        </div>
 
-          {/* Print-only: Edit mode notes pages (rendered after swiper for proper print flow) */}
-          {slidesWithEditButton.map(index => (
-            (editModeNotes[index]?.note1 || editModeNotes[index]?.note2) && (
-              <div key={`notes-${index}`} className="hidden print-notes-page">
-                <div className="w-full h-full flex items-center justify-center px-4">
-                  <div className="retro-card-container relative h-full w-full max-w-[500px] max-h-[780px] mx-auto flex flex-col items-start bg-retro-card-bg rounded-2xl p-8">
-                    {/* Question text */}
-                    <h2 
-                      className="retro-body text-retro-white/80 mb-6"
-                      style={{ fontSize: '16px', lineHeight: 1.4 }}
-                    >
-                      {getSlideQuestion(index)}
-                    </h2>
-                    
-                    {/* Post-it notes */}
-                    <div className="flex flex-col flex-1 gap-4 w-full">
-                      {editModeNotes[index]?.note1 && (
-                        <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg whitespace-pre-wrap min-h-[120px]">
-                          {editModeNotes[index].note1}
-                        </div>
-                      )}
-                      {editModeNotes[index]?.note2 && (
-                        <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg whitespace-pre-wrap min-h-[120px]">
-                          {editModeNotes[index].note2}
-                        </div>
-                      )}
+        {/* Print-only: All slides with notes interleaved in correct order */}
+        <div className="hidden print-slides-container">
+          {Array.from({ length: totalCards }, (_, index) => (
+            <React.Fragment key={`print-${index}`}>
+              {/* Skip slides 9 and 10 (Archive and Questions) in print */}
+              {index !== 9 && index !== 10 && (
+                <div className="print-slide-page" style={{ order: index * 2 }}>
+                  <div className="w-full h-full flex items-center justify-center px-4">
+                    <div className="retro-card-container relative h-full w-full max-w-[500px] mx-auto flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8">
+                      {renderCard(index)}
                     </div>
                   </div>
                 </div>
-              </div>
-            )
+              )}
+              
+              {/* Notes page right after its slide */}
+              {slidesWithEditButton.includes(index) && (editModeNotes[index]?.note1 || editModeNotes[index]?.note2) && (
+                <div className="print-slide-page" style={{ order: index * 2 + 1 }}>
+                  <div className="w-full h-full flex items-center justify-center px-4">
+                    <div className="retro-card-container relative h-full w-full max-w-[500px] mx-auto flex flex-col items-start bg-retro-card-bg rounded-2xl p-8">
+                      {/* Question text */}
+                      <h2 
+                        className="retro-body mb-6"
+                        style={{ fontSize: '16px', lineHeight: 1.4 }}
+                      >
+                        {getSlideQuestion(index)}
+                      </h2>
+                      
+                      {/* Post-it notes */}
+                      <div className="flex flex-col flex-1 gap-4 w-full">
+                        {editModeNotes[index]?.note1 && (
+                          <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg whitespace-pre-wrap min-h-[120px]">
+                            {editModeNotes[index].note1}
+                          </div>
+                        )}
+                        {editModeNotes[index]?.note2 && (
+                          <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg whitespace-pre-wrap min-h-[120px]">
+                            {editModeNotes[index].note2}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </React.Fragment>
           ))}
         </div>
       </div>
