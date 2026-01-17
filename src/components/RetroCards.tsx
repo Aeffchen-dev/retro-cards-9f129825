@@ -894,7 +894,7 @@ const RetroCards: React.FC = () => {
 
       case 4:
         return (
-          <div className="flex flex-col items-start w-full h-full">
+          <div className="flex flex-col items-start w-full h-full relative">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">To talk about</span>
@@ -903,7 +903,7 @@ const RetroCards: React.FC = () => {
                 Darüber möchte ich mit dir sprechen
               </h2>
             </div>
-            <div className="flex flex-col flex-1 w-full justify-between gap-6 mt-10">
+            <div className="flex flex-col flex-1 w-full justify-between gap-6 mt-10 screen-only">
               <textarea
                 value={postItTexts.niklas}
                 onChange={(e) =>
@@ -956,6 +956,15 @@ const RetroCards: React.FC = () => {
                 } as React.CSSProperties}
                 placeholder="Jana's Themen"
               />
+            </div>
+            {/* Print-only: post-it notes bottom right */}
+            <div className="hidden print-only absolute bottom-0 right-0 flex-col gap-4 max-w-[60%]">
+              <div className="p-4 bg-retro-post-it text-black text-lg min-h-[100px]">
+                {postItTexts.niklas || "Niklas' Themen"}
+              </div>
+              <div className="p-4 bg-retro-post-it text-black text-lg min-h-[100px]">
+                {postItTexts.jana || "Jana's Themen"}
+              </div>
             </div>
           </div>
         );
@@ -1023,13 +1032,20 @@ const RetroCards: React.FC = () => {
               </div>
               <h2 className="retro-heading w-full">Sind wir uns körperlich nah?</h2>
             </div>
-            {/* Dog image - print only, on right side */}
+            {/* Dog image - print only, on right side center */}
             <div className="hidden print-only absolute top-1/2 -translate-y-1/2 right-0 -mr-4">
               <img
                 src={kalleImage}
                 alt="Kalle"
-                className="w-32 h-32 object-contain"
+                className="w-40 h-40 object-contain"
+                style={{ transform: 'scaleX(-1)' }}
               />
+            </div>
+            {/* Small text - print only, bottom right */}
+            <div className="hidden print-only absolute bottom-0 right-0 flex-col gap-2 text-right">
+              <div className="retro-body text-black">Was wünschen wir uns?</div>
+              <div className="retro-body text-black">Was funktioniert gut?</div>
+              <div className="retro-body text-black">Was fehlt?</div>
             </div>
           </div>
         );

@@ -334,4 +334,25 @@ button {
     min-height: 120px !important;
     background: #f4e5a3 !important;
   }
+
+  /* Slide 2-3: Scale emojis and memojis properly for print */
+  .swiper-slide:nth-child(2) .text-4xl,
+  .swiper-slide:nth-child(3) .text-4xl {
+    font-size: 3rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .swiper-slide:nth-child(2) .w-14,
+  .swiper-slide:nth-child(3) .w-14 {
+    width: 4.5rem !important;
+    height: 4.5rem !important;
+  }
+
+  /* Slide 8: vertically center content */
+  .swiper-slide:nth-child(9) > div > div {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    min-height: 100% !important;
+  }
 }
