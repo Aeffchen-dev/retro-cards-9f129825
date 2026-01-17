@@ -77,5 +77,6 @@ export const STORAGE_KEYS = {
   MEMOJI_POSITIONS: 'retro-cards-memoji-positions',
   POST_IT_TEXTS: 'retro-cards-post-it-texts',
   TAKEAWAY_TEXTS: 'retro-cards-takeaway-texts',
-  CURRENT_QUESTION: 'retro-cards-current-question'
+  CURRENT_QUESTION: 'retro-cards-current-question',
+  EDIT_MODE_NOTES: 'retro-cards-edit-mode-notes'
 } as const;
