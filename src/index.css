@@ -414,8 +414,8 @@ button {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     aspect-ratio: 1 / 1 !important;
-    /* Override inline positions - use CSS custom property for top */
-    left: 50px !important;
+    /* Override inline positions - use CSS custom properties */
+    left: calc(var(--print-left-percent) * 0.6) !important;
     top: var(--print-top-percent) !important;
   }
 
