@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { RefreshCw, Download } from "lucide-react";
+import { RefreshCw, Download, Pencil, X } from "lucide-react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
@@ -90,6 +90,16 @@ const RetroCards: React.FC = () => {
   // State for Kalle speech bubble
   const [showKalleBubble, setShowKalleBubble] = useState(false);
   const [kalleBubbleMessage, setKalleBubbleMessage] = useState("Woof!");
+
+  // State for edit mode on slides
+  const [editModeSlides, setEditModeSlides] = useState<Record<number, boolean>>({});
+  const [editModeNotes, setEditModeNotes] = useState<Record<number, { note1: string; note2: string }>>(() => {
+    const saved = loadFromStorage<Record<number, { note1: string; note2: string }>>(STORAGE_KEYS.EDIT_MODE_NOTES);
+    return saved || {};
+  });
+
+  // Slides that should have the edit button (all except 0, 5, 9, 10)
+  const slidesWithEditButton = [1, 2, 3, 4, 6, 7, 8];
   
   const dogMessages = [
     "Woof!",
@@ -174,6 +184,33 @@ const RetroCards: React.FC = () => {
       saveToStorage(STORAGE_KEYS.CURRENT_QUESTION, currentQuestion);
     }
   }, [currentQuestion]);
+
+  useEffect(() => {
+    if (isInitialMount.current) return;
+    saveToStorage(STORAGE_KEYS.EDIT_MODE_NOTES, editModeNotes);
+  }, [editModeNotes]);
+
+  // Toggle edit mode for a slide
+  const toggleEditMode = (slideIndex: number) => {
+    setEditModeSlides(prev => ({
+      ...prev,
+      [slideIndex]: !prev[slideIndex]
+    }));
+  };
+
+  // Get question text for a slide (for edit mode display)
+  const getSlideQuestion = (slideIndex: number): string => {
+    const questions: Record<number, string> = {
+      1: isMobile ? "Wie geht's mir persönlich?" : "Wie geht's mir persönlich in letzter Zeit?",
+      2: "Wie geht's mir in der Beziehung?",
+      3: "Wie waren die letzten 4 Wochen? Was war los?",
+      4: "Darüber möchte ich mit dir sprechen",
+      6: "Wie läufts mit Kalle?",
+      7: "Sind wir uns körperlich nah?",
+      8: "Das nehmen wir aus der Retro mit"
+    };
+    return questions[slideIndex] || "";
+  };
 
   // Fetch questions from Google Sheets - truly non-blocking with cache
   useEffect(() => {
@@ -1159,9 +1196,67 @@ const RetroCards: React.FC = () => {
               <SwiperSlide key={index}>
                 <div className="w-full h-full flex items-center justify-center px-4">
                   <div 
-                    className="relative h-full w-full max-w-[500px] max-h-[780px] mx-auto flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl"
+                    className="relative h-full w-full max-w-[500px] max-h-[780px] mx-auto flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl overflow-hidden"
                   >
-                    {renderCard(index)}
+                    {/* Edit Mode View */}
+                    {editModeSlides[index] && slidesWithEditButton.includes(index) ? (
+                      <div className="absolute inset-0 p-8 flex flex-col animate-fade-in z-30 bg-retro-card-bg">
+                        {/* Question text - animated to top left, smaller */}
+                        <h2 
+                          className="retro-body text-retro-white/80 mb-6 transition-all duration-300"
+                          style={{ fontSize: isMobile ? '14px' : '16px' }}
+                        >
+                          {getSlideQuestion(index)}
+                        </h2>
+                        
+                        {/* Two post-it notes */}
+                        <div className="flex flex-col flex-1 gap-4 w-full">
+                          <textarea
+                            value={editModeNotes[index]?.note1 || ""}
+                            onChange={(e) =>
+                              setEditModeNotes(prev => ({
+                                ...prev,
+                                [index]: { ...prev[index], note1: e.target.value, note2: prev[index]?.note2 || "" }
+                              }))
+                            }
+                            className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
+                            style={{ borderRadius: "0px" }}
+                            placeholder="Notiz 1..."
+                          />
+                          <textarea
+                            value={editModeNotes[index]?.note2 || ""}
+                            onChange={(e) =>
+                              setEditModeNotes(prev => ({
+                                ...prev,
+                                [index]: { ...prev[index], note2: e.target.value, note1: prev[index]?.note1 || "" }
+                              }))
+                            }
+                            className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
+                            style={{ borderRadius: "0px" }}
+                            placeholder="Notiz 2..."
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        {renderCard(index)}
+                      </>
+                    )}
+
+                    {/* Edit/Close button - top right with 48x48 touch target */}
+                    {slidesWithEditButton.includes(index) && (
+                      <button
+                        onClick={() => toggleEditMode(index)}
+                        className="absolute top-4 right-4 w-12 h-12 flex items-center justify-center z-40 cursor-pointer hover:opacity-80 transition-all duration-300"
+                        style={{ touchAction: 'manipulation' }}
+                      >
+                        {editModeSlides[index] ? (
+                          <X size={24} strokeWidth={2} className="text-retro-white" />
+                        ) : (
+                          <Pencil size={24} strokeWidth={2} className="text-retro-white" />
+                        )}
+                      </button>
+                    )}
 
                     {/* Navigation hint on first card */}
                     {index === 0 && (
@@ -1171,7 +1266,7 @@ const RetroCards: React.FC = () => {
                     )}
 
                     {/* Left navigation zone (32px wide) */}
-                    {index > 0 && (
+                    {index > 0 && !editModeSlides[index] && (
                       <div
                         onClick={() => navigateCard("prev")}
                         className="absolute left-0 top-0 w-8 h-full cursor-pointer z-20"
@@ -1180,7 +1275,7 @@ const RetroCards: React.FC = () => {
                     )}
 
                     {/* Right navigation zone (32px wide) */}
-                    {index < totalCards - 1 && (
+                    {index < totalCards - 1 && !editModeSlides[index] && (
                       <div
                         onClick={() => navigateCard("next")}
                         className="absolute right-0 top-0 w-8 h-full cursor-pointer z-20"
