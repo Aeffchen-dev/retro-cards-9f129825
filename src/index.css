@@ -220,6 +220,11 @@ button {
     position: static !important;
     height: auto !important;
     overflow: visible !important;
+    background: white !important;
+  }
+
+  .bg-retro-black {
+    background: white !important;
   }
 
   .swiper {
@@ -239,13 +244,13 @@ button {
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    min-height: 90vh !important;
+    min-height: 180vh !important;
     page-break-inside: avoid !important;
     page-break-after: always !important;
     break-inside: avoid !important;
     break-after: page !important;
     margin: 0 !important;
-    padding: 20px !important;
+    padding: 40px 20px !important;
   }
 
   .swiper-slide:last-child {
@@ -263,7 +268,7 @@ button {
   .bg-retro-card-bg {
     background: #e8e8e8 !important;
     box-shadow: none !important;
-    min-height: 80vh !important;
+    min-height: 160vh !important;
     max-height: none !important;
     height: auto !important;
   }
