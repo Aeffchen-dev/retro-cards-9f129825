@@ -375,17 +375,12 @@ button {
     font-size: 1rem !important;
   }
 
-  /* Slide 2-3: Memoji container - scale container to match pixel positions from frontend */
+  /* Slide 2-3: Memoji container */
   .print-memoji-container {
     position: relative !important;
-    /* Frontend container is ~520px tall. We set same height and scale down to fit print */
-    height: 520px !important;
-    width: 480px !important;
+    height: 55vh !important;
     margin-top: 8px !important;
     overflow: visible !important;
-    /* Scale to fit print page - 520px * 0.7 = 364px which fits well */
-    transform: scale(0.7) !important;
-    transform-origin: top left !important;
   }
 
   .print-emoji-scale {
@@ -396,21 +391,21 @@ button {
   }
 
   .print-memoji-container .text-4xl {
-    font-size: 3.5rem !important;
+    font-size: 2.5rem !important;
     line-height: 1 !important;
   }
 
-  /* Memojis - keep frontend size (w-14 h-14 = 56px) */
+  /* Memojis - use percentage-based positioning for print */
   .print-memoji {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
-    max-width: 56px !important;
-    max-height: 56px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
     position: absolute !important;
     z-index: 9999 !important;
     border-radius: 50% !important;
@@ -419,18 +414,21 @@ button {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     aspect-ratio: 1 / 1 !important;
+    /* Override inline positions - use CSS custom property for top */
+    left: 50px !important;
+    top: var(--print-top-percent) !important;
   }
 
   .print-memoji img {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
-    max-width: 56px !important;
-    max-height: 56px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
     object-fit: cover !important;
     border-radius: 50% !important;
     -webkit-print-color-adjust: exact !important;

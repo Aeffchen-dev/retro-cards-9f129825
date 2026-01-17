@@ -758,12 +758,13 @@ const RetroCards: React.FC = () => {
               </div>
               {/* Draggable Memojis */}
               <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji"
+                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-niklas"
                 style={{
                   left: memojisPositions[1]?.niklas.x || (isMobile ? 248 : 380),
                   top: memojisPositions[1]?.niklas.y || (isMobile ? 64 : 120),
                   zIndex: 1000,
-                }}
+                  '--print-top-percent': `${((memojisPositions[1]?.niklas.y || (isMobile ? 64 : 120)) / (isMobile ? 400 : 520)) * 100}%`,
+                } as React.CSSProperties}
                 onMouseDown={(e) => handleMemojiMouseDown(e, 1, "niklas")}
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "niklas")}
               >
@@ -775,12 +776,13 @@ const RetroCards: React.FC = () => {
                 />
               </div>
               <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji"
+                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-jana"
                 style={{
                   left: memojisPositions[1]?.jana.x || (isMobile ? 248 : 380),
                   top: memojisPositions[1]?.jana.y || (isMobile ? 136 : 192),
                   zIndex: 1000,
-                }}
+                  '--print-top-percent': `${((memojisPositions[1]?.jana.y || (isMobile ? 136 : 192)) / (isMobile ? 400 : 520)) * 100}%`,
+                } as React.CSSProperties}
                 onMouseDown={(e) => handleMemojiMouseDown(e, 1, "jana")}
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "jana")}
               >
@@ -819,12 +821,13 @@ const RetroCards: React.FC = () => {
               </div>
               {/* Draggable Memojis */}
               <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji"
+                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-niklas"
                 style={{
                   left: memojisPositions[2]?.niklas.x || (isMobile ? 248 : 380),
                   top: memojisPositions[2]?.niklas.y || (isMobile ? 64 : 120),
                   zIndex: 1000,
-                }}
+                  '--print-top-percent': `${((memojisPositions[2]?.niklas.y || (isMobile ? 64 : 120)) / (isMobile ? 400 : 520)) * 100}%`,
+                } as React.CSSProperties}
                 onMouseDown={(e) => handleMemojiMouseDown(e, 2, "niklas")}
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "niklas")}
               >
@@ -836,12 +839,13 @@ const RetroCards: React.FC = () => {
                 />
               </div>
               <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji"
+                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-jana"
                 style={{
                   left: memojisPositions[2]?.jana.x || (isMobile ? 248 : 380),
                   top: memojisPositions[2]?.jana.y || (isMobile ? 136 : 192),
                   zIndex: 1000,
-                }}
+                  '--print-top-percent': `${((memojisPositions[2]?.jana.y || (isMobile ? 136 : 192)) / (isMobile ? 400 : 520)) * 100}%`,
+                } as React.CSSProperties}
                 onMouseDown={(e) => handleMemojiMouseDown(e, 2, "jana")}
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "jana")}
               >
