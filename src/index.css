@@ -278,22 +278,21 @@ button {
 
   /* Print slides container - show in print */
   .print-slides-container {
-    display: flex !important;
-    flex-direction: column !important;
+    display: block !important;
+    width: 100% !important;
   }
 
   .print-slide-page {
     display: block !important;
-    width: 100vw !important;
+    width: 100% !important;
     height: 100vh !important;
-    min-height: 100vh !important;
-    max-height: 100vh !important;
     page-break-after: always !important;
     page-break-inside: avoid !important;
     break-after: page !important;
     break-inside: avoid !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
+    position: relative !important;
   }
 
   .print-slide-page:last-child {
