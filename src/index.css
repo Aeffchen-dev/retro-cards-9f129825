@@ -300,14 +300,14 @@ button {
     visibility: visible !important;
   }
 
-  /* Card styling for print - fill page exactly */
+  /* Card styling for print - fill page exactly with top margin */
   .bg-retro-card-bg {
     background: #e8e8e8 !important;
     box-shadow: none !important;
     height: 100vh !important;
     min-height: 100vh !important;
     max-height: 100vh !important;
-    padding: 32px !important;
+    padding: 48px 32px 32px 32px !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
   }
@@ -368,11 +368,12 @@ button {
     font-size: 1rem !important;
   }
 
-  /* Slide 2-3: Memoji container - scale to match print page */
+  /* Slide 2-3: Memoji container - properly sized for print */
   .print-memoji-container {
     position: relative !important;
-    height: 65vh !important;
+    height: 55vh !important;
     margin-top: 24px !important;
+    overflow: visible !important;
   }
 
   .print-memoji-container .flex.flex-col.items-start.justify-between.h-full {
@@ -385,15 +386,29 @@ button {
     line-height: 1.2 !important;
   }
 
-  /* Memojis - ensure visibility in print */
+  /* Memojis - fix positioning for print by using percentage-based positioning */
   .print-memoji {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 3.5rem !important;
-    height: 3.5rem !important;
+    width: 60px !important;
+    height: 60px !important;
     position: absolute !important;
     z-index: 1000 !important;
+    left: auto !important;
+    right: 20% !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+  }
+
+  /* Position first memoji (Niklas) */
+  .print-memoji:first-of-type {
+    top: 15% !important;
+  }
+
+  /* Position second memoji (Jana) */
+  .print-memoji:last-of-type {
+    top: 35% !important;
   }
 
   .print-memoji img {
@@ -402,11 +417,13 @@ button {
     opacity: 1 !important;
     width: 100% !important;
     height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
   }
 
   /* Ensure flex containers maintain proper height */
   .swiper-slide .h-full {
-    height: calc(100vh - 64px) !important;
+    height: calc(100vh - 80px) !important;
   }
 
   .swiper-slide .flex-1 {
