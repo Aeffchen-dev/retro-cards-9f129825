@@ -377,13 +377,13 @@ button {
   .retro-card-container {
     max-width: 490px !important;
     width: 490px !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: calc(100vh - 40mm) !important;
+    height: 85vh !important;
+    min-height: 85vh !important;
+    max-height: 85vh !important;
     margin: auto !important;
     padding: 40px 40px 40px 40px !important;
     background: #e8e8e8 !important;
-    overflow: visible !important;
+    overflow: hidden !important;
   }
 
   .print-slide-page .retro-card-container {
