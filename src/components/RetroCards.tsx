@@ -98,8 +98,8 @@ const RetroCards: React.FC = () => {
     return saved || {};
   });
 
-  // Slides that should have the edit button (all except 0, 4, 5, 9, 10)
-  const slidesWithEditButton = [1, 2, 3, 6, 7, 8];
+  // Slides that should have the edit button (all except 0, 4, 5, 8, 9, 10)
+  const slidesWithEditButton = [1, 2, 3, 6, 7];
   
   const dogMessages = [
     "Woof!",
