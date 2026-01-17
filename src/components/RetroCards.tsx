@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { RefreshCw, Download, Pencil, X } from "lucide-react";
+import { RefreshCw, Download, Pencil, X, Trash2 } from "lucide-react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
@@ -745,6 +745,35 @@ const RetroCards: React.FC = () => {
     }
   };
 
+  const clearAllUserData = () => {
+    if (window.confirm("Möchtest du wirklich alle deine Einträge löschen? Diese Aktion kann nicht rückgängig gemacht werden.")) {
+      // Clear all state
+      setPostItTexts({ niklas: "", jana: "" });
+      setTakeawayTexts({ niklas: "", jana: "" });
+      setEditModeNotes({});
+      setCapturedPhotos([]);
+      setCurrentQuestion("");
+      
+      // Reset memoji positions
+      const mobile = window.innerWidth <= 768;
+      const x = mobile ? 248 : 380;
+      const yNiklas = mobile ? 64 : 120;
+      const yJana = mobile ? 136 : 192;
+      setMemojisPositions({
+        1: { niklas: { x, y: yNiklas }, jana: { x, y: yJana } },
+        2: { niklas: { x, y: yNiklas }, jana: { x, y: yJana } },
+      });
+      
+      // Clear localStorage
+      Object.values(STORAGE_KEYS).forEach(key => {
+        localStorage.removeItem(key);
+      });
+      
+      // Also clear questions cache
+      localStorage.removeItem('retro-cards-questions-cache-v4');
+    }
+  };
+
   const renderCard = (cardIndex: number) => {
     switch (cardIndex) {
       case 0:
@@ -1108,13 +1137,22 @@ const RetroCards: React.FC = () => {
               </div>
               <h2 className="retro-heading w-full">Sichert eure Inhalte</h2>
             </div>
-            <button
-              onClick={() => window.print()}
-              className="flex items-center gap-3 py-3 px-6 rounded-full bg-transparent hover:bg-retro-white/10 transition-colors cursor-pointer"
-            >
-              <Download size={20} className="text-retro-white" />
-              <span className="retro-body">Ergebnisse sichern</span>
-            </button>
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={() => window.print()}
+                className="flex items-center gap-3 py-3 px-6 rounded-full bg-transparent hover:bg-retro-white/10 transition-colors cursor-pointer"
+              >
+                <Download size={20} className="text-retro-white" />
+                <span className="retro-body">Ergebnisse sichern</span>
+              </button>
+              <button
+                onClick={clearAllUserData}
+                className="flex items-center gap-3 py-3 px-6 rounded-full bg-transparent hover:bg-retro-white/10 transition-colors cursor-pointer"
+              >
+                <Trash2 size={20} className="text-retro-white" />
+                <span className="retro-body">Meine Einträge löschen</span>
+              </button>
+            </div>
           </div>
         );
 
