@@ -1078,7 +1078,7 @@ const RetroCards: React.FC = () => {
               </div>
               <button
                 onClick={() => window.print()}
-                className="flex items-center gap-3 py-3 px-6 rounded-full border border-retro-white bg-transparent hover:bg-retro-white/10 transition-colors cursor-pointer"
+                className="flex items-center gap-3 py-3 px-6 rounded-full bg-transparent hover:bg-retro-white/10 transition-colors cursor-pointer"
               >
                 <Download size={20} className="text-retro-white" />
                 <span className="retro-body">Ergebnisse sichern</span>
