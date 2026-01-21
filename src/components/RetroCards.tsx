@@ -335,16 +335,25 @@ const RetroCards: React.FC = () => {
   // Handle mobile Safari viewport height and card dimensions - debounced
   // Store initial height to avoid resizing when keyboard opens
   const initialViewportHeight = useRef<number>(typeof window !== "undefined" ? window.innerHeight : 767);
+  const lastMobileState = useRef<boolean>(typeof window !== "undefined" && window.innerWidth <= 768);
+  const lastViewportHeight = useRef<number>(typeof window !== "undefined" ? window.innerHeight : 767);
   
   useEffect(() => {
-    let rafId: number;
+    let rafId: number | null = null;
+    let isCleanedUp = false;
     
     const updateViewportHeight = () => {
+      if (isCleanedUp) return;
+      
       const height = window.innerHeight;
       const width = window.innerWidth;
 
-      // Update mobile detection
-      setIsMobile(width <= 768);
+      // Only update mobile state if it actually changed
+      const newIsMobile = width <= 768;
+      if (newIsMobile !== lastMobileState.current) {
+        lastMobileState.current = newIsMobile;
+        setIsMobile(newIsMobile);
+      }
 
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
       
@@ -359,8 +368,12 @@ const RetroCards: React.FC = () => {
         initialViewportHeight.current = height;
       }
 
-      // Ensure minimum height for usability
-      setViewportHeight(Math.max(height, 600));
+      // Only update viewport height if it actually changed significantly (more than 10px)
+      const newHeight = Math.max(height, 600);
+      if (Math.abs(newHeight - lastViewportHeight.current) > 10) {
+        lastViewportHeight.current = newHeight;
+        setViewportHeight(newHeight);
+      }
     };
 
     // Run immediately
@@ -368,7 +381,9 @@ const RetroCards: React.FC = () => {
     
     // Debounced handler for events
     const handleResize = () => {
-      cancelAnimationFrame(rafId);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
       rafId = requestAnimationFrame(updateViewportHeight);
     };
     
@@ -379,9 +394,12 @@ const RetroCards: React.FC = () => {
     const timeoutId = setTimeout(updateViewportHeight, 100);
 
     return () => {
+      isCleanedUp = true;
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('orientationchange', handleResize);
-      cancelAnimationFrame(rafId);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
       clearTimeout(timeoutId);
     };
   }, []);
