@@ -411,20 +411,34 @@ const RetroCards: React.FC = () => {
     };
   }, []);
 
+  // Use refs to avoid stale closures in drag handlers
+  const isMobileRef = useRef(isMobile);
+  const swiperRefRef = useRef(swiperRef);
+  
+  // Keep refs in sync
+  useEffect(() => {
+    isMobileRef.current = isMobile;
+  }, [isMobile]);
+  
+  useEffect(() => {
+    swiperRefRef.current = swiperRef;
+  }, [swiperRef]);
+
   // Add global event listeners for memoji dragging
   useEffect(() => {
-    const handleGlobalMouseMove = (e: MouseEvent) => {
-      if (!draggingMemoji) return;
+    if (!draggingMemoji) return;
 
+    const handleGlobalMouseMove = (e: MouseEvent) => {
       const deltaX = e.clientX - draggingMemoji.startX;
       const deltaY = e.clientY - draggingMemoji.startY;
 
-      // Boundaries relative to the memoji container - keep within card bounds
-      const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
-      const containerHeight = isMobile ? 300 : 520; // Increased desktop height to allow dragging closer to instruction text
+      // Use ref for current isMobile value
+      const mobile = isMobileRef.current;
+      const containerWidth = mobile ? 320 : 480;
+      const containerHeight = mobile ? 300 : 520;
       
-      const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
-      const newY = Math.max(-40, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // -40px allows dragging into mt-10 space
+      const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX));
+      const newY = Math.max(-40, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY));
 
       setMemojisPositions((prev) => ({
         ...prev,
@@ -436,27 +450,25 @@ const RetroCards: React.FC = () => {
     };
 
     const handleGlobalMouseUp = () => {
-      // Re-enable swiper when memoji dragging ends
-      if (swiperRef) {
-        swiperRef.allowTouchMove = true;
+      // Use ref for current swiper value
+      if (swiperRefRef.current) {
+        swiperRefRef.current.allowTouchMove = true;
       }
       setDraggingMemoji(null);
     };
 
     const handleGlobalTouchMove = (e: TouchEvent) => {
-      if (!draggingMemoji) return;
-
       const touch = e.touches[0];
       const deltaX = touch.clientX - draggingMemoji.startX;
       const deltaY = touch.clientY - draggingMemoji.startY;
 
-      // Boundaries relative to the memoji container - keep within card bounds
-      const containerWidth = isMobile ? 320 : 480; // Width of the draggable area
-      const containerHeight = isMobile ? 300 : 520; // Increased desktop height to allow dragging closer to instruction text
+      // Use ref for current isMobile value
+      const mobile = isMobileRef.current;
+      const containerWidth = mobile ? 320 : 480;
+      const containerHeight = mobile ? 300 : 520;
       
-      
-      const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX)); // 56px = memoji width
-      const newY = Math.max(-40, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY)); // -40px allows dragging into mt-10 space
+      const newX = Math.max(0, Math.min(containerWidth - 56, draggingMemoji.initialX + deltaX));
+      const newY = Math.max(-40, Math.min(containerHeight - 56, draggingMemoji.initialY + deltaY));
 
       setMemojisPositions((prev) => ({
         ...prev,
@@ -468,19 +480,17 @@ const RetroCards: React.FC = () => {
     };
 
     const handleGlobalTouchEnd = () => {
-      // Re-enable swiper when memoji dragging ends  
-      if (swiperRef) {
-        swiperRef.allowTouchMove = true;
+      // Use ref for current swiper value
+      if (swiperRefRef.current) {
+        swiperRefRef.current.allowTouchMove = true;
       }
       setDraggingMemoji(null);
     };
 
-    if (draggingMemoji) {
-      document.addEventListener("mousemove", handleGlobalMouseMove);
-      document.addEventListener("mouseup", handleGlobalMouseUp);
-      document.addEventListener("touchmove", handleGlobalTouchMove);
-      document.addEventListener("touchend", handleGlobalTouchEnd);
-    }
+    document.addEventListener("mousemove", handleGlobalMouseMove);
+    document.addEventListener("mouseup", handleGlobalMouseUp);
+    document.addEventListener("touchmove", handleGlobalTouchMove);
+    document.addEventListener("touchend", handleGlobalTouchEnd);
 
     return () => {
       document.removeEventListener("mousemove", handleGlobalMouseMove);
