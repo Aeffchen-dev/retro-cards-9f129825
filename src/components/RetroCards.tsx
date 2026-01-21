@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { RefreshCw, Download, Pencil, X, Trash2 } from "lucide-react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
@@ -191,15 +191,22 @@ const RetroCards: React.FC = () => {
   }, [editModeNotes]);
 
   // Toggle edit mode for a slide
-  const toggleEditMode = (slideIndex: number) => {
+  const toggleEditMode = useCallback((slideIndex: number) => {
     setEditModeSlides(prev => ({
       ...prev,
       [slideIndex]: !prev[slideIndex]
     }));
-  };
+  }, []);
+
+  // Handle slide change - memoized to prevent unnecessary re-renders
+  const handleSlideChange = useCallback((swiper: SwiperType) => {
+    setCurrentCard(swiper.activeIndex);
+    // Only reset if there are active edit modes
+    setEditModeSlides(prev => Object.keys(prev).length > 0 ? {} : prev);
+  }, []);
 
   // Get question text for a slide (for edit mode display)
-  const getSlideQuestion = (slideIndex: number): string => {
+  const getSlideQuestion = useCallback((slideIndex: number): string => {
     const questions: Record<number, string> = {
       1: isMobile ? "Wie geht's mir persönlich?" : "Wie geht's mir persönlich in letzter Zeit?",
       2: "Wie geht's mir in der Beziehung?",
@@ -211,7 +218,7 @@ const RetroCards: React.FC = () => {
       8: "Das nehmen wir aus der Retro mit"
     };
     return questions[slideIndex] || "";
-  };
+  }, [isMobile]);
 
   // Fetch questions from Google Sheets - truly non-blocking with cache
   useEffect(() => {
@@ -326,11 +333,11 @@ const RetroCards: React.FC = () => {
     return () => clearTimeout(timeoutId);
   }, []);
 
-  const getRandomQuestion = () => {
+  const getRandomQuestion = useCallback(() => {
     if (allQuestions.length === 0) return;
     const randomIndex = Math.floor(Math.random() * allQuestions.length);
     setCurrentQuestion(allQuestions[randomIndex]);
-  };
+  }, [allQuestions]);
 
   // Handle mobile Safari viewport height and card dimensions - debounced
   // Store initial height to avoid resizing when keyboard opens
@@ -753,7 +760,7 @@ const RetroCards: React.FC = () => {
     });
   };
 
-  const navigateCard = (direction: "prev" | "next") => {
+  const navigateCard = useCallback((direction: "prev" | "next") => {
     if (!swiperRef) return;
     
     if (direction === "prev") {
@@ -761,9 +768,9 @@ const RetroCards: React.FC = () => {
     } else {
       swiperRef.slideNext();
     }
-  };
+  }, [swiperRef]);
 
-  const clearAllUserData = () => {
+  const clearAllUserData = useCallback(() => {
     if (window.confirm("Möchtest du wirklich alle deine Einträge löschen? Diese Aktion kann nicht rückgängig gemacht werden.")) {
       // Clear all state
       setPostItTexts({ niklas: "", jana: "" });
@@ -790,7 +797,7 @@ const RetroCards: React.FC = () => {
       // Also clear questions cache
       localStorage.removeItem('retro-cards-questions-cache-v4');
     }
-  };
+  }, []);
 
   const renderCard = (cardIndex: number) => {
     switch (cardIndex) {
@@ -1235,10 +1242,7 @@ const RetroCards: React.FC = () => {
             speed={500}
             initialSlide={currentCard}
             onSwiper={setSwiperRef}
-            onSlideChange={(swiper) => {
-              setCurrentCard(swiper.activeIndex);
-              setEditModeSlides({});
-            }}
+            onSlideChange={handleSlideChange}
             allowTouchMove={!draggingMemoji}
             style={{ height: '100%', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}
             effect="slide"
