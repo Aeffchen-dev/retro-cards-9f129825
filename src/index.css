@@ -229,6 +229,13 @@ button {
   color: #b29f71 !important;
 }
 
+/* Setup slide: 60% opacity placeholders that vanish on typing (native behavior) */
+.setup-name-input::placeholder,
+.setup-emoji-input::placeholder {
+  color: #ffffff;
+  opacity: 0.6;
+}
+
 /* Print styles for archiving all slides */
 @media print {
   @page {
