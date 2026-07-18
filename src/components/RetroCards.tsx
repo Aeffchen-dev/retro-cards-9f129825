@@ -1222,7 +1222,7 @@ const RetroCards: React.FC = () => {
                   role="switch"
                   aria-checked={setupData.openRelationship}
                   onClick={() => setSetupData({ ...setupData, openRelationship: !setupData.openRelationship })}
-                  className={`relative shrink-0 w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-retro-white' : 'bg-retro-white/30'}`}
+                  className={`relative shrink-0 w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-[#00E676]' : 'bg-retro-white/30'}`}
                 >
                   <span
                     className={`absolute top-1 left-1 w-5 h-5 rounded-full bg-retro-card-bg transition-transform ${setupData.openRelationship ? 'translate-x-5' : ''}`}
@@ -1233,7 +1233,7 @@ const RetroCards: React.FC = () => {
             <button
               type="button"
               onClick={() => swiperRef?.slideNext()}
-              className="mt-auto w-full retro-body text-retro-card-bg bg-retro-white rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
+              className="mt-auto w-full retro-body text-retro-card-bg bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
             >
               Los geht's
             </button>
