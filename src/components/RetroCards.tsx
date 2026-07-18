@@ -40,6 +40,20 @@ const NAME2_PLACEHOLDER = "Name deines Partners";
 const EMOJI1_PLACEHOLDER = "🧚‍♂️";
 const EMOJI2_PLACEHOLDER = "🧚‍♀️";
 
+// German possessive helper: add "s" unless name ends in s, x, z or ß
+const germanPossessive = (name: string): string => {
+  if (!name) return "";
+  const lastChar = name.slice(-1).toLowerCase();
+  const needsApostrophe = ["s", "x", "z", "ß"].includes(lastChar);
+  return name + (needsApostrophe ? "'" : "s");
+};
+
+// Post-it / takeaway placeholder that falls back to sensible German when no name is entered
+const postItPlaceholder = (name: string, label: string, fallback: string): string => {
+  if (!name || name === NAME1_PLACEHOLDER || name === NAME2_PLACEHOLDER) return fallback;
+  return `${germanPossessive(name)} ${label}`;
+};
+
 // Keep only a single emoji grapheme; drop any plain text
 const sanitizeEmoji = (input: string): string => {
   if (!input) return "";
