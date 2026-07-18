@@ -1086,44 +1086,120 @@ const RetroCards: React.FC = () => {
           </div>
         );
 
-      case 6:
+      case SLIDE_INTRO:
         return (
-          <div className="flex flex-col items-start w-full h-full relative">
+          <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
-                <span className="retro-label">Kalle</span>
+                <span className="retro-label">Intro</span>
               </div>
-              <h2 className="retro-heading w-full">
-                Wie läufts mit Kalle?
-              </h2>
+              <h2 className="retro-heading w-full">Retro Cards</h2>
             </div>
-            <div className="absolute bottom-0 left-0 flex flex-col gap-4 pb-0">
-              <div className="retro-body text-white">Was war schön?</div>
-              <div className="retro-body text-white">Was war anstrengend?</div>
-              <div className="retro-body text-white">Entlasten wir uns gegenseitig?</div>
-              <div className="retro-body text-white">Nehmen wir Hilfe an?</div>
-              <div className="retro-body text-white">Welche Fortschritte gab es?</div>
-              <div className="retro-body text-white">Was sollten wir noch angehen?</div>
+            <div className="flex flex-col gap-4 w-full mt-8 retro-body">
+              <p>Retro Cards is a simple guided ritual to check in with your partner, reflect on your relationship, and keep it healthy.</p>
+              <p>Make it a monthly date night. Grab a drink, and enjoy an honest conversation that builds connection.</p>
+              <p>Listen with an open mind, stay curious, and always remember you're playing on the same team.</p>
             </div>
-            <div className="absolute top-1/2 -translate-y-[calc(50%+24px)] right-0 -mr-4 md:-mr-6">
-              <div className="relative cursor-pointer" onClick={() => {
-                const randomMessage = dogMessages[Math.floor(Math.random() * dogMessages.length)];
-                setKalleBubbleMessage(randomMessage);
-                setShowKalleBubble(!showKalleBubble);
-              }}>
-                {showKalleBubble && (
-                  <div className="absolute top-[20px] right-[calc(50%+88px)] bg-black text-white px-3 py-1.5 rounded-[16px] whitespace-nowrap text-sm animate-bubble-pop">
-                    <span className="font-bold">{kalleBubbleMessage}</span>
-                    <div className="absolute top-1/2 -translate-y-1/2 -right-[6px] w-0 h-0 border-t-[6px] border-b-[6px] border-l-[6px] border-t-transparent border-b-transparent border-l-black"></div>
-                  </div>
-                )}
-                <img 
-                  src={kalleImage} 
-                  alt="Kalle" 
-                  className={`max-h-[200px] md:max-h-[264px] object-contain transition-transform duration-300 ease-out hover:scale-105 active:scale-95 ${showKalleBubble ? 'animate-[wiggle_0.5s_ease-in-out]' : ''}`}
-                  style={{ transform: 'scaleX(-1)' }}
+          </div>
+        );
+
+      case SLIDE_SETUP:
+        return (
+          <div className="flex flex-col items-start w-full h-full">
+            <div className="flex flex-col items-start gap-6 w-full">
+              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+                <span className="retro-label">Setup</span>
+              </div>
+              <h2 className="retro-heading w-full">Setup</h2>
+            </div>
+            <div className="flex flex-col gap-6 w-full mt-8">
+              {/* Person 1 */}
+              <div className="flex items-center gap-3 w-full border-b border-retro-white/30 pb-2">
+                <input
+                  type="text"
+                  value={setupData.emoji1}
+                  onChange={(e) => setSetupData({ ...setupData, emoji1: e.target.value.slice(0, 4) })}
+                  placeholder="🙂"
+                  className="w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                />
+                <input
+                  type="text"
+                  value={setupData.name1}
+                  onChange={(e) => setSetupData({ ...setupData, name1: e.target.value })}
+                  placeholder="Dein Name"
+                  className="flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
                 />
               </div>
+              {/* Person 2 */}
+              <div className="flex items-center gap-3 w-full border-b border-retro-white/30 pb-2">
+                <input
+                  type="text"
+                  value={setupData.emoji2}
+                  onChange={(e) => setSetupData({ ...setupData, emoji2: e.target.value.slice(0, 4) })}
+                  placeholder="😊"
+                  className="w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                />
+                <input
+                  type="text"
+                  value={setupData.name2}
+                  onChange={(e) => setSetupData({ ...setupData, name2: e.target.value })}
+                  placeholder="Name deines Partners"
+                  className="flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
+                />
+              </div>
+              {/* Toggle */}
+              <label className="flex items-center justify-between w-full cursor-pointer mt-4">
+                <span className="retro-body">Offene Beziehung</span>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={setupData.openRelationship}
+                  onClick={() => setSetupData({ ...setupData, openRelationship: !setupData.openRelationship })}
+                  className={`relative w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-retro-white' : 'bg-retro-white/30'}`}
+                >
+                  <span
+                    className={`absolute top-1 left-1 w-5 h-5 rounded-full bg-retro-card-bg transition-transform ${setupData.openRelationship ? 'translate-x-5' : ''}`}
+                  />
+                </button>
+              </label>
+              <p className="retro-body text-retro-white/60 text-sm">
+                Deine Namen und Emojis werden in allen Karten verwendet.
+              </p>
+            </div>
+          </div>
+        );
+
+      case SLIDE_REFLECTION:
+        return (
+          <div className="flex flex-col items-start w-full h-full">
+            <div className="flex flex-col items-start gap-6 w-full">
+              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+                <span className="retro-label">Reflection</span>
+              </div>
+              <h2 className="retro-heading w-full">Reflection</h2>
+            </div>
+            <div className="flex flex-col flex-1 w-full gap-4 mt-8">
+              <textarea
+                value={reflectionTexts.nice}
+                onChange={(e) => setReflectionTexts({ ...reflectionTexts, nice: e.target.value })}
+                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-base focus:outline-none"
+                style={{ borderRadius: "0px" }}
+                placeholder="Das finde ich gerade schön in unserer Beziehung"
+              />
+              <textarea
+                value={reflectionTexts.thanks}
+                onChange={(e) => setReflectionTexts({ ...reflectionTexts, thanks: e.target.value })}
+                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-base focus:outline-none"
+                style={{ borderRadius: "0px" }}
+                placeholder="Dafür möchte ich Danke sagen / ein Kompliment für dich"
+              />
+              <textarea
+                value={reflectionTexts.idea}
+                onChange={(e) => setReflectionTexts({ ...reflectionTexts, idea: e.target.value })}
+                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-base focus:outline-none"
+                style={{ borderRadius: "0px" }}
+                placeholder="Eine Idee für uns / Das können wir besser machen"
+              />
             </div>
           </div>
         );
