@@ -1231,8 +1231,14 @@ const RetroCards: React.FC = () => {
               </div>
               <div className="mt-6 retro-label opacity-60 text-center w-full">
                 Swipe to continue →
-              </div>
             </div>
+            <button
+              type="button"
+              onClick={() => swiperRef?.slideNext()}
+              className="mt-auto w-full retro-body text-retro-card-bg bg-retro-white rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
+            >
+              Los geht's
+            </button>
           </div>
         );
       }
