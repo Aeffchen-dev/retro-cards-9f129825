@@ -106,17 +106,6 @@ const RetroCards: React.FC = () => {
   // State for captured photos
   const [capturedPhotos, setCapturedPhotos] = useState<string[]>([]);
 
-  // State for Kalle speech bubble
-  const [showKalleBubble, setShowKalleBubble] = useState(false);
-  const [kalleBubbleMessage, setKalleBubbleMessage] = useState("Woof!");
-
-  // State for edit mode on slides
-  const [editModeSlides, setEditModeSlides] = useState<Record<number, boolean>>({});
-  const [editModeNotes, setEditModeNotes] = useState<Record<number, { note1: string; note2: string }>>(() => {
-    const saved = loadFromStorage<Record<number, { note1: string; note2: string }>>(STORAGE_KEYS.EDIT_MODE_NOTES);
-    return saved || {};
-  });
-
   // State for setup (names, emojis, open-relationship toggle)
   const [setupData, setSetupData] = useState<SetupData>(() => {
     const saved = loadFromStorage<SetupData>(STORAGE_KEYS.SETUP_DATA);
