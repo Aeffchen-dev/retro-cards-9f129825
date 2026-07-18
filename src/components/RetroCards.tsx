@@ -1109,7 +1109,7 @@ const RetroCards: React.FC = () => {
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Intro</span>
               </div>
-              <div className="flex flex-col gap-4 w-full retro-body text-xs">
+              <div className="flex flex-col gap-4 w-full retro-body-copy">
                 <p>Retro Cards ist euer monatlicher Check-in für eure Beziehung. Nehmt euch Zeit füreinander, sprecht ehrlich über das, was euch bewegt, und stärkt, was euch verbindet.</p>
                 <p>Macht daraus euren Date-Abend. Schnappt euch euer Lieblingsgetränk, macht’s euch gemütlich und genießt ein gutes Gespräch.</p>
                 <p>Hört einander zu, bleibt neugierig und denkt immer daran: Ihr seid ein Team. ❤️</p>
