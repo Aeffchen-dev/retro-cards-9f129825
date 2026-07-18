@@ -20,13 +20,43 @@ const SLIDE_INTRO = 100;
 const SLIDE_SETUP = 101;
 const SLIDE_REFLECTION = 102;
 
+interface ExtraPartner {
+  name: string;
+  emoji: string;
+}
+
 interface SetupData {
   name1: string;
   name2: string;
   emoji1: string;
   emoji2: string;
   openRelationship: boolean;
+  extraPartners: ExtraPartner[];
 }
+
+const NAME1_PLACEHOLDER = "Your name";
+const NAME2_PLACEHOLDER = "Your partner's name";
+const EMOJI1_PLACEHOLDER = "🧚‍♂️";
+const EMOJI2_PLACEHOLDER = "🧚‍♀️";
+
+// Keep only a single emoji grapheme; drop any plain text
+const sanitizeEmoji = (input: string): string => {
+  if (!input) return "";
+  const emojiRe = /\p{Extended_Pictographic}/u;
+  try {
+    // @ts-ignore
+    const seg = new Intl.Segmenter(undefined, { granularity: "grapheme" });
+    // @ts-ignore
+    const graphemes = Array.from(seg.segment(input), (s: any) => s.segment as string);
+    for (let i = graphemes.length - 1; i >= 0; i--) {
+      if (emojiRe.test(graphemes[i])) return graphemes[i];
+    }
+    return "";
+  } catch {
+    const m = input.match(/\p{Extended_Pictographic}(\u200D\p{Extended_Pictographic})*/gu);
+    return m ? m[m.length - 1] : "";
+  }
+};
 
 interface ReflectionTexts {
   nice: string;
