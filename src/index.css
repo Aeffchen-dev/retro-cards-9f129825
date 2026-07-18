@@ -177,7 +177,7 @@
 .retro-label {
   font-family: "Kokoro", Arial, sans-serif;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 10px;
   line-height: 1;
   letter-spacing: 0.4px;
   color: var(--retro-white);
@@ -194,8 +194,16 @@
 .retro-body {
   font-family: Arial, sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.2;
+  color: var(--retro-white);
+}
+
+.retro-body-copy {
+  font-family: Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
   color: var(--retro-white);
 }
 
