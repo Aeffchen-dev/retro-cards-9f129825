@@ -1119,8 +1119,8 @@ const RetroCards: React.FC = () => {
         );
 
       case SLIDE_SETUP: {
-        const emojiInputCls = "setup-emoji-input w-14 h-14 text-3xl bg-transparent focus:outline-none text-center border border-retro-white rounded-lg leading-none";
-        const nameInputCls = "setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg";
+        const emojiInputCls = "setup-emoji-input w-11 h-11 text-xl bg-transparent focus:outline-none text-center border border-retro-white/30 rounded-lg leading-none";
+        const nameInputCls = "name-input-field flex-1 retro-body-copy bg-transparent border-none focus:outline-none text-retro-white w-full";
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
