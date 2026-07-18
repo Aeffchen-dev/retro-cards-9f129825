@@ -1169,28 +1169,30 @@ const RetroCards: React.FC = () => {
               {/* Extra partners */}
               {setupData.extraPartners.map((p, idx) => (
                 <div key={idx} className="flex items-center gap-3 w-full">
-                  <input
-                    type="text"
-                    value={p.emoji}
-                    onChange={(e) => {
-                      const next = [...setupData.extraPartners];
-                      next[idx] = { ...next[idx], emoji: sanitizeEmoji(e.target.value) };
-                      setSetupData({ ...setupData, extraPartners: next });
-                    }}
-                    placeholder="🧚"
-                    className={emojiInputCls}
-                  />
-                  <input
-                    type="text"
-                    value={p.name}
-                    onChange={(e) => {
-                      const next = [...setupData.extraPartners];
-                      next[idx] = { ...next[idx], name: e.target.value };
-                      setSetupData({ ...setupData, extraPartners: next });
-                    }}
-                    placeholder={`Partner ${idx + 3}`}
-                    className={nameInputCls}
-                  />
+                  <div className="flex-1 flex items-center gap-3">
+                    <input
+                      type="text"
+                      value={p.emoji}
+                      onChange={(e) => {
+                        const next = [...setupData.extraPartners];
+                        next[idx] = { ...next[idx], emoji: sanitizeEmoji(e.target.value) };
+                        setSetupData({ ...setupData, extraPartners: next });
+                      }}
+                      placeholder="🧚"
+                      className={emojiInputCls}
+                    />
+                    <input
+                      type="text"
+                      value={p.name}
+                      onChange={(e) => {
+                        const next = [...setupData.extraPartners];
+                        next[idx] = { ...next[idx], name: e.target.value };
+                        setSetupData({ ...setupData, extraPartners: next });
+                      }}
+                      placeholder={`Partner ${idx + 3}`}
+                      className={nameInputCls}
+                    />
+                  </div>
                   <button
                     type="button"
                     aria-label="Partner entfernen"
@@ -1210,7 +1212,7 @@ const RetroCards: React.FC = () => {
                   ...setupData,
                   extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
                 })}
-                className="self-start retro-body text-retro-white text-sm border border-retro-white rounded-full px-4 py-2 hover:bg-retro-white hover:text-retro-card-bg transition-colors no-underline"
+                className="self-start retro-body text-retro-white/90 bg-retro-white/10 backdrop-blur-md border border-retro-white/20 rounded-full px-4 py-2 hover:bg-retro-white/20 transition-colors no-underline"
               >
                 + Weiteren Partner hinzufügen
               </button>
@@ -1233,7 +1235,7 @@ const RetroCards: React.FC = () => {
             <button
               type="button"
               onClick={() => swiperRef?.slideNext()}
-              className="mt-auto w-full retro-body text-retro-card-bg bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
+              className="mt-auto w-full retro-body text-black bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
             >
               Los geht's
             </button>
@@ -1402,14 +1404,14 @@ const RetroCards: React.FC = () => {
     >
       {/* Header - Compact like friends app */}
       <div className="flex items-center gap-4 w-full px-4 py-3">
-        <h1 className="retro-title" style={{ fontSize: '19.6px' }}>Retro Cards</h1>
+        <h1 className="retro-title" style={{ fontSize: '17.64px' }}>Retro Cards</h1>
         <div className="flex-1 text-right retro-body">
           {currentCard + 1} / {totalCards}
         </div>
       </div>
 
       {/* Card Content - Swiper.js slide animation like friends app */}
-      <div className="flex-1 flex items-center justify-center px-4 pb-1">
+      <div className="flex-1 flex items-center justify-center px-4 py-4">
         <div className="w-full h-full">
            <Swiper
             modules={[Navigation, Pagination]}
@@ -1436,7 +1438,7 @@ const RetroCards: React.FC = () => {
               <SwiperSlide key={slideId}>
                 <div className="w-full h-full flex items-center justify-center px-4">
                   <div 
-                    className="retro-card-container relative h-full w-full max-w-[500px] max-h-[780px] mx-auto flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl overflow-hidden"
+                    className="retro-card-container relative h-full w-full max-w-[500px] max-h-[720px] mx-auto flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl overflow-hidden"
                   >
                     {/* Edit Mode View */}
                     {editModeSlides[slideId] && slidesWithEditButton.includes(slideId) ? (
