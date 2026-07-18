@@ -930,15 +930,21 @@ const RetroCards: React.FC = () => {
         );
 
       case 1:
+      case 2: {
+        const cardId = cardIndex;
+        const heading = cardId === 1
+          ? (isMobile ? "Wie geht's mir persönlich?" : "Wie geht's mir persönlich in letzter Zeit?")
+          : "Wie geht's mir in der Beziehung?";
+        const defaultX = isMobile ? 248 : 380;
+        // Stagger default y positions per person so they don't overlap
+        const defaultY = (i: number) => (isMobile ? 40 + i * 56 : 96 + i * 72);
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Health Check</span>
               </div>
-              <h2 className="retro-heading w-full">
-                {isMobile ? "Wie geht's mir persönlich?" : "Wie geht's mir persönlich in letzter Zeit?"}
-              </h2>
+              <h2 className="retro-heading w-full">{heading}</h2>
             </div>
             <div className="relative w-full flex-1 mt-10 print-memoji-container">
               <div className="flex flex-col items-start justify-between h-full print-emoji-scale">
@@ -948,96 +954,38 @@ const RetroCards: React.FC = () => {
                 <div className="text-4xl">🙁</div>
                 <div className="text-4xl">😩</div>
               </div>
-              {/* Draggable Memojis */}
-              <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-niklas"
-                style={{
-                  left: memojisPositions[1]?.niklas.x || (isMobile ? 248 : 380),
-                  top: memojisPositions[1]?.niklas.y || (isMobile ? 64 : 120),
-                  zIndex: 1000,
-                  '--print-top-percent': `${((memojisPositions[1]?.niklas.y || (isMobile ? 64 : 120)) / (isMobile ? 400 : 520)) * 100}%`,
-                  '--print-left-percent': `${((memojisPositions[1]?.niklas.x || (isMobile ? 248 : 380)) / (isMobile ? 320 : 480)) * 100}%`,
-                } as React.CSSProperties}
-                onMouseDown={(e) => handleMemojiMouseDown(e, 1, "niklas")}
-                onTouchStart={(e) => handleMemojiTouchStart(e, 1, "niklas")}
-              >
-                <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{displayEmoji1}</div>
-              </div>
-              <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-jana"
-                style={{
-                  left: memojisPositions[1]?.jana.x || (isMobile ? 248 : 380),
-                  top: memojisPositions[1]?.jana.y || (isMobile ? 136 : 192),
-                  zIndex: 1000,
-                  '--print-top-percent': `${((memojisPositions[1]?.jana.y || (isMobile ? 136 : 192)) / (isMobile ? 400 : 520)) * 100}%`,
-                  '--print-left-percent': `${((memojisPositions[1]?.jana.x || (isMobile ? 248 : 380)) / (isMobile ? 320 : 480)) * 100}%`,
-                } as React.CSSProperties}
-                onMouseDown={(e) => handleMemojiMouseDown(e, 1, "jana")}
-                onTouchStart={(e) => handleMemojiTouchStart(e, 1, "jana")}
-              >
-                <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{displayEmoji2}</div>
-              </div>
+              {/* Draggable Memojis — one per person */}
+              {persons.map((person, i) => {
+                const posX = memojisPositions[cardId]?.[person.key]?.x ?? defaultX;
+                const posY = memojisPositions[cardId]?.[person.key]?.y ?? defaultY(i);
+                return (
+                  <div
+                    key={person.key}
+                    className={`absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-${person.key}`}
+                    style={{
+                      left: posX,
+                      top: posY,
+                      zIndex: 1000,
+                      '--print-top-percent': `${(posY / (isMobile ? 400 : 520)) * 100}%`,
+                      '--print-left-percent': `${(posX / (isMobile ? 320 : 480)) * 100}%`,
+                    } as React.CSSProperties}
+                    onMouseDown={(e) => handleMemojiMouseDown(e, cardId, person.key)}
+                    onTouchStart={(e) => handleMemojiTouchStart(e, cardId, person.key)}
+                  >
+                    <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">
+                      {person.emoji}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
             <div className="w-full text-center retro-body mt-8 screen-only">
               Platziert eure Memojis auf der Skala
             </div>
           </div>
         );
+      }
 
-      case 2:
-        return (
-          <div className="flex flex-col items-start w-full h-full">
-            <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
-                <span className="retro-label">Health Check</span>
-              </div>
-              <h2 className="retro-heading w-full">
-                Wie geht's mir in der Beziehung?
-              </h2>
-            </div>
-            <div className="relative w-full flex-1 mt-10 print-memoji-container">
-              <div className="flex flex-col items-start justify-between h-full print-emoji-scale">
-                <div className="text-4xl">🤩</div>
-                <div className="text-4xl">🙂</div>
-                <div className="text-4xl">🤨</div>
-                <div className="text-4xl">🙁</div>
-                <div className="text-4xl">😩</div>
-              </div>
-              {/* Draggable Memojis */}
-              <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-niklas"
-                style={{
-                  left: memojisPositions[2]?.niklas.x || (isMobile ? 248 : 380),
-                  top: memojisPositions[2]?.niklas.y || (isMobile ? 64 : 120),
-                  zIndex: 1000,
-                  '--print-top-percent': `${((memojisPositions[2]?.niklas.y || (isMobile ? 64 : 120)) / (isMobile ? 400 : 520)) * 100}%`,
-                  '--print-left-percent': `${((memojisPositions[2]?.niklas.x || (isMobile ? 248 : 380)) / (isMobile ? 320 : 480)) * 100}%`,
-                } as React.CSSProperties}
-                onMouseDown={(e) => handleMemojiMouseDown(e, 2, "niklas")}
-                onTouchStart={(e) => handleMemojiTouchStart(e, 2, "niklas")}
-              >
-                <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{displayEmoji1}</div>
-              </div>
-              <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-jana"
-                style={{
-                  left: memojisPositions[2]?.jana.x || (isMobile ? 248 : 380),
-                  top: memojisPositions[2]?.jana.y || (isMobile ? 136 : 192),
-                  zIndex: 1000,
-                  '--print-top-percent': `${((memojisPositions[2]?.jana.y || (isMobile ? 136 : 192)) / (isMobile ? 400 : 520)) * 100}%`,
-                  '--print-left-percent': `${((memojisPositions[2]?.jana.x || (isMobile ? 248 : 380)) / (isMobile ? 320 : 480)) * 100}%`,
-                } as React.CSSProperties}
-                onMouseDown={(e) => handleMemojiMouseDown(e, 2, "jana")}
-                onTouchStart={(e) => handleMemojiTouchStart(e, 2, "jana")}
-              >
-                <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{displayEmoji2}</div>
-              </div>
-            </div>
-            <div className="w-full text-center retro-body mt-8 screen-only">
-              Platziert eure Memojis auf der Skala
-            </div>
-          </div>
-        );
 
       case 3:
         return (
