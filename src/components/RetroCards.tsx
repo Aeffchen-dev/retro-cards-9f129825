@@ -15,10 +15,11 @@ const niklasMemoji = "/assets/niklas-memoji.png";
 const janaMemoji = "/assets/jana-memoji.png";
 
 // Slide IDs — case numbers used inside renderCard's switch
-// Legacy cases 0-10 (with 6=Kalle removed), plus new: 100=Intro, 101=Setup, 102=Reflection
+// Legacy cases 0-10 (with 6=Kalle removed), plus new: 100=Intro, 101=Setup, 102=Reflection, 103=Logo
 const SLIDE_INTRO = 100;
 const SLIDE_SETUP = 101;
 const SLIDE_REFLECTION = 102;
+const SLIDE_LOGO = 103;
 
 interface ExtraPartner {
   name: string;
@@ -65,8 +66,7 @@ interface ReflectionTexts {
 }
 
 interface MemojisPosition {
-  niklas: { x: number; y: number };
-  jana: { x: number; y: number };
+  [personKey: string]: { x: number; y: number };
 }
 
 const RetroCards: React.FC = () => {
@@ -84,18 +84,18 @@ const RetroCards: React.FC = () => {
   >(() => {
     const mobile = typeof window !== "undefined" && window.innerWidth <= 768;
     const x = mobile ? 248 : 380;
-    const yNiklas = mobile ? 64 : 120;
-    const yJana = mobile ? 136 : 192;
+    const y0 = mobile ? 64 : 120;
+    const y1 = mobile ? 136 : 192;
     return {
-      1: { niklas: { x, y: yNiklas }, jana: { x, y: yJana } },
-      2: { niklas: { x, y: yNiklas }, jana: { x, y: yJana } },
+      1: { p0: { x, y: y0 }, p1: { x, y: y1 } },
+      2: { p0: { x, y: y0 }, p1: { x, y: y1 } },
     };
   });
 
   // State for memoji dragging
   const [draggingMemoji, setDraggingMemoji] = useState<{
     cardIndex: number;
-    person: "niklas" | "jana";
+    person: string;
     startX: number;
     startY: number;
     initialX: number;
@@ -156,6 +156,19 @@ const RetroCards: React.FC = () => {
   const displayEmoji1 = setupData.emoji1 || EMOJI1_PLACEHOLDER;
   const displayEmoji2 = setupData.emoji2 || EMOJI2_PLACEHOLDER;
 
+  // All persons (2 main + extra partners) — used to render draggable memojis on health-check slides
+  const persons = useMemo(() => {
+    return [
+      { key: 'p0', name: displayName1, emoji: displayEmoji1 },
+      { key: 'p1', name: displayName2, emoji: displayEmoji2 },
+      ...setupData.extraPartners.map((p, i) => ({
+        key: `p${i + 2}`,
+        name: p.name || `Partner ${i + 3}`,
+        emoji: p.emoji || '🧚',
+      })),
+    ];
+  }, [displayName1, displayName2, displayEmoji1, displayEmoji2, setupData.extraPartners]);
+
   // State for reflection slide post-its
   const [reflectionTexts, setReflectionTexts] = useState<ReflectionTexts>(() => {
     const saved = loadFromStorage<ReflectionTexts>(STORAGE_KEYS.REFLECTION_TEXTS);
@@ -175,7 +188,7 @@ const RetroCards: React.FC = () => {
 
   // Ordered list of visible slide ids — filters out dates if openRelationship is off
   const slides = useMemo(() => {
-    const arr: number[] = [SLIDE_INTRO, SLIDE_SETUP, 0, 1, 2, 3, SLIDE_REFLECTION, 4];
+    const arr: number[] = [SLIDE_LOGO, SLIDE_INTRO, SLIDE_SETUP, 0, 1, 2, 3, SLIDE_REFLECTION, 4];
     if (setupData.openRelationship) arr.push(5);
     arr.push(7, 8, 9, 10);
     return arr;
@@ -791,7 +804,7 @@ const RetroCards: React.FC = () => {
   const handleMemojiMouseDown = (
     e: React.MouseEvent,
     cardIndex: number,
-    person: "niklas" | "jana",
+    person: string,
   ) => {
     e.stopPropagation();
     e.preventDefault();
@@ -815,7 +828,7 @@ const RetroCards: React.FC = () => {
   const handleMemojiTouchStart = (
     e: React.TouchEvent,
     cardIndex: number,
-    person: "niklas" | "jana",
+    person: string,
   ) => {
     e.stopPropagation();
     e.preventDefault();
@@ -860,11 +873,11 @@ const RetroCards: React.FC = () => {
       // Reset memoji positions
       const mobile = window.innerWidth <= 768;
       const x = mobile ? 248 : 380;
-      const yNiklas = mobile ? 64 : 120;
-      const yJana = mobile ? 136 : 192;
+      const y0 = mobile ? 64 : 120;
+      const y1 = mobile ? 136 : 192;
       setMemojisPositions({
-        1: { niklas: { x, y: yNiklas }, jana: { x, y: yJana } },
-        2: { niklas: { x, y: yNiklas }, jana: { x, y: yJana } },
+        1: { p0: { x, y: y0 }, p1: { x, y: y1 } },
+        2: { p0: { x, y: y0 }, p1: { x, y: y1 } },
       });
       
       // Clear localStorage
@@ -917,15 +930,21 @@ const RetroCards: React.FC = () => {
         );
 
       case 1:
+      case 2: {
+        const cardId = cardIndex;
+        const heading = cardId === 1
+          ? (isMobile ? "Wie geht's mir persönlich?" : "Wie geht's mir persönlich in letzter Zeit?")
+          : "Wie geht's mir in der Beziehung?";
+        const defaultX = isMobile ? 248 : 380;
+        // Stagger default y positions per person so they don't overlap
+        const defaultY = (i: number) => (isMobile ? 40 + i * 56 : 96 + i * 72);
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Health Check</span>
               </div>
-              <h2 className="retro-heading w-full">
-                {isMobile ? "Wie geht's mir persönlich?" : "Wie geht's mir persönlich in letzter Zeit?"}
-              </h2>
+              <h2 className="retro-heading w-full">{heading}</h2>
             </div>
             <div className="relative w-full flex-1 mt-10 print-memoji-container">
               <div className="flex flex-col items-start justify-between h-full print-emoji-scale">
@@ -935,96 +954,38 @@ const RetroCards: React.FC = () => {
                 <div className="text-4xl">🙁</div>
                 <div className="text-4xl">😩</div>
               </div>
-              {/* Draggable Memojis */}
-              <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-niklas"
-                style={{
-                  left: memojisPositions[1]?.niklas.x || (isMobile ? 248 : 380),
-                  top: memojisPositions[1]?.niklas.y || (isMobile ? 64 : 120),
-                  zIndex: 1000,
-                  '--print-top-percent': `${((memojisPositions[1]?.niklas.y || (isMobile ? 64 : 120)) / (isMobile ? 400 : 520)) * 100}%`,
-                  '--print-left-percent': `${((memojisPositions[1]?.niklas.x || (isMobile ? 248 : 380)) / (isMobile ? 320 : 480)) * 100}%`,
-                } as React.CSSProperties}
-                onMouseDown={(e) => handleMemojiMouseDown(e, 1, "niklas")}
-                onTouchStart={(e) => handleMemojiTouchStart(e, 1, "niklas")}
-              >
-                <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{displayEmoji1}</div>
-              </div>
-              <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-jana"
-                style={{
-                  left: memojisPositions[1]?.jana.x || (isMobile ? 248 : 380),
-                  top: memojisPositions[1]?.jana.y || (isMobile ? 136 : 192),
-                  zIndex: 1000,
-                  '--print-top-percent': `${((memojisPositions[1]?.jana.y || (isMobile ? 136 : 192)) / (isMobile ? 400 : 520)) * 100}%`,
-                  '--print-left-percent': `${((memojisPositions[1]?.jana.x || (isMobile ? 248 : 380)) / (isMobile ? 320 : 480)) * 100}%`,
-                } as React.CSSProperties}
-                onMouseDown={(e) => handleMemojiMouseDown(e, 1, "jana")}
-                onTouchStart={(e) => handleMemojiTouchStart(e, 1, "jana")}
-              >
-                <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{displayEmoji2}</div>
-              </div>
+              {/* Draggable Memojis — one per person */}
+              {persons.map((person, i) => {
+                const posX = memojisPositions[cardId]?.[person.key]?.x ?? defaultX;
+                const posY = memojisPositions[cardId]?.[person.key]?.y ?? defaultY(i);
+                return (
+                  <div
+                    key={person.key}
+                    className={`absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-${person.key}`}
+                    style={{
+                      left: posX,
+                      top: posY,
+                      zIndex: 1000,
+                      '--print-top-percent': `${(posY / (isMobile ? 400 : 520)) * 100}%`,
+                      '--print-left-percent': `${(posX / (isMobile ? 320 : 480)) * 100}%`,
+                    } as React.CSSProperties}
+                    onMouseDown={(e) => handleMemojiMouseDown(e, cardId, person.key)}
+                    onTouchStart={(e) => handleMemojiTouchStart(e, cardId, person.key)}
+                  >
+                    <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">
+                      {person.emoji}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
             <div className="w-full text-center retro-body mt-8 screen-only">
               Platziert eure Memojis auf der Skala
             </div>
           </div>
         );
+      }
 
-      case 2:
-        return (
-          <div className="flex flex-col items-start w-full h-full">
-            <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
-                <span className="retro-label">Health Check</span>
-              </div>
-              <h2 className="retro-heading w-full">
-                Wie geht's mir in der Beziehung?
-              </h2>
-            </div>
-            <div className="relative w-full flex-1 mt-10 print-memoji-container">
-              <div className="flex flex-col items-start justify-between h-full print-emoji-scale">
-                <div className="text-4xl">🤩</div>
-                <div className="text-4xl">🙂</div>
-                <div className="text-4xl">🤨</div>
-                <div className="text-4xl">🙁</div>
-                <div className="text-4xl">😩</div>
-              </div>
-              {/* Draggable Memojis */}
-              <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-niklas"
-                style={{
-                  left: memojisPositions[2]?.niklas.x || (isMobile ? 248 : 380),
-                  top: memojisPositions[2]?.niklas.y || (isMobile ? 64 : 120),
-                  zIndex: 1000,
-                  '--print-top-percent': `${((memojisPositions[2]?.niklas.y || (isMobile ? 64 : 120)) / (isMobile ? 400 : 520)) * 100}%`,
-                  '--print-left-percent': `${((memojisPositions[2]?.niklas.x || (isMobile ? 248 : 380)) / (isMobile ? 320 : 480)) * 100}%`,
-                } as React.CSSProperties}
-                onMouseDown={(e) => handleMemojiMouseDown(e, 2, "niklas")}
-                onTouchStart={(e) => handleMemojiTouchStart(e, 2, "niklas")}
-              >
-                <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{displayEmoji1}</div>
-              </div>
-              <div
-                className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-jana"
-                style={{
-                  left: memojisPositions[2]?.jana.x || (isMobile ? 248 : 380),
-                  top: memojisPositions[2]?.jana.y || (isMobile ? 136 : 192),
-                  zIndex: 1000,
-                  '--print-top-percent': `${((memojisPositions[2]?.jana.y || (isMobile ? 136 : 192)) / (isMobile ? 400 : 520)) * 100}%`,
-                  '--print-left-percent': `${((memojisPositions[2]?.jana.x || (isMobile ? 248 : 380)) / (isMobile ? 320 : 480)) * 100}%`,
-                } as React.CSSProperties}
-                onMouseDown={(e) => handleMemojiMouseDown(e, 2, "jana")}
-                onTouchStart={(e) => handleMemojiTouchStart(e, 2, "jana")}
-              >
-                <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{displayEmoji2}</div>
-              </div>
-            </div>
-            <div className="w-full text-center retro-body mt-8 screen-only">
-              Platziert eure Memojis auf der Skala
-            </div>
-          </div>
-        );
 
       case 3:
         return (
@@ -1119,6 +1080,21 @@ const RetroCards: React.FC = () => {
           </div>
         );
 
+      case SLIDE_LOGO:
+        return (
+          <div className="flex flex-col items-center justify-center w-full h-full text-center">
+            <h1
+              className="retro-title"
+              style={{ fontSize: '64px', lineHeight: 1.05 }}
+            >
+              Retro Cards
+            </h1>
+            <div className="mt-8 retro-label opacity-60">
+              Swipe to continue →
+            </div>
+          </div>
+        );
+
       case SLIDE_INTRO:
         return (
           <div className="flex flex-col items-start w-full h-full">
@@ -1126,7 +1102,6 @@ const RetroCards: React.FC = () => {
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Intro</span>
               </div>
-              <h2 className="retro-heading w-full">Retro Cards</h2>
             </div>
             <div className="flex flex-col gap-4 w-full mt-8 retro-body">
               <p>Retro Cards is a simple guided ritual to check in with your partner, reflect on your relationship, and keep it healthy.</p>
@@ -1136,56 +1111,55 @@ const RetroCards: React.FC = () => {
           </div>
         );
 
-      case SLIDE_SETUP:
+      case SLIDE_SETUP: {
+        const emojiInputCls = "setup-emoji-input w-14 h-14 text-3xl bg-transparent focus:outline-none text-center border border-retro-white rounded-lg leading-none";
+        const nameInputCls = "setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg";
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Setup</span>
               </div>
-              <h2 className="retro-heading w-full">
-                Tragt eure Namen ein und wählt ein individuelles Emoji
-              </h2>
             </div>
-            <div className="flex flex-col gap-6 w-full mt-8">
+            <div className="flex flex-col gap-4 w-full mt-8">
               {/* Person 1 */}
-              <div className="flex items-center gap-3 w-full border-b border-retro-white/30 pb-2">
+              <div className="flex items-center gap-3 w-full">
                 <input
                   type="text"
                   inputMode="text"
                   value={setupData.emoji1}
                   onChange={(e) => setSetupData({ ...setupData, emoji1: sanitizeEmoji(e.target.value) })}
                   placeholder={EMOJI1_PLACEHOLDER}
-                  className="setup-emoji-input w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                  className={emojiInputCls}
                 />
                 <input
                   type="text"
                   value={setupData.name1}
                   onChange={(e) => setSetupData({ ...setupData, name1: e.target.value })}
                   placeholder={NAME1_PLACEHOLDER}
-                  className="setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
+                  className={nameInputCls}
                 />
               </div>
               {/* Person 2 */}
-              <div className="flex items-center gap-3 w-full border-b border-retro-white/30 pb-2">
+              <div className="flex items-center gap-3 w-full">
                 <input
                   type="text"
                   value={setupData.emoji2}
                   onChange={(e) => setSetupData({ ...setupData, emoji2: sanitizeEmoji(e.target.value) })}
                   placeholder={EMOJI2_PLACEHOLDER}
-                  className="setup-emoji-input w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                  className={emojiInputCls}
                 />
                 <input
                   type="text"
                   value={setupData.name2}
                   onChange={(e) => setSetupData({ ...setupData, name2: e.target.value })}
                   placeholder={NAME2_PLACEHOLDER}
-                  className="setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
+                  className={nameInputCls}
                 />
               </div>
               {/* Extra partners */}
               {setupData.extraPartners.map((p, idx) => (
-                <div key={idx} className="flex items-center gap-3 w-full border-b border-retro-white/30 pb-2">
+                <div key={idx} className="flex items-center gap-3 w-full">
                   <input
                     type="text"
                     value={p.emoji}
@@ -1195,7 +1169,7 @@ const RetroCards: React.FC = () => {
                       setSetupData({ ...setupData, extraPartners: next });
                     }}
                     placeholder="🧚"
-                    className="setup-emoji-input w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                    className={emojiInputCls}
                   />
                   <input
                     type="text"
@@ -1206,7 +1180,7 @@ const RetroCards: React.FC = () => {
                       setSetupData({ ...setupData, extraPartners: next });
                     }}
                     placeholder={`Partner ${idx + 3}`}
-                    className="setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
+                    className={nameInputCls}
                   />
                   <button
                     type="button"
@@ -1227,28 +1201,34 @@ const RetroCards: React.FC = () => {
                   ...setupData,
                   extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
                 })}
-                className="self-start retro-body text-retro-white/70 hover:text-retro-white text-sm underline underline-offset-4"
+                className="self-start retro-body text-retro-white text-sm border border-retro-white rounded-full px-4 py-2 hover:bg-retro-white hover:text-retro-card-bg transition-colors no-underline"
               >
                 + Weiteren Partner hinzufügen
               </button>
               {/* Toggle */}
-              <label className="flex items-center justify-between w-full cursor-pointer mt-4">
+              <div className="flex items-center justify-between w-full mt-4">
                 <span className="retro-body">Offene Beziehung</span>
                 <button
                   type="button"
                   role="switch"
                   aria-checked={setupData.openRelationship}
                   onClick={() => setSetupData({ ...setupData, openRelationship: !setupData.openRelationship })}
-                  className={`relative w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-retro-white' : 'bg-retro-white/30'}`}
+                  className={`relative shrink-0 w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-retro-white' : 'bg-retro-white/30'}`}
                 >
                   <span
                     className={`absolute top-1 left-1 w-5 h-5 rounded-full bg-retro-card-bg transition-transform ${setupData.openRelationship ? 'translate-x-5' : ''}`}
                   />
                 </button>
-              </label>
+              </div>
+              <div className="mt-6 retro-label opacity-60 text-center w-full">
+                Swipe to continue →
+              </div>
             </div>
           </div>
         );
+      }
+
+
 
 
       case SLIDE_REFLECTION:
@@ -1540,8 +1520,8 @@ const RetroCards: React.FC = () => {
         <div className="hidden print-slides-container">
           {slides.map((slideId, index) => (
             <React.Fragment key={`print-${slideId}`}>
-              {/* Skip Intro, Setup, Archive (9) and Questions (10) in print */}
-              {slideId !== SLIDE_INTRO && slideId !== SLIDE_SETUP && slideId !== 9 && slideId !== 10 && (
+              {/* Skip Logo, Intro, Setup, Archive (9) and Questions (10) in print */}
+              {slideId !== SLIDE_LOGO && slideId !== SLIDE_INTRO && slideId !== SLIDE_SETUP && slideId !== 9 && slideId !== 10 && (
                 <div className="print-slide-page" style={{ order: index * 2 }}>
                   <div className="retro-card-container relative flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl">
                     {renderCard(slideId)}
