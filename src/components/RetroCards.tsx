@@ -1334,7 +1334,7 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder={`${displayName1}s Erkenntnisse`}
+                placeholder={postItPlaceholder(setupData.name1, "Erkenntnisse", "Meine Erkenntnisse")}
               />
               <textarea
                 value={takeawayTexts.jana}
@@ -1345,7 +1345,7 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder={`${displayName2}s Erkenntnisse`}
+                placeholder={postItPlaceholder(setupData.name2, "Erkenntnisse", "Erkenntnisse meines Partners")}
               />
             </div>
           </div>
