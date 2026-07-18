@@ -1104,16 +1104,16 @@ const RetroCards: React.FC = () => {
 
       case SLIDE_INTRO:
         return (
-          <div className="flex flex-col items-start w-full h-full">
-            <div className="flex flex-col items-start gap-6 w-full">
+          <div className="flex flex-col justify-center items-start w-full h-full">
+            <div className="flex flex-col items-start gap-8 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Intro</span>
               </div>
-            </div>
-            <div className="flex flex-col gap-4 w-full mt-8 retro-body">
-              <p>Retro Cards ist ein einfaches, geführtes Ritual, um mit deinem Partner einzuchecken, eure Beziehung zu reflektieren und sie gesund zu halten.</p>
-              <p>Macht es zum monatlichen Date-Abend. Schnappt euch ein Getränk und genießt ein ehrliches Gespräch, das Verbindung schafft.</p>
-              <p>Hört mit offenem Herzen zu, bleibt neugierig und denkt immer daran: Ihr spielt im selben Team.</p>
+              <div className="flex flex-col gap-4 w-full retro-body text-xs">
+                <p>Retro Cards ist euer monatlicher Check-in für eure Beziehung. Nehmt euch Zeit füreinander, sprecht ehrlich über das, was euch bewegt, und stärkt, was euch verbindet.</p>
+                <p>Macht daraus euren Date-Abend. Schnappt euch euer Lieblingsgetränk, macht’s euch gemütlich und genießt ein gutes Gespräch.</p>
+                <p>Hört einander zu, bleibt neugierig und denkt immer daran: Ihr seid ein Team. ❤️</p>
+              </div>
             </div>
           </div>
         );
