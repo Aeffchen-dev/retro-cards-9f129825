@@ -920,7 +920,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white" style={{ paddingTop: '6px', paddingBottom: '4px' }}>
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white" style={{ paddingTop: '6px', paddingBottom: '4px' }}>
                 <span className="retro-label" style={{ lineHeight: 1, display: 'flex', alignItems: 'center' }}>Memory Time</span>
               </div>
               <h2 className="retro-heading w-full">
@@ -965,7 +965,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Health Check</span>
               </div>
               <h2 className="retro-heading w-full">{heading}</h2>
@@ -1015,7 +1015,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">The last 4 weeks</span>
               </div>
               <h2 className="retro-heading w-full">
@@ -1049,7 +1049,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full relative">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">To talk about</span>
               </div>
               <h2 className="retro-heading w-full">
@@ -1096,7 +1096,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start gap-14 w-full justify-center">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Offene Beziehung</span>
               </div>
               <h2 className="retro-heading w-full">Wie stehts mit Dates?</h2>
@@ -1120,7 +1120,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col justify-center items-start w-full h-full">
             <div className="flex flex-col items-start gap-8 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Intro</span>
               </div>
               <div className="flex flex-col gap-4 w-full retro-body-copy">
@@ -1138,7 +1138,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Setup</span>
               </div>
             </div>
@@ -1270,7 +1270,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Reflection</span>
               </div>
               <h2 className="retro-heading w-full">Reflection</h2>
@@ -1305,7 +1305,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start gap-14 w-full justify-center">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Intimacy</span>
               </div>
               <h2 className="retro-heading w-full">Sind wir uns körperlich nah?</h2>
@@ -1317,7 +1317,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Takeaways</span>
               </div>
               <h2 className="retro-heading w-full">
@@ -1355,7 +1355,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-center w-full h-full">
             <div className="flex flex-col items-center gap-6 w-full text-center flex-1 justify-center">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Archive</span>
               </div>
               <h2 className="retro-heading w-full">Sichert eure Inhalte</h2>
@@ -1383,7 +1383,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Questions</span>
               </div>
               <h2 className="retro-heading w-full">
