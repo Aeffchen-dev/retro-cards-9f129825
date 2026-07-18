@@ -1520,8 +1520,8 @@ const RetroCards: React.FC = () => {
         <div className="hidden print-slides-container">
           {slides.map((slideId, index) => (
             <React.Fragment key={`print-${slideId}`}>
-              {/* Skip Intro, Setup, Archive (9) and Questions (10) in print */}
-              {slideId !== SLIDE_INTRO && slideId !== SLIDE_SETUP && slideId !== 9 && slideId !== 10 && (
+              {/* Skip Logo, Intro, Setup, Archive (9) and Questions (10) in print */}
+              {slideId !== SLIDE_LOGO && slideId !== SLIDE_INTRO && slideId !== SLIDE_SETUP && slideId !== 9 && slideId !== 10 && (
                 <div className="print-slide-page" style={{ order: index * 2 }}>
                   <div className="retro-card-container relative flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl">
                     {renderCard(slideId)}
