@@ -35,8 +35,8 @@ interface SetupData {
   extraPartners: ExtraPartner[];
 }
 
-const NAME1_PLACEHOLDER = "Your name";
-const NAME2_PLACEHOLDER = "Your partner's name";
+const NAME1_PLACEHOLDER = "Dein Name";
+const NAME2_PLACEHOLDER = "Name deines Partners";
 const EMOJI1_PLACEHOLDER = "🧚‍♂️";
 const EMOJI2_PLACEHOLDER = "🧚‍♀️";
 
@@ -1092,7 +1092,7 @@ const RetroCards: React.FC = () => {
 
       case SLIDE_LOGO:
         return (
-          <div className="flex flex-col items-center justify-center w-full h-full text-center">
+          <div className="flex flex-col items-center w-full h-full text-center" style={{ paddingTop: '25%' }}>
             <h1
               className="retro-title"
               style={{ fontSize: '64px', lineHeight: 1.05 }}
@@ -1111,9 +1111,9 @@ const RetroCards: React.FC = () => {
               </div>
             </div>
             <div className="flex flex-col gap-4 w-full mt-8 retro-body">
-              <p>Retro Cards is a simple guided ritual to check in with your partner, reflect on your relationship, and keep it healthy.</p>
-              <p>Make it a monthly date night. Grab a drink, and enjoy an honest conversation that builds connection.</p>
-              <p>Listen with an open mind, stay curious, and always remember you're playing on the same team.</p>
+              <p>Retro Cards ist ein einfaches, geführtes Ritual, um mit deinem Partner einzuchecken, eure Beziehung zu reflektieren und sie gesund zu halten.</p>
+              <p>Macht es zum monatlichen Date-Abend. Schnappt euch ein Getränk und genießt ein ehrliches Gespräch, das Verbindung schafft.</p>
+              <p>Hört mit offenem Herzen zu, bleibt neugierig und denkt immer daran: Ihr spielt im selben Team.</p>
             </div>
           </div>
         );
@@ -1222,7 +1222,7 @@ const RetroCards: React.FC = () => {
                   role="switch"
                   aria-checked={setupData.openRelationship}
                   onClick={() => setSetupData({ ...setupData, openRelationship: !setupData.openRelationship })}
-                  className={`relative shrink-0 w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-retro-white' : 'bg-retro-white/30'}`}
+                  className={`relative shrink-0 w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-[#00E676]' : 'bg-retro-white/30'}`}
                 >
                   <span
                     className={`absolute top-1 left-1 w-5 h-5 rounded-full bg-retro-card-bg transition-transform ${setupData.openRelationship ? 'translate-x-5' : ''}`}
@@ -1233,7 +1233,7 @@ const RetroCards: React.FC = () => {
             <button
               type="button"
               onClick={() => swiperRef?.slideNext()}
-              className="mt-auto w-full retro-body text-retro-card-bg bg-retro-white rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
+              className="mt-auto w-full retro-body text-retro-card-bg bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
             >
               Los geht's
             </button>
@@ -1402,7 +1402,7 @@ const RetroCards: React.FC = () => {
     >
       {/* Header - Compact like friends app */}
       <div className="flex items-center gap-4 w-full px-4 py-3">
-        <h1 className="retro-title">Retro Cards</h1>
+        <h1 className="retro-title" style={{ fontSize: '19.6px' }}>Retro Cards</h1>
         <div className="flex-1 text-right retro-body">
           {currentCard + 1} / {totalCards}
         </div>
@@ -1575,21 +1575,6 @@ const RetroCards: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer - Same margin as header for consistency */}
-      <div className={`flex items-center gap-4 w-full px-4 ${isMobile ? 'py-3' : 'py-3'}`}>
-        <button
-          onClick={openRelationshipByDesign}
-          className="flex-1 retro-body text-left cursor-pointer hover:opacity-80 transition-opacity"
-        >
-          Relationship by design
-        </button>
-        <button
-          onClick={openFeedbackEmail}
-          className="retro-body cursor-pointer hover:opacity-80 transition-opacity"
-        >
-          Feedback geben
-        </button>
-      </div>
 
       {/* Camera Preview Modal */}
       {cameraStream && (
