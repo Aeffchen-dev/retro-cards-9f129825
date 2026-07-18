@@ -1439,7 +1439,14 @@ const RetroCards: React.FC = () => {
             slidesPerView={1}
             speed={500}
             initialSlide={currentCard}
-            onSwiper={setSwiperRef}
+            onSwiper={(swiper) => {
+              setSwiperRef(swiper);
+              (window as any).__swiperDebug = {
+                activeIndex: swiper.activeIndex,
+                initialSlide: currentCard,
+                slideCount: swiper.slides.length,
+              };
+            }}
             onSlideChange={handleSlideChange}
             allowTouchMove={!draggingMemoji}
             style={{ height: '100%', width: '100%' }}
