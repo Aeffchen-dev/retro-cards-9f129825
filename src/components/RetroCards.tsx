@@ -1066,7 +1066,7 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder={`${displayName1}s Themen`}
+                placeholder={postItPlaceholder(setupData.name1, "Themen", "Meine Themen")}
               />
               <textarea
                 value={postItTexts.jana}
@@ -1077,16 +1077,16 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder={`${displayName2}s Themen`}
+                placeholder={postItPlaceholder(setupData.name2, "Themen", "Themen meines Partners")}
               />
             </div>
             {/* Print-only: post-it notes like takeaways with line breaks */}
             <div className="hidden print-only flex-col flex-1 w-full justify-between gap-6 mt-10">
               <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
-                {postItTexts.niklas || `${displayName1}s Themen`}
+                {postItTexts.niklas || postItPlaceholder(setupData.name1, "Themen", "Meine Themen")}
               </div>
               <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
-                {postItTexts.jana || `${displayName2}s Themen`}
+                {postItTexts.jana || postItPlaceholder(setupData.name2, "Themen", "Themen meines Partners")}
               </div>
             </div>
           </div>
