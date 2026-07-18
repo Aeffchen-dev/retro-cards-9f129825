@@ -4,16 +4,35 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { saveToStorage, loadFromStorage, clearExpiredStorage, STORAGE_KEYS } from '@/lib/storage';
-import kalleImage from '@/assets/kalle.png';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-// Memoji images from public assets folder
+// Memoji images from public assets folder (fallbacks if user didn't pick emojis)
 const niklasMemoji = "/assets/niklas-memoji.png";
 const janaMemoji = "/assets/jana-memoji.png";
+
+// Slide IDs — case numbers used inside renderCard's switch
+// Legacy cases 0-10 (with 6=Kalle removed), plus new: 100=Intro, 101=Setup, 102=Reflection
+const SLIDE_INTRO = 100;
+const SLIDE_SETUP = 101;
+const SLIDE_REFLECTION = 102;
+
+interface SetupData {
+  name1: string;
+  name2: string;
+  emoji1: string;
+  emoji2: string;
+  openRelationship: boolean;
+}
+
+interface ReflectionTexts {
+  nice: string;
+  thanks: string;
+  idea: string;
+}
 
 interface MemojisPosition {
   niklas: { x: number; y: number };
@@ -87,42 +106,38 @@ const RetroCards: React.FC = () => {
   // State for captured photos
   const [capturedPhotos, setCapturedPhotos] = useState<string[]>([]);
 
-  // State for Kalle speech bubble
-  const [showKalleBubble, setShowKalleBubble] = useState(false);
-  const [kalleBubbleMessage, setKalleBubbleMessage] = useState("Woof!");
+  // State for setup (names, emojis, open-relationship toggle)
+  const [setupData, setSetupData] = useState<SetupData>(() => {
+    const saved = loadFromStorage<SetupData>(STORAGE_KEYS.SETUP_DATA);
+    return saved || { name1: 'Niklas', name2: 'Jana', emoji1: '', emoji2: '', openRelationship: false };
+  });
 
-  // State for edit mode on slides
+  // State for reflection slide post-its
+  const [reflectionTexts, setReflectionTexts] = useState<ReflectionTexts>(() => {
+    const saved = loadFromStorage<ReflectionTexts>(STORAGE_KEYS.REFLECTION_TEXTS);
+    return saved || { nice: '', thanks: '', idea: '' };
+  });
+
+  // State for edit mode on slides — keyed by slide id (case number)
   const [editModeSlides, setEditModeSlides] = useState<Record<number, boolean>>({});
   const [editModeNotes, setEditModeNotes] = useState<Record<number, { note1: string; note2: string }>>(() => {
     const saved = loadFromStorage<Record<number, { note1: string; note2: string }>>(STORAGE_KEYS.EDIT_MODE_NOTES);
     return saved || {};
   });
 
-  // Slides that should have the edit button (all except 0, 4, 8, 9, 10)
-  const slidesWithEditButton = [1, 2, 3, 5, 6, 7];
-  
-  const dogMessages = [
-    "Woof!",
-    "Bark!",
-    "Ruff!",
-    "Arf arf!",
-    "Wau wau!",
-    "Yip yip!",
-    "Bork!",
-    "Howl!",
-    "Treat?",
-    "Pet me!",
-  ];
+  // Slide ids with edit button: health-personal(1), health-relationship(2), last-4-weeks(3),
+  // reflection(102), dates(5), intimacy(7)
+  const slidesWithEditButton = [1, 2, 3, SLIDE_REFLECTION, 5, 7];
 
-  // Auto-hide Kalle speech bubble after 300ms
-  useEffect(() => {
-    if (showKalleBubble) {
-      const timer = setTimeout(() => setShowKalleBubble(false), 600);
-      return () => clearTimeout(timer);
-    }
-  }, [showKalleBubble]);
+  // Ordered list of visible slide ids — filters out dates if openRelationship is off
+  const slides = useMemo(() => {
+    const arr: number[] = [SLIDE_INTRO, SLIDE_SETUP, 0, 1, 2, 3, SLIDE_REFLECTION, 4];
+    if (setupData.openRelationship) arr.push(5);
+    arr.push(7, 8, 9, 10);
+    return arr;
+  }, [setupData.openRelationship]);
 
-  const totalCards = 11;
+  const totalCards = slides.length;
 
   // Track if initial load is complete to avoid saving on mount
   const isInitialMount = useRef(true);
@@ -190,6 +205,16 @@ const RetroCards: React.FC = () => {
     saveToStorage(STORAGE_KEYS.EDIT_MODE_NOTES, editModeNotes);
   }, [editModeNotes]);
 
+  useEffect(() => {
+    if (isInitialMount.current) return;
+    saveToStorage(STORAGE_KEYS.SETUP_DATA, setupData);
+  }, [setupData]);
+
+  useEffect(() => {
+    if (isInitialMount.current) return;
+    saveToStorage(STORAGE_KEYS.REFLECTION_TEXTS, reflectionTexts);
+  }, [reflectionTexts]);
+
   // Toggle edit mode for a slide
   const toggleEditMode = useCallback((slideIndex: number) => {
     setEditModeSlides(prev => ({
@@ -206,18 +231,16 @@ const RetroCards: React.FC = () => {
   }, []);
 
   // Get question text for a slide (for edit mode display)
-  const getSlideQuestion = useCallback((slideIndex: number): string => {
+  const getSlideQuestion = useCallback((slideId: number): string => {
     const questions: Record<number, string> = {
       1: isMobile ? "Wie geht's mir persönlich?" : "Wie geht's mir persönlich in letzter Zeit?",
       2: "Wie geht's mir in der Beziehung?",
       3: "Wie waren die letzten 4 Wochen? Was war los?",
-      4: "Darüber möchte ich mit dir sprechen",
+      [SLIDE_REFLECTION]: "Reflection",
       5: "Wie stehts mit Dates?",
-      6: "Wie läufts mit Kalle?",
       7: "Sind wir uns körperlich nah?",
-      8: "Das nehmen wir aus der Retro mit"
     };
-    return questions[slideIndex] || "";
+    return questions[slideId] || "";
   }, [isMobile]);
 
   // Fetch questions from Google Sheets - truly non-blocking with cache
@@ -786,6 +809,7 @@ const RetroCards: React.FC = () => {
       setPostItTexts({ niklas: "", jana: "" });
       setTakeawayTexts({ niklas: "", jana: "" });
       setEditModeNotes({});
+      setReflectionTexts({ nice: '', thanks: '', idea: '' });
       setCapturedPhotos([]);
       setCurrentQuestion("");
       
@@ -880,12 +904,16 @@ const RetroCards: React.FC = () => {
                 onMouseDown={(e) => handleMemojiMouseDown(e, 1, "niklas")}
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "niklas")}
               >
-                <img
-                  src={niklasMemoji}
-                  alt="Niklas Memoji"
-                  className="w-full h-full object-cover rounded-full pointer-events-none"
-                  draggable={false}
-                />
+                {setupData.emoji1 ? (
+                  <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{setupData.emoji1}</div>
+                ) : (
+                  <img
+                    src={niklasMemoji}
+                    alt={`${setupData.name1} Memoji`}
+                    className="w-full h-full object-cover rounded-full pointer-events-none"
+                    draggable={false}
+                  />
+                )}
               </div>
               <div
                 className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-jana"
@@ -899,12 +927,16 @@ const RetroCards: React.FC = () => {
                 onMouseDown={(e) => handleMemojiMouseDown(e, 1, "jana")}
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "jana")}
               >
-                <img
-                  src={janaMemoji}
-                  alt="Jana Memoji"
-                  className="w-full h-full object-cover rounded-full pointer-events-none"
-                  draggable={false}
-                />
+                {setupData.emoji2 ? (
+                  <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{setupData.emoji2}</div>
+                ) : (
+                  <img
+                    src={janaMemoji}
+                    alt={`${setupData.name2} Memoji`}
+                    className="w-full h-full object-cover rounded-full pointer-events-none"
+                    draggable={false}
+                  />
+                )}
               </div>
             </div>
             <div className="w-full text-center retro-body mt-8 screen-only">
@@ -945,12 +977,16 @@ const RetroCards: React.FC = () => {
                 onMouseDown={(e) => handleMemojiMouseDown(e, 2, "niklas")}
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "niklas")}
               >
-                <img
-                  src={niklasMemoji}
-                  alt="Niklas Memoji"
-                  className="w-full h-full object-cover rounded-full pointer-events-none"
-                  draggable={false}
-                />
+                {setupData.emoji1 ? (
+                  <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{setupData.emoji1}</div>
+                ) : (
+                  <img
+                    src={niklasMemoji}
+                    alt={`${setupData.name1} Memoji`}
+                    className="w-full h-full object-cover rounded-full pointer-events-none"
+                    draggable={false}
+                  />
+                )}
               </div>
               <div
                 className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-jana"
@@ -964,12 +1000,16 @@ const RetroCards: React.FC = () => {
                 onMouseDown={(e) => handleMemojiMouseDown(e, 2, "jana")}
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "jana")}
               >
-                <img
-                  src={janaMemoji}
-                  alt="Jana Memoji"
-                  className="w-full h-full object-cover rounded-full pointer-events-none"
-                  draggable={false}
-                />
+                {setupData.emoji2 ? (
+                  <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{setupData.emoji2}</div>
+                ) : (
+                  <img
+                    src={janaMemoji}
+                    alt={`${setupData.name2} Memoji`}
+                    className="w-full h-full object-cover rounded-full pointer-events-none"
+                    draggable={false}
+                  />
+                )}
               </div>
             </div>
             <div className="w-full text-center retro-body mt-8 screen-only">
@@ -1033,7 +1073,7 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder="Niklas' Themen"
+                placeholder={`${setupData.name1}s Themen`}
               />
               <textarea
                 value={postItTexts.jana}
@@ -1044,16 +1084,16 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder="Jana's Themen"
+                placeholder={`${setupData.name2}s Themen`}
               />
             </div>
             {/* Print-only: post-it notes like takeaways with line breaks */}
             <div className="hidden print-only flex-col flex-1 w-full justify-between gap-6 mt-10">
               <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
-                {postItTexts.niklas || "Niklas' Themen"}
+                {postItTexts.niklas || `${setupData.name1}s Themen`}
               </div>
               <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
-                {postItTexts.jana || "Jana's Themen"}
+                {postItTexts.jana || `${setupData.name2}s Themen`}
               </div>
             </div>
           </div>
@@ -1071,44 +1111,120 @@ const RetroCards: React.FC = () => {
           </div>
         );
 
-      case 6:
+      case SLIDE_INTRO:
         return (
-          <div className="flex flex-col items-start w-full h-full relative">
+          <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
-                <span className="retro-label">Kalle</span>
+                <span className="retro-label">Intro</span>
               </div>
-              <h2 className="retro-heading w-full">
-                Wie läufts mit Kalle?
-              </h2>
+              <h2 className="retro-heading w-full">Retro Cards</h2>
             </div>
-            <div className="absolute bottom-0 left-0 flex flex-col gap-4 pb-0">
-              <div className="retro-body text-white">Was war schön?</div>
-              <div className="retro-body text-white">Was war anstrengend?</div>
-              <div className="retro-body text-white">Entlasten wir uns gegenseitig?</div>
-              <div className="retro-body text-white">Nehmen wir Hilfe an?</div>
-              <div className="retro-body text-white">Welche Fortschritte gab es?</div>
-              <div className="retro-body text-white">Was sollten wir noch angehen?</div>
+            <div className="flex flex-col gap-4 w-full mt-8 retro-body">
+              <p>Retro Cards is a simple guided ritual to check in with your partner, reflect on your relationship, and keep it healthy.</p>
+              <p>Make it a monthly date night. Grab a drink, and enjoy an honest conversation that builds connection.</p>
+              <p>Listen with an open mind, stay curious, and always remember you're playing on the same team.</p>
             </div>
-            <div className="absolute top-1/2 -translate-y-[calc(50%+24px)] right-0 -mr-4 md:-mr-6">
-              <div className="relative cursor-pointer" onClick={() => {
-                const randomMessage = dogMessages[Math.floor(Math.random() * dogMessages.length)];
-                setKalleBubbleMessage(randomMessage);
-                setShowKalleBubble(!showKalleBubble);
-              }}>
-                {showKalleBubble && (
-                  <div className="absolute top-[20px] right-[calc(50%+88px)] bg-black text-white px-3 py-1.5 rounded-[16px] whitespace-nowrap text-sm animate-bubble-pop">
-                    <span className="font-bold">{kalleBubbleMessage}</span>
-                    <div className="absolute top-1/2 -translate-y-1/2 -right-[6px] w-0 h-0 border-t-[6px] border-b-[6px] border-l-[6px] border-t-transparent border-b-transparent border-l-black"></div>
-                  </div>
-                )}
-                <img 
-                  src={kalleImage} 
-                  alt="Kalle" 
-                  className={`max-h-[200px] md:max-h-[264px] object-contain transition-transform duration-300 ease-out hover:scale-105 active:scale-95 ${showKalleBubble ? 'animate-[wiggle_0.5s_ease-in-out]' : ''}`}
-                  style={{ transform: 'scaleX(-1)' }}
+          </div>
+        );
+
+      case SLIDE_SETUP:
+        return (
+          <div className="flex flex-col items-start w-full h-full">
+            <div className="flex flex-col items-start gap-6 w-full">
+              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+                <span className="retro-label">Setup</span>
+              </div>
+              <h2 className="retro-heading w-full">Setup</h2>
+            </div>
+            <div className="flex flex-col gap-6 w-full mt-8">
+              {/* Person 1 */}
+              <div className="flex items-center gap-3 w-full border-b border-retro-white/30 pb-2">
+                <input
+                  type="text"
+                  value={setupData.emoji1}
+                  onChange={(e) => setSetupData({ ...setupData, emoji1: e.target.value.slice(0, 4) })}
+                  placeholder="🙂"
+                  className="w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                />
+                <input
+                  type="text"
+                  value={setupData.name1}
+                  onChange={(e) => setSetupData({ ...setupData, name1: e.target.value })}
+                  placeholder="Dein Name"
+                  className="flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
                 />
               </div>
+              {/* Person 2 */}
+              <div className="flex items-center gap-3 w-full border-b border-retro-white/30 pb-2">
+                <input
+                  type="text"
+                  value={setupData.emoji2}
+                  onChange={(e) => setSetupData({ ...setupData, emoji2: e.target.value.slice(0, 4) })}
+                  placeholder="😊"
+                  className="w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                />
+                <input
+                  type="text"
+                  value={setupData.name2}
+                  onChange={(e) => setSetupData({ ...setupData, name2: e.target.value })}
+                  placeholder="Name deines Partners"
+                  className="flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
+                />
+              </div>
+              {/* Toggle */}
+              <label className="flex items-center justify-between w-full cursor-pointer mt-4">
+                <span className="retro-body">Offene Beziehung</span>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={setupData.openRelationship}
+                  onClick={() => setSetupData({ ...setupData, openRelationship: !setupData.openRelationship })}
+                  className={`relative w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-retro-white' : 'bg-retro-white/30'}`}
+                >
+                  <span
+                    className={`absolute top-1 left-1 w-5 h-5 rounded-full bg-retro-card-bg transition-transform ${setupData.openRelationship ? 'translate-x-5' : ''}`}
+                  />
+                </button>
+              </label>
+              <p className="retro-body text-retro-white/60 text-sm">
+                Deine Namen und Emojis werden in allen Karten verwendet.
+              </p>
+            </div>
+          </div>
+        );
+
+      case SLIDE_REFLECTION:
+        return (
+          <div className="flex flex-col items-start w-full h-full">
+            <div className="flex flex-col items-start gap-6 w-full">
+              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+                <span className="retro-label">Reflection</span>
+              </div>
+              <h2 className="retro-heading w-full">Reflection</h2>
+            </div>
+            <div className="flex flex-col flex-1 w-full gap-4 mt-8">
+              <textarea
+                value={reflectionTexts.nice}
+                onChange={(e) => setReflectionTexts({ ...reflectionTexts, nice: e.target.value })}
+                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-base focus:outline-none"
+                style={{ borderRadius: "0px" }}
+                placeholder="Das finde ich gerade schön in unserer Beziehung"
+              />
+              <textarea
+                value={reflectionTexts.thanks}
+                onChange={(e) => setReflectionTexts({ ...reflectionTexts, thanks: e.target.value })}
+                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-base focus:outline-none"
+                style={{ borderRadius: "0px" }}
+                placeholder="Dafür möchte ich Danke sagen / ein Kompliment für dich"
+              />
+              <textarea
+                value={reflectionTexts.idea}
+                onChange={(e) => setReflectionTexts({ ...reflectionTexts, idea: e.target.value })}
+                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-base focus:outline-none"
+                style={{ borderRadius: "0px" }}
+                placeholder="Eine Idee für uns / Das können wir besser machen"
+              />
             </div>
           </div>
         );
@@ -1146,7 +1262,7 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder="Niklas' Erkenntnisse"
+                placeholder={`${setupData.name1}s Erkenntnisse`}
               />
               <textarea
                 value={takeawayTexts.jana}
@@ -1157,7 +1273,7 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder="Jana's Erkenntnisse"
+                placeholder={`${setupData.name2}s Erkenntnisse`}
               />
             </div>
           </div>
@@ -1266,65 +1382,65 @@ const RetroCards: React.FC = () => {
             longSwipesRatio={0.5}
             longSwipesMs={300}
           >
-            {Array.from({ length: totalCards }, (_, index) => (
-              <SwiperSlide key={index}>
+            {slides.map((slideId, index) => (
+              <SwiperSlide key={slideId}>
                 <div className="w-full h-full flex items-center justify-center px-4">
                   <div 
                     className="retro-card-container relative h-full w-full max-w-[500px] max-h-[780px] mx-auto flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl overflow-hidden"
                   >
                     {/* Edit Mode View */}
-                    {editModeSlides[index] && slidesWithEditButton.includes(index) ? (
+                    {editModeSlides[slideId] && slidesWithEditButton.includes(slideId) ? (
                       <div className="absolute inset-0 p-8 flex flex-col z-30 bg-retro-card-bg">
                         {/* Question text - animated to top left, smaller, with right padding for close icon */}
                         <h2 
                           className="retro-body text-retro-white/80 mb-6 pr-12 animate-[slideUp_0.15s_ease-in-out_forwards]"
                           style={{ fontSize: isMobile ? '14px' : '16px', lineHeight: 1.4 }}
                         >
-                          {getSlideQuestion(index)}
+                          {getSlideQuestion(slideId)}
                         </h2>
                         
                         {/* Two post-it notes */}
                         <div className="flex flex-col flex-1 gap-4 w-full animate-[fadeInUp_0.4s_ease-out_0.1s_both]">
                           <textarea
-                            value={editModeNotes[index]?.note1 || ""}
+                            value={editModeNotes[slideId]?.note1 || ""}
                             onChange={(e) =>
                               setEditModeNotes(prev => ({
                                 ...prev,
-                                [index]: { ...prev[index], note1: e.target.value, note2: prev[index]?.note2 || "" }
+                                [slideId]: { ...prev[slideId], note1: e.target.value, note2: prev[slideId]?.note2 || "" }
                               }))
                             }
                             className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                             style={{ borderRadius: "0px" }}
-                            placeholder="Niklas Notizen"
+                            placeholder={`${setupData.name1} Notizen`}
                           />
                           <textarea
-                            value={editModeNotes[index]?.note2 || ""}
+                            value={editModeNotes[slideId]?.note2 || ""}
                             onChange={(e) =>
                               setEditModeNotes(prev => ({
                                 ...prev,
-                                [index]: { ...prev[index], note2: e.target.value, note1: prev[index]?.note1 || "" }
+                                [slideId]: { ...prev[slideId], note2: e.target.value, note1: prev[slideId]?.note1 || "" }
                               }))
                             }
                             className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                             style={{ borderRadius: "0px" }}
-                            placeholder="Jana's Notizen"
+                            placeholder={`${setupData.name2} Notizen`}
                           />
                         </div>
                       </div>
                     ) : (
                       <>
-                        {renderCard(index)}
+                        {renderCard(slideId)}
                       </>
                     )}
 
                     {/* Edit/Close button - top right with 48x48 touch target */}
-                    {slidesWithEditButton.includes(index) && (
+                    {slidesWithEditButton.includes(slideId) && (
                       <button
-                        onClick={() => toggleEditMode(index)}
+                        onClick={() => toggleEditMode(slideId)}
                         className="absolute top-4 right-4 w-12 h-12 flex items-center justify-center z-40 cursor-pointer hover:opacity-80 transition-all duration-300 screen-only"
                         style={{ touchAction: 'manipulation' }}
                       >
-                        {editModeSlides[index] ? (
+                        {editModeSlides[slideId] ? (
                           <X size={32} strokeWidth={1} className="text-retro-white" />
                         ) : (
                           <Pencil size={24} strokeWidth={1} className="text-retro-white" />
@@ -1340,7 +1456,7 @@ const RetroCards: React.FC = () => {
                     )}
 
                     {/* Left navigation zone (32px wide) */}
-                    {index > 0 && !editModeSlides[index] && (
+                    {index > 0 && !editModeSlides[slideId] && (
                       <div
                         onClick={() => navigateCard("prev")}
                         className="absolute left-0 top-0 w-8 h-full cursor-pointer z-20"
@@ -1349,7 +1465,7 @@ const RetroCards: React.FC = () => {
                     )}
 
                     {/* Right navigation zone (32px wide) */}
-                    {index < totalCards - 1 && !editModeSlides[index] && (
+                    {index < totalCards - 1 && !editModeSlides[slideId] && (
                       <div
                         onClick={() => navigateCard("next")}
                         className="absolute right-0 top-0 w-8 h-full cursor-pointer z-20"
@@ -1365,19 +1481,19 @@ const RetroCards: React.FC = () => {
 
         {/* Print-only: All slides with notes interleaved in correct order */}
         <div className="hidden print-slides-container">
-          {Array.from({ length: totalCards }, (_, index) => (
-            <React.Fragment key={`print-${index}`}>
-              {/* Skip slides 9 and 10 (Archive and Questions) in print */}
-              {index !== 9 && index !== 10 && (
+          {slides.map((slideId, index) => (
+            <React.Fragment key={`print-${slideId}`}>
+              {/* Skip Intro, Setup, Archive (9) and Questions (10) in print */}
+              {slideId !== SLIDE_INTRO && slideId !== SLIDE_SETUP && slideId !== 9 && slideId !== 10 && (
                 <div className="print-slide-page" style={{ order: index * 2 }}>
                   <div className="retro-card-container relative flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl">
-                    {renderCard(index)}
+                    {renderCard(slideId)}
                   </div>
                 </div>
               )}
               
               {/* Notes page right after its slide - on its own page */}
-              {slidesWithEditButton.includes(index) && (editModeNotes[index]?.note1 || editModeNotes[index]?.note2) && (
+              {slidesWithEditButton.includes(slideId) && (editModeNotes[slideId]?.note1 || editModeNotes[slideId]?.note2) && (
                 <div className="print-slide-page print-notes-page" style={{ order: index * 2 + 1 }}>
                   <div className="retro-card-container relative flex flex-col items-start bg-retro-card-bg rounded-2xl">
                     {/* Question text */}
@@ -1385,19 +1501,19 @@ const RetroCards: React.FC = () => {
                       className="retro-body mb-6"
                       style={{ fontSize: '16px', lineHeight: 1.4 }}
                     >
-                      {getSlideQuestion(index)} — Notizen
+                      {getSlideQuestion(slideId)} — Notizen
                     </h2>
                     
                     {/* Post-it notes */}
                     <div className="flex flex-col flex-1 gap-4 w-full">
-                      {editModeNotes[index]?.note1 && (
+                      {editModeNotes[slideId]?.note1 && (
                         <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg whitespace-pre-wrap min-h-[120px]">
-                          {editModeNotes[index].note1}
+                          {editModeNotes[slideId].note1}
                         </div>
                       )}
-                      {editModeNotes[index]?.note2 && (
+                      {editModeNotes[slideId]?.note2 && (
                         <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg whitespace-pre-wrap min-h-[120px]">
-                          {editModeNotes[index].note2}
+                          {editModeNotes[slideId].note2}
                         </div>
                       )}
                     </div>
