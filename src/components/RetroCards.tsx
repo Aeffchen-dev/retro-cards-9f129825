@@ -1106,9 +1106,9 @@ const RetroCards: React.FC = () => {
 
       case SLIDE_LOGO:
         return (
-          <div className="flex flex-col items-center w-full h-full text-center" style={{ paddingTop: '25%' }}>
+          <div className="flex flex-col items-center w-full h-full text-center" style={{ paddingTop: '45%' }}>
             <h1
-              className="retro-title"
+              className="retro-title logo-slide-anim"
               style={{ fontSize: '64px', lineHeight: 1.05 }}
             >
               Retro Cards
