@@ -791,7 +791,7 @@ const RetroCards: React.FC = () => {
   const handleMemojiMouseDown = (
     e: React.MouseEvent,
     cardIndex: number,
-    person: "niklas" | "jana",
+    person: string,
   ) => {
     e.stopPropagation();
     e.preventDefault();
@@ -815,7 +815,7 @@ const RetroCards: React.FC = () => {
   const handleMemojiTouchStart = (
     e: React.TouchEvent,
     cardIndex: number,
-    person: "niklas" | "jana",
+    person: string,
   ) => {
     e.stopPropagation();
     e.preventDefault();
