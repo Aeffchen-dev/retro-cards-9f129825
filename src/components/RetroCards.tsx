@@ -1443,7 +1443,6 @@ const RetroCards: React.FC = () => {
             onSlideChange={handleSlideChange}
             allowTouchMove={!draggingMemoji}
             style={{ height: '100%', width: '100%' }}
-            centeredSlides={true}
             effect="slide"
             resistance={true}
             resistanceRatio={0.3}
