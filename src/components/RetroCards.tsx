@@ -20,13 +20,43 @@ const SLIDE_INTRO = 100;
 const SLIDE_SETUP = 101;
 const SLIDE_REFLECTION = 102;
 
+interface ExtraPartner {
+  name: string;
+  emoji: string;
+}
+
 interface SetupData {
   name1: string;
   name2: string;
   emoji1: string;
   emoji2: string;
   openRelationship: boolean;
+  extraPartners: ExtraPartner[];
 }
+
+const NAME1_PLACEHOLDER = "Your name";
+const NAME2_PLACEHOLDER = "Your partner's name";
+const EMOJI1_PLACEHOLDER = "🧚‍♂️";
+const EMOJI2_PLACEHOLDER = "🧚‍♀️";
+
+// Keep only a single emoji grapheme; drop any plain text
+const sanitizeEmoji = (input: string): string => {
+  if (!input) return "";
+  const emojiRe = /\p{Extended_Pictographic}/u;
+  try {
+    // @ts-ignore
+    const seg = new Intl.Segmenter(undefined, { granularity: "grapheme" });
+    // @ts-ignore
+    const graphemes = Array.from(seg.segment(input), (s: any) => s.segment as string);
+    for (let i = graphemes.length - 1; i >= 0; i--) {
+      if (emojiRe.test(graphemes[i])) return graphemes[i];
+    }
+    return "";
+  } catch {
+    const m = input.match(/\p{Extended_Pictographic}(\u200D\p{Extended_Pictographic})*/gu);
+    return m ? m[m.length - 1] : "";
+  }
+};
 
 interface ReflectionTexts {
   nice: string;
@@ -106,11 +136,25 @@ const RetroCards: React.FC = () => {
   // State for captured photos
   const [capturedPhotos, setCapturedPhotos] = useState<string[]>([]);
 
-  // State for setup (names, emojis, open-relationship toggle)
+  // State for setup (names, emojis, open-relationship toggle, extra partners)
   const [setupData, setSetupData] = useState<SetupData>(() => {
-    const saved = loadFromStorage<SetupData>(STORAGE_KEYS.SETUP_DATA);
-    return saved || { name1: 'Niklas', name2: 'Jana', emoji1: '', emoji2: '', openRelationship: false };
+    const saved = loadFromStorage<Partial<SetupData>>(STORAGE_KEYS.SETUP_DATA);
+    return {
+      name1: '',
+      name2: '',
+      emoji1: '',
+      emoji2: '',
+      openRelationship: false,
+      extraPartners: [],
+      ...(saved || {}),
+    } as SetupData;
   });
+
+  // Display fallbacks for name/emoji
+  const displayName1 = setupData.name1 || NAME1_PLACEHOLDER;
+  const displayName2 = setupData.name2 || NAME2_PLACEHOLDER;
+  const displayEmoji1 = setupData.emoji1 || EMOJI1_PLACEHOLDER;
+  const displayEmoji2 = setupData.emoji2 || EMOJI2_PLACEHOLDER;
 
   // State for reflection slide post-its
   const [reflectionTexts, setReflectionTexts] = useState<ReflectionTexts>(() => {
@@ -904,16 +948,7 @@ const RetroCards: React.FC = () => {
                 onMouseDown={(e) => handleMemojiMouseDown(e, 1, "niklas")}
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "niklas")}
               >
-                {setupData.emoji1 ? (
-                  <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{setupData.emoji1}</div>
-                ) : (
-                  <img
-                    src={niklasMemoji}
-                    alt={`${setupData.name1} Memoji`}
-                    className="w-full h-full object-cover rounded-full pointer-events-none"
-                    draggable={false}
-                  />
-                )}
+                <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{displayEmoji1}</div>
               </div>
               <div
                 className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-jana"
@@ -927,16 +962,7 @@ const RetroCards: React.FC = () => {
                 onMouseDown={(e) => handleMemojiMouseDown(e, 1, "jana")}
                 onTouchStart={(e) => handleMemojiTouchStart(e, 1, "jana")}
               >
-                {setupData.emoji2 ? (
-                  <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{setupData.emoji2}</div>
-                ) : (
-                  <img
-                    src={janaMemoji}
-                    alt={`${setupData.name2} Memoji`}
-                    className="w-full h-full object-cover rounded-full pointer-events-none"
-                    draggable={false}
-                  />
-                )}
+                <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{displayEmoji2}</div>
               </div>
             </div>
             <div className="w-full text-center retro-body mt-8 screen-only">
@@ -977,16 +1003,7 @@ const RetroCards: React.FC = () => {
                 onMouseDown={(e) => handleMemojiMouseDown(e, 2, "niklas")}
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "niklas")}
               >
-                {setupData.emoji1 ? (
-                  <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{setupData.emoji1}</div>
-                ) : (
-                  <img
-                    src={niklasMemoji}
-                    alt={`${setupData.name1} Memoji`}
-                    className="w-full h-full object-cover rounded-full pointer-events-none"
-                    draggable={false}
-                  />
-                )}
+                <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{displayEmoji1}</div>
               </div>
               <div
                 className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-jana"
@@ -1000,16 +1017,7 @@ const RetroCards: React.FC = () => {
                 onMouseDown={(e) => handleMemojiMouseDown(e, 2, "jana")}
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "jana")}
               >
-                {setupData.emoji2 ? (
-                  <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{setupData.emoji2}</div>
-                ) : (
-                  <img
-                    src={janaMemoji}
-                    alt={`${setupData.name2} Memoji`}
-                    className="w-full h-full object-cover rounded-full pointer-events-none"
-                    draggable={false}
-                  />
-                )}
+                <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{displayEmoji2}</div>
               </div>
             </div>
             <div className="w-full text-center retro-body mt-8 screen-only">
@@ -1073,7 +1081,7 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder={`${setupData.name1}s Themen`}
+                placeholder={`${displayName1}s Themen`}
               />
               <textarea
                 value={postItTexts.jana}
@@ -1084,16 +1092,16 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder={`${setupData.name2}s Themen`}
+                placeholder={`${displayName2}s Themen`}
               />
             </div>
             {/* Print-only: post-it notes like takeaways with line breaks */}
             <div className="hidden print-only flex-col flex-1 w-full justify-between gap-6 mt-10">
               <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
-                {postItTexts.niklas || `${setupData.name1}s Themen`}
+                {postItTexts.niklas || `${displayName1}s Themen`}
               </div>
               <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
-                {postItTexts.jana || `${setupData.name2}s Themen`}
+                {postItTexts.jana || `${displayName2}s Themen`}
               </div>
             </div>
           </div>
@@ -1135,24 +1143,27 @@ const RetroCards: React.FC = () => {
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Setup</span>
               </div>
-              <h2 className="retro-heading w-full">Setup</h2>
+              <h2 className="retro-heading w-full">
+                Tragt eure Namen ein und wählt ein individuelles Emoji
+              </h2>
             </div>
             <div className="flex flex-col gap-6 w-full mt-8">
               {/* Person 1 */}
               <div className="flex items-center gap-3 w-full border-b border-retro-white/30 pb-2">
                 <input
                   type="text"
+                  inputMode="text"
                   value={setupData.emoji1}
-                  onChange={(e) => setSetupData({ ...setupData, emoji1: e.target.value.slice(0, 4) })}
-                  placeholder="🙂"
-                  className="w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                  onChange={(e) => setSetupData({ ...setupData, emoji1: sanitizeEmoji(e.target.value) })}
+                  placeholder={EMOJI1_PLACEHOLDER}
+                  className="setup-emoji-input w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
                 />
                 <input
                   type="text"
                   value={setupData.name1}
                   onChange={(e) => setSetupData({ ...setupData, name1: e.target.value })}
-                  placeholder="Dein Name"
-                  className="flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
+                  placeholder={NAME1_PLACEHOLDER}
+                  className="setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
                 />
               </div>
               {/* Person 2 */}
@@ -1160,18 +1171,66 @@ const RetroCards: React.FC = () => {
                 <input
                   type="text"
                   value={setupData.emoji2}
-                  onChange={(e) => setSetupData({ ...setupData, emoji2: e.target.value.slice(0, 4) })}
-                  placeholder="😊"
-                  className="w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                  onChange={(e) => setSetupData({ ...setupData, emoji2: sanitizeEmoji(e.target.value) })}
+                  placeholder={EMOJI2_PLACEHOLDER}
+                  className="setup-emoji-input w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
                 />
                 <input
                   type="text"
                   value={setupData.name2}
                   onChange={(e) => setSetupData({ ...setupData, name2: e.target.value })}
-                  placeholder="Name deines Partners"
-                  className="flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
+                  placeholder={NAME2_PLACEHOLDER}
+                  className="setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
                 />
               </div>
+              {/* Extra partners */}
+              {setupData.extraPartners.map((p, idx) => (
+                <div key={idx} className="flex items-center gap-3 w-full border-b border-retro-white/30 pb-2">
+                  <input
+                    type="text"
+                    value={p.emoji}
+                    onChange={(e) => {
+                      const next = [...setupData.extraPartners];
+                      next[idx] = { ...next[idx], emoji: sanitizeEmoji(e.target.value) };
+                      setSetupData({ ...setupData, extraPartners: next });
+                    }}
+                    placeholder="🧚"
+                    className="setup-emoji-input w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                  />
+                  <input
+                    type="text"
+                    value={p.name}
+                    onChange={(e) => {
+                      const next = [...setupData.extraPartners];
+                      next[idx] = { ...next[idx], name: e.target.value };
+                      setSetupData({ ...setupData, extraPartners: next });
+                    }}
+                    placeholder={`Partner ${idx + 3}`}
+                    className="setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
+                  />
+                  <button
+                    type="button"
+                    aria-label="Partner entfernen"
+                    onClick={() => {
+                      const next = setupData.extraPartners.filter((_, i) => i !== idx);
+                      setSetupData({ ...setupData, extraPartners: next });
+                    }}
+                    className="text-retro-white/60 hover:text-retro-white p-1"
+                  >
+                    <X size={18} strokeWidth={2} />
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => setSetupData({
+                  ...setupData,
+                  extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
+                })}
+                className="self-start retro-body text-retro-white/70 hover:text-retro-white text-sm underline underline-offset-4"
+              >
+                + Weiteren Partner hinzufügen
+              </button>
               {/* Toggle */}
               <label className="flex items-center justify-between w-full cursor-pointer mt-4">
                 <span className="retro-body">Offene Beziehung</span>
@@ -1187,12 +1246,10 @@ const RetroCards: React.FC = () => {
                   />
                 </button>
               </label>
-              <p className="retro-body text-retro-white/60 text-sm">
-                Deine Namen und Emojis werden in allen Karten verwendet.
-              </p>
             </div>
           </div>
         );
+
 
       case SLIDE_REFLECTION:
         return (
@@ -1262,7 +1319,7 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder={`${setupData.name1}s Erkenntnisse`}
+                placeholder={`${displayName1}s Erkenntnisse`}
               />
               <textarea
                 value={takeawayTexts.jana}
@@ -1273,7 +1330,7 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder={`${setupData.name2}s Erkenntnisse`}
+                placeholder={`${displayName2}s Erkenntnisse`}
               />
             </div>
           </div>
@@ -1411,7 +1468,7 @@ const RetroCards: React.FC = () => {
                             }
                             className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                             style={{ borderRadius: "0px" }}
-                            placeholder={`${setupData.name1} Notizen`}
+                            placeholder={`${displayName1} Notizen`}
                           />
                           <textarea
                             value={editModeNotes[slideId]?.note2 || ""}
@@ -1423,7 +1480,7 @@ const RetroCards: React.FC = () => {
                             }
                             className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                             style={{ borderRadius: "0px" }}
-                            placeholder={`${setupData.name2} Notizen`}
+                            placeholder={`${displayName2} Notizen`}
                           />
                         </div>
                       </div>
