@@ -1575,21 +1575,6 @@ const RetroCards: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer - Same margin as header for consistency */}
-      <div className={`flex items-center gap-4 w-full px-4 ${isMobile ? 'py-3' : 'py-3'}`}>
-        <button
-          onClick={openRelationshipByDesign}
-          className="flex-1 retro-body text-left cursor-pointer hover:opacity-80 transition-opacity"
-        >
-          Relationship by design
-        </button>
-        <button
-          onClick={openFeedbackEmail}
-          className="retro-body cursor-pointer hover:opacity-80 transition-opacity"
-        >
-          Feedback geben
-        </button>
-      </div>
 
       {/* Camera Preview Modal */}
       {cameraStream && (
