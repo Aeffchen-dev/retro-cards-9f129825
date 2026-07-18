@@ -1229,8 +1229,6 @@ const RetroCards: React.FC = () => {
                   />
                 </button>
               </div>
-              <div className="mt-6 retro-label opacity-60 text-center w-full">
-                Swipe to continue →
             </div>
             <button
               type="button"
