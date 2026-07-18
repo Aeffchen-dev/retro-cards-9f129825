@@ -1080,6 +1080,21 @@ const RetroCards: React.FC = () => {
           </div>
         );
 
+      case SLIDE_LOGO:
+        return (
+          <div className="flex flex-col items-center justify-center w-full h-full text-center">
+            <h1
+              className="retro-title"
+              style={{ fontSize: '64px', lineHeight: 1.05 }}
+            >
+              Retro Cards
+            </h1>
+            <div className="mt-8 retro-label opacity-60">
+              Swipe to continue →
+            </div>
+          </div>
+        );
+
       case SLIDE_INTRO:
         return (
           <div className="flex flex-col items-start w-full h-full">
@@ -1087,7 +1102,6 @@ const RetroCards: React.FC = () => {
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Intro</span>
               </div>
-              <h2 className="retro-heading w-full">Retro Cards</h2>
             </div>
             <div className="flex flex-col gap-4 w-full mt-8 retro-body">
               <p>Retro Cards is a simple guided ritual to check in with your partner, reflect on your relationship, and keep it healthy.</p>
@@ -1097,56 +1111,55 @@ const RetroCards: React.FC = () => {
           </div>
         );
 
-      case SLIDE_SETUP:
+      case SLIDE_SETUP: {
+        const emojiInputCls = "setup-emoji-input w-14 h-14 text-3xl bg-transparent focus:outline-none text-center border border-retro-white rounded-lg leading-none";
+        const nameInputCls = "setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg";
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Setup</span>
               </div>
-              <h2 className="retro-heading w-full">
-                Tragt eure Namen ein und wählt ein individuelles Emoji
-              </h2>
             </div>
-            <div className="flex flex-col gap-6 w-full mt-8">
+            <div className="flex flex-col gap-4 w-full mt-8">
               {/* Person 1 */}
-              <div className="flex items-center gap-3 w-full border-b border-retro-white/30 pb-2">
+              <div className="flex items-center gap-3 w-full">
                 <input
                   type="text"
                   inputMode="text"
                   value={setupData.emoji1}
                   onChange={(e) => setSetupData({ ...setupData, emoji1: sanitizeEmoji(e.target.value) })}
                   placeholder={EMOJI1_PLACEHOLDER}
-                  className="setup-emoji-input w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                  className={emojiInputCls}
                 />
                 <input
                   type="text"
                   value={setupData.name1}
                   onChange={(e) => setSetupData({ ...setupData, name1: e.target.value })}
                   placeholder={NAME1_PLACEHOLDER}
-                  className="setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
+                  className={nameInputCls}
                 />
               </div>
               {/* Person 2 */}
-              <div className="flex items-center gap-3 w-full border-b border-retro-white/30 pb-2">
+              <div className="flex items-center gap-3 w-full">
                 <input
                   type="text"
                   value={setupData.emoji2}
                   onChange={(e) => setSetupData({ ...setupData, emoji2: sanitizeEmoji(e.target.value) })}
                   placeholder={EMOJI2_PLACEHOLDER}
-                  className="setup-emoji-input w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                  className={emojiInputCls}
                 />
                 <input
                   type="text"
                   value={setupData.name2}
                   onChange={(e) => setSetupData({ ...setupData, name2: e.target.value })}
                   placeholder={NAME2_PLACEHOLDER}
-                  className="setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
+                  className={nameInputCls}
                 />
               </div>
               {/* Extra partners */}
               {setupData.extraPartners.map((p, idx) => (
-                <div key={idx} className="flex items-center gap-3 w-full border-b border-retro-white/30 pb-2">
+                <div key={idx} className="flex items-center gap-3 w-full">
                   <input
                     type="text"
                     value={p.emoji}
@@ -1156,7 +1169,7 @@ const RetroCards: React.FC = () => {
                       setSetupData({ ...setupData, extraPartners: next });
                     }}
                     placeholder="🧚"
-                    className="setup-emoji-input w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                    className={emojiInputCls}
                   />
                   <input
                     type="text"
@@ -1167,7 +1180,7 @@ const RetroCards: React.FC = () => {
                       setSetupData({ ...setupData, extraPartners: next });
                     }}
                     placeholder={`Partner ${idx + 3}`}
-                    className="setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
+                    className={nameInputCls}
                   />
                   <button
                     type="button"
@@ -1188,28 +1201,34 @@ const RetroCards: React.FC = () => {
                   ...setupData,
                   extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
                 })}
-                className="self-start retro-body text-retro-white/70 hover:text-retro-white text-sm underline underline-offset-4"
+                className="self-start retro-body text-retro-white text-sm border border-retro-white rounded-full px-4 py-2 hover:bg-retro-white hover:text-retro-card-bg transition-colors no-underline"
               >
                 + Weiteren Partner hinzufügen
               </button>
               {/* Toggle */}
-              <label className="flex items-center justify-between w-full cursor-pointer mt-4">
+              <div className="flex items-center justify-between w-full mt-4">
                 <span className="retro-body">Offene Beziehung</span>
                 <button
                   type="button"
                   role="switch"
                   aria-checked={setupData.openRelationship}
                   onClick={() => setSetupData({ ...setupData, openRelationship: !setupData.openRelationship })}
-                  className={`relative w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-retro-white' : 'bg-retro-white/30'}`}
+                  className={`relative shrink-0 w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-retro-white' : 'bg-retro-white/30'}`}
                 >
                   <span
                     className={`absolute top-1 left-1 w-5 h-5 rounded-full bg-retro-card-bg transition-transform ${setupData.openRelationship ? 'translate-x-5' : ''}`}
                   />
                 </button>
-              </label>
+              </div>
+              <div className="mt-6 retro-label opacity-60 text-center w-full">
+                Swipe to continue →
+              </div>
             </div>
           </div>
         );
+      }
+
+
 
 
       case SLIDE_REFLECTION:
