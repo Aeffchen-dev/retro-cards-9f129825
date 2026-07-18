@@ -150,6 +150,12 @@ const RetroCards: React.FC = () => {
     } as SetupData;
   });
 
+  // Display fallbacks for name/emoji
+  const displayName1 = setupData.name1 || NAME1_PLACEHOLDER;
+  const displayName2 = setupData.name2 || NAME2_PLACEHOLDER;
+  const displayEmoji1 = setupData.emoji1 || EMOJI1_PLACEHOLDER;
+  const displayEmoji2 = setupData.emoji2 || EMOJI2_PLACEHOLDER;
+
   // State for reflection slide post-its
   const [reflectionTexts, setReflectionTexts] = useState<ReflectionTexts>(() => {
     const saved = loadFromStorage<ReflectionTexts>(STORAGE_KEYS.REFLECTION_TEXTS);
