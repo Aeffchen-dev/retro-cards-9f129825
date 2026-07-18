@@ -15,10 +15,11 @@ const niklasMemoji = "/assets/niklas-memoji.png";
 const janaMemoji = "/assets/jana-memoji.png";
 
 // Slide IDs — case numbers used inside renderCard's switch
-// Legacy cases 0-10 (with 6=Kalle removed), plus new: 100=Intro, 101=Setup, 102=Reflection
+// Legacy cases 0-10 (with 6=Kalle removed), plus new: 100=Intro, 101=Setup, 102=Reflection, 103=Logo
 const SLIDE_INTRO = 100;
 const SLIDE_SETUP = 101;
 const SLIDE_REFLECTION = 102;
+const SLIDE_LOGO = 103;
 
 interface ExtraPartner {
   name: string;
