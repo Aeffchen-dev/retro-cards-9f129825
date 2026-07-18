@@ -1109,7 +1109,7 @@ const RetroCards: React.FC = () => {
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Intro</span>
               </div>
-              <div className="flex flex-col gap-4 w-full retro-body text-xs">
+              <div className="flex flex-col gap-4 w-full retro-body-copy">
                 <p>Retro Cards ist euer monatlicher Check-in für eure Beziehung. Nehmt euch Zeit füreinander, sprecht ehrlich über das, was euch bewegt, und stärkt, was euch verbindet.</p>
                 <p>Macht daraus euren Date-Abend. Schnappt euch euer Lieblingsgetränk, macht’s euch gemütlich und genießt ein gutes Gespräch.</p>
                 <p>Hört einander zu, bleibt neugierig und denkt immer daran: Ihr seid ein Team. ❤️</p>
@@ -1119,8 +1119,8 @@ const RetroCards: React.FC = () => {
         );
 
       case SLIDE_SETUP: {
-        const emojiInputCls = "setup-emoji-input w-14 h-14 text-3xl bg-transparent focus:outline-none text-center border border-retro-white rounded-lg leading-none";
-        const nameInputCls = "setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg";
+        const emojiInputCls = "setup-emoji-input w-11 h-11 text-xl bg-transparent focus:outline-none text-center border border-retro-white/30 rounded-lg leading-none";
+        const nameInputCls = "name-input-field flex-1 retro-body-copy bg-transparent border-none focus:outline-none text-retro-white w-full";
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
@@ -1139,15 +1139,17 @@ const RetroCards: React.FC = () => {
                   placeholder={EMOJI1_PLACEHOLDER}
                   className={emojiInputCls}
                 />
-                <input
-                  ref={setupFirstInputRef}
-                  type="text"
-                  autoFocus
-                  value={setupData.name1}
-                  onChange={(e) => setSetupData({ ...setupData, name1: e.target.value })}
-                  placeholder={NAME1_PLACEHOLDER}
-                  className={nameInputCls}
-                />
+                <div className="name-input-wrapper">
+                  <input
+                    ref={setupFirstInputRef}
+                    type="text"
+                    autoFocus
+                    value={setupData.name1}
+                    onChange={(e) => setSetupData({ ...setupData, name1: e.target.value })}
+                    placeholder={NAME1_PLACEHOLDER}
+                    className={nameInputCls}
+                  />
+                </div>
               </div>
               {/* Person 2 */}
               <div className="flex items-center gap-3 w-full">
@@ -1158,13 +1160,15 @@ const RetroCards: React.FC = () => {
                   placeholder={EMOJI2_PLACEHOLDER}
                   className={emojiInputCls}
                 />
-                <input
-                  type="text"
-                  value={setupData.name2}
-                  onChange={(e) => setSetupData({ ...setupData, name2: e.target.value })}
-                  placeholder={NAME2_PLACEHOLDER}
-                  className={nameInputCls}
-                />
+                <div className="name-input-wrapper">
+                  <input
+                    type="text"
+                    value={setupData.name2}
+                    onChange={(e) => setSetupData({ ...setupData, name2: e.target.value })}
+                    placeholder={NAME2_PLACEHOLDER}
+                    className={nameInputCls}
+                  />
+                </div>
               </div>
               {/* Extra partners */}
               {setupData.extraPartners.map((p, idx) => (
@@ -1181,17 +1185,19 @@ const RetroCards: React.FC = () => {
                       placeholder="🧚"
                       className={emojiInputCls}
                     />
-                    <input
-                      type="text"
-                      value={p.name}
-                      onChange={(e) => {
-                        const next = [...setupData.extraPartners];
-                        next[idx] = { ...next[idx], name: e.target.value };
-                        setSetupData({ ...setupData, extraPartners: next });
-                      }}
-                      placeholder={`Partner ${idx + 3}`}
-                      className={nameInputCls}
-                    />
+                    <div className="name-input-wrapper">
+                      <input
+                        type="text"
+                        value={p.name}
+                        onChange={(e) => {
+                          const next = [...setupData.extraPartners];
+                          next[idx] = { ...next[idx], name: e.target.value };
+                          setSetupData({ ...setupData, extraPartners: next });
+                        }}
+                        placeholder={`Partner ${idx + 3}`}
+                        className={nameInputCls}
+                      />
+                    </div>
                   </div>
                   <button
                     type="button"
@@ -1212,7 +1218,7 @@ const RetroCards: React.FC = () => {
                   ...setupData,
                   extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
                 })}
-                className="self-start retro-body text-retro-white/90 bg-retro-white/10 backdrop-blur-md border border-retro-white/20 rounded-full px-4 py-2 hover:bg-retro-white/20 transition-colors no-underline"
+                className="self-start retro-body text-retro-white/60 bg-retro-white/5 backdrop-blur-md border border-retro-white/10 rounded-full px-4 py-2 hover:bg-retro-white/10 hover:text-retro-white/80 transition-colors no-underline"
               >
                 + Weiteren Partner hinzufügen
               </button>
@@ -1235,7 +1241,7 @@ const RetroCards: React.FC = () => {
             <button
               type="button"
               onClick={() => swiperRef?.slideNext()}
-              className="mt-auto w-full retro-body text-black bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
+              className="mt-auto w-full retro-body !text-black bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
             >
               Los geht's
             </button>

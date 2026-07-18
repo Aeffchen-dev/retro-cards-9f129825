@@ -177,7 +177,7 @@
 .retro-label {
   font-family: "Kokoro", Arial, sans-serif;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 10px;
   line-height: 1;
   letter-spacing: 0.4px;
   color: var(--retro-white);
@@ -194,8 +194,16 @@
 .retro-body {
   font-family: Arial, sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.2;
+  color: var(--retro-white);
+}
+
+.retro-body-copy {
+  font-family: Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
   color: var(--retro-white);
 }
 
@@ -231,15 +239,54 @@ button {
 
 /* Setup slide: 60% opacity placeholders that vanish on typing (native behavior) */
 .setup-name-input::placeholder,
-.setup-emoji-input::placeholder {
-  color: #ffffff;
-  opacity: 0.6;
+.setup-emoji-input::placeholder,
+.name-input-field::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 1;
 }
 
 /* White blinking cursor in setup inputs */
 .setup-name-input,
-.setup-emoji-input {
+.setup-emoji-input,
+.name-input-field {
   caret-color: #ffffff;
+}
+
+/* Name input wrapper: blinking cursor left of placeholder for empty fields */
+.name-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.name-input-wrapper:has(input:placeholder-shown:not(:focus))::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.5px;
+  height: 1em;
+  background-color: rgba(255, 255, 255, 0.6);
+  animation: blink-cursor 1.1s step-end infinite;
+  pointer-events: none;
+}
+
+.name-input-wrapper input {
+  padding-left: 10px;
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Setup emoji input: smaller, subtler outline */
+.setup-emoji-input {
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /* Print styles for archiving all slides */
