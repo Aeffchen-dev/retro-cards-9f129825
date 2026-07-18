@@ -66,8 +66,7 @@ interface ReflectionTexts {
 }
 
 interface MemojisPosition {
-  niklas: { x: number; y: number };
-  jana: { x: number; y: number };
+  [personKey: string]: { x: number; y: number };
 }
 
 const RetroCards: React.FC = () => {
