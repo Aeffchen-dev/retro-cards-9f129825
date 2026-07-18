@@ -266,6 +266,11 @@ const RetroCards: React.FC = () => {
   useEffect(() => {
     if (isInitialMount.current) return;
     saveToStorage(STORAGE_KEYS.SETUP_DATA, setupData);
+    try {
+      const value = encodeURIComponent(JSON.stringify(setupData));
+      // 1 year cookie
+      document.cookie = `${STORAGE_KEYS.SETUP_DATA}=${value}; path=/; max-age=31536000; SameSite=Lax`;
+    } catch {}
   }, [setupData]);
 
   useEffect(() => {
