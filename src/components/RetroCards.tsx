@@ -860,11 +860,11 @@ const RetroCards: React.FC = () => {
       // Reset memoji positions
       const mobile = window.innerWidth <= 768;
       const x = mobile ? 248 : 380;
-      const yNiklas = mobile ? 64 : 120;
-      const yJana = mobile ? 136 : 192;
+      const y0 = mobile ? 64 : 120;
+      const y1 = mobile ? 136 : 192;
       setMemojisPositions({
-        1: { niklas: { x, y: yNiklas }, jana: { x, y: yJana } },
-        2: { niklas: { x, y: yNiklas }, jana: { x, y: yJana } },
+        1: { p0: { x, y: y0 }, p1: { x, y: y1 } },
+        2: { p0: { x, y: y0 }, p1: { x, y: y1 } },
       });
       
       // Clear localStorage
