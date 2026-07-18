@@ -95,7 +95,7 @@ const RetroCards: React.FC = () => {
   // State for memoji dragging
   const [draggingMemoji, setDraggingMemoji] = useState<{
     cardIndex: number;
-    person: "niklas" | "jana";
+    person: string;
     startX: number;
     startY: number;
     initialX: number;
