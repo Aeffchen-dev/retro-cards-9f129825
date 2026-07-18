@@ -1099,9 +1099,6 @@ const RetroCards: React.FC = () => {
             >
               Retro Cards
             </h1>
-            <div className="mt-8 retro-label opacity-60">
-              Swipe to continue →
-            </div>
           </div>
         );
 
