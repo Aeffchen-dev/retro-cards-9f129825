@@ -1218,7 +1218,7 @@ const RetroCards: React.FC = () => {
                   ...setupData,
                   extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
                 })}
-                className="self-start retro-body text-retro-white/90 bg-retro-white/10 backdrop-blur-md border border-retro-white/20 rounded-full px-4 py-2 hover:bg-retro-white/20 transition-colors no-underline"
+                className="self-start retro-body text-retro-white/60 bg-retro-white/5 backdrop-blur-md border border-retro-white/10 rounded-full px-4 py-2 hover:bg-retro-white/10 hover:text-retro-white/80 transition-colors no-underline"
               >
                 + Weiteren Partner hinzufügen
               </button>
@@ -1241,7 +1241,7 @@ const RetroCards: React.FC = () => {
             <button
               type="button"
               onClick={() => swiperRef?.slideNext()}
-              className="mt-auto w-full retro-body text-black bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
+              className="mt-auto w-full retro-body !text-black bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
             >
               Los geht's
             </button>
