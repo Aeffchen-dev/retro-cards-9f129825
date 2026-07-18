@@ -1139,15 +1139,17 @@ const RetroCards: React.FC = () => {
                   placeholder={EMOJI1_PLACEHOLDER}
                   className={emojiInputCls}
                 />
-                <input
-                  ref={setupFirstInputRef}
-                  type="text"
-                  autoFocus
-                  value={setupData.name1}
-                  onChange={(e) => setSetupData({ ...setupData, name1: e.target.value })}
-                  placeholder={NAME1_PLACEHOLDER}
-                  className={nameInputCls}
-                />
+                <div className="name-input-wrapper">
+                  <input
+                    ref={setupFirstInputRef}
+                    type="text"
+                    autoFocus
+                    value={setupData.name1}
+                    onChange={(e) => setSetupData({ ...setupData, name1: e.target.value })}
+                    placeholder={NAME1_PLACEHOLDER}
+                    className={nameInputCls}
+                  />
+                </div>
               </div>
               {/* Person 2 */}
               <div className="flex items-center gap-3 w-full">
@@ -1158,13 +1160,15 @@ const RetroCards: React.FC = () => {
                   placeholder={EMOJI2_PLACEHOLDER}
                   className={emojiInputCls}
                 />
-                <input
-                  type="text"
-                  value={setupData.name2}
-                  onChange={(e) => setSetupData({ ...setupData, name2: e.target.value })}
-                  placeholder={NAME2_PLACEHOLDER}
-                  className={nameInputCls}
-                />
+                <div className="name-input-wrapper">
+                  <input
+                    type="text"
+                    value={setupData.name2}
+                    onChange={(e) => setSetupData({ ...setupData, name2: e.target.value })}
+                    placeholder={NAME2_PLACEHOLDER}
+                    className={nameInputCls}
+                  />
+                </div>
               </div>
               {/* Extra partners */}
               {setupData.extraPartners.map((p, idx) => (
