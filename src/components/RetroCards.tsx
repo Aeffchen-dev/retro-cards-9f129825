@@ -4,16 +4,35 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { saveToStorage, loadFromStorage, clearExpiredStorage, STORAGE_KEYS } from '@/lib/storage';
-import kalleImage from '@/assets/kalle.png';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-// Memoji images from public assets folder
+// Memoji images from public assets folder (fallbacks if user didn't pick emojis)
 const niklasMemoji = "/assets/niklas-memoji.png";
 const janaMemoji = "/assets/jana-memoji.png";
+
+// Slide IDs — case numbers used inside renderCard's switch
+// Legacy cases 0-10 (with 6=Kalle removed), plus new: 100=Intro, 101=Setup, 102=Reflection
+const SLIDE_INTRO = 100;
+const SLIDE_SETUP = 101;
+const SLIDE_REFLECTION = 102;
+
+interface SetupData {
+  name1: string;
+  name2: string;
+  emoji1: string;
+  emoji2: string;
+  openRelationship: boolean;
+}
+
+interface ReflectionTexts {
+  nice: string;
+  thanks: string;
+  idea: string;
+}
 
 interface MemojisPosition {
   niklas: { x: number; y: number };
