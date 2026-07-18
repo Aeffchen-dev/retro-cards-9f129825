@@ -809,6 +809,7 @@ const RetroCards: React.FC = () => {
       setPostItTexts({ niklas: "", jana: "" });
       setTakeawayTexts({ niklas: "", jana: "" });
       setEditModeNotes({});
+      setReflectionTexts({ nice: '', thanks: '', idea: '' });
       setCapturedPhotos([]);
       setCurrentQuestion("");
       
