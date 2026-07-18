@@ -976,12 +976,16 @@ const RetroCards: React.FC = () => {
                 onMouseDown={(e) => handleMemojiMouseDown(e, 2, "niklas")}
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "niklas")}
               >
-                <img
-                  src={niklasMemoji}
-                  alt="Niklas Memoji"
-                  className="w-full h-full object-cover rounded-full pointer-events-none"
-                  draggable={false}
-                />
+                {setupData.emoji1 ? (
+                  <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{setupData.emoji1}</div>
+                ) : (
+                  <img
+                    src={niklasMemoji}
+                    alt={`${setupData.name1} Memoji`}
+                    className="w-full h-full object-cover rounded-full pointer-events-none"
+                    draggable={false}
+                  />
+                )}
               </div>
               <div
                 className="absolute w-14 h-14 cursor-move select-none touch-none print-memoji print-memoji-jana"
@@ -995,12 +999,16 @@ const RetroCards: React.FC = () => {
                 onMouseDown={(e) => handleMemojiMouseDown(e, 2, "jana")}
                 onTouchStart={(e) => handleMemojiTouchStart(e, 2, "jana")}
               >
-                <img
-                  src={janaMemoji}
-                  alt="Jana Memoji"
-                  className="w-full h-full object-cover rounded-full pointer-events-none"
-                  draggable={false}
-                />
+                {setupData.emoji2 ? (
+                  <div className="w-full h-full flex items-center justify-center rounded-full pointer-events-none text-4xl leading-none">{setupData.emoji2}</div>
+                ) : (
+                  <img
+                    src={janaMemoji}
+                    alt={`${setupData.name2} Memoji`}
+                    className="w-full h-full object-cover rounded-full pointer-events-none"
+                    draggable={false}
+                  />
+                )}
               </div>
             </div>
             <div className="w-full text-center retro-body mt-8 screen-only">
