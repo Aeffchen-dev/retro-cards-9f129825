@@ -1442,7 +1442,7 @@ const RetroCards: React.FC = () => {
             onSwiper={setSwiperRef}
             onSlideChange={handleSlideChange}
             allowTouchMove={!draggingMemoji}
-            style={{ height: '100%', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}
+            style={{ height: '100%', width: '100%' }}
             effect="slide"
             resistance={true}
             resistanceRatio={0.3}
@@ -1452,6 +1452,7 @@ const RetroCards: React.FC = () => {
             longSwipes={true}
             longSwipesRatio={0.5}
             longSwipesMs={300}
+            normalizeSlideIndex={false}
           >
             {slides.map((slideId, index) => (
               <SwiperSlide key={slideId}>
