@@ -177,7 +177,7 @@
 .retro-label {
   font-family: "Kokoro", Arial, sans-serif;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1;
   letter-spacing: 0.4px;
   color: var(--retro-white);
@@ -194,7 +194,7 @@
 .retro-body {
   font-family: Arial, sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.2;
   color: var(--retro-white);
 }
@@ -234,6 +234,12 @@ button {
 .setup-emoji-input::placeholder {
   color: #ffffff;
   opacity: 0.6;
+}
+
+/* White blinking cursor in setup inputs */
+.setup-name-input,
+.setup-emoji-input {
+  caret-color: #ffffff;
 }
 
 /* Print styles for archiving all slides */
