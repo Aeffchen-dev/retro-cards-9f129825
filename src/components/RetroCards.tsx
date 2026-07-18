@@ -175,7 +175,7 @@ const RetroCards: React.FC = () => {
 
   // Ordered list of visible slide ids — filters out dates if openRelationship is off
   const slides = useMemo(() => {
-    const arr: number[] = [SLIDE_INTRO, SLIDE_SETUP, 0, 1, 2, 3, SLIDE_REFLECTION, 4];
+    const arr: number[] = [SLIDE_LOGO, SLIDE_INTRO, SLIDE_SETUP, 0, 1, 2, 3, SLIDE_REFLECTION, 4];
     if (setupData.openRelationship) arr.push(5);
     arr.push(7, 8, 9, 10);
     return arr;
