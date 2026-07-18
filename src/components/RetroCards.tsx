@@ -1185,17 +1185,19 @@ const RetroCards: React.FC = () => {
                       placeholder="🧚"
                       className={emojiInputCls}
                     />
-                    <input
-                      type="text"
-                      value={p.name}
-                      onChange={(e) => {
-                        const next = [...setupData.extraPartners];
-                        next[idx] = { ...next[idx], name: e.target.value };
-                        setSetupData({ ...setupData, extraPartners: next });
-                      }}
-                      placeholder={`Partner ${idx + 3}`}
-                      className={nameInputCls}
-                    />
+                    <div className="name-input-wrapper">
+                      <input
+                        type="text"
+                        value={p.name}
+                        onChange={(e) => {
+                          const next = [...setupData.extraPartners];
+                          next[idx] = { ...next[idx], name: e.target.value };
+                          setSetupData({ ...setupData, extraPartners: next });
+                        }}
+                        placeholder={`Partner ${idx + 3}`}
+                        className={nameInputCls}
+                      />
+                    </div>
                   </div>
                   <button
                     type="button"
