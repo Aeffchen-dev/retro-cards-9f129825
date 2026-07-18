@@ -1261,7 +1261,7 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder="Niklas' Erkenntnisse"
+                placeholder={`${setupData.name1}s Erkenntnisse`}
               />
               <textarea
                 value={takeawayTexts.jana}
@@ -1272,7 +1272,7 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder="Jana's Erkenntnisse"
+                placeholder={`${setupData.name2}s Erkenntnisse`}
               />
             </div>
           </div>
