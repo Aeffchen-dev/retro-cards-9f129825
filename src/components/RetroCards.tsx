@@ -205,6 +205,16 @@ const RetroCards: React.FC = () => {
     saveToStorage(STORAGE_KEYS.EDIT_MODE_NOTES, editModeNotes);
   }, [editModeNotes]);
 
+  useEffect(() => {
+    if (isInitialMount.current) return;
+    saveToStorage(STORAGE_KEYS.SETUP_DATA, setupData);
+  }, [setupData]);
+
+  useEffect(() => {
+    if (isInitialMount.current) return;
+    saveToStorage(STORAGE_KEYS.REFLECTION_TEXTS, reflectionTexts);
+  }, [reflectionTexts]);
+
   // Toggle edit mode for a slide
   const toggleEditMode = useCallback((slideIndex: number) => {
     setEditModeSlides(prev => ({
@@ -221,18 +231,16 @@ const RetroCards: React.FC = () => {
   }, []);
 
   // Get question text for a slide (for edit mode display)
-  const getSlideQuestion = useCallback((slideIndex: number): string => {
+  const getSlideQuestion = useCallback((slideId: number): string => {
     const questions: Record<number, string> = {
       1: isMobile ? "Wie geht's mir persönlich?" : "Wie geht's mir persönlich in letzter Zeit?",
       2: "Wie geht's mir in der Beziehung?",
       3: "Wie waren die letzten 4 Wochen? Was war los?",
-      4: "Darüber möchte ich mit dir sprechen",
+      [SLIDE_REFLECTION]: "Reflection",
       5: "Wie stehts mit Dates?",
-      6: "Wie läufts mit Kalle?",
       7: "Sind wir uns körperlich nah?",
-      8: "Das nehmen wir aus der Retro mit"
     };
-    return questions[slideIndex] || "";
+    return questions[slideId] || "";
   }, [isMobile]);
 
   // Fetch questions from Google Sheets - truly non-blocking with cache
