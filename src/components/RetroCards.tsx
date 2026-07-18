@@ -1381,65 +1381,65 @@ const RetroCards: React.FC = () => {
             longSwipesRatio={0.5}
             longSwipesMs={300}
           >
-            {Array.from({ length: totalCards }, (_, index) => (
-              <SwiperSlide key={index}>
+            {slides.map((slideId, index) => (
+              <SwiperSlide key={slideId}>
                 <div className="w-full h-full flex items-center justify-center px-4">
                   <div 
                     className="retro-card-container relative h-full w-full max-w-[500px] max-h-[780px] mx-auto flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl overflow-hidden"
                   >
                     {/* Edit Mode View */}
-                    {editModeSlides[index] && slidesWithEditButton.includes(index) ? (
+                    {editModeSlides[slideId] && slidesWithEditButton.includes(slideId) ? (
                       <div className="absolute inset-0 p-8 flex flex-col z-30 bg-retro-card-bg">
                         {/* Question text - animated to top left, smaller, with right padding for close icon */}
                         <h2 
                           className="retro-body text-retro-white/80 mb-6 pr-12 animate-[slideUp_0.15s_ease-in-out_forwards]"
                           style={{ fontSize: isMobile ? '14px' : '16px', lineHeight: 1.4 }}
                         >
-                          {getSlideQuestion(index)}
+                          {getSlideQuestion(slideId)}
                         </h2>
                         
                         {/* Two post-it notes */}
                         <div className="flex flex-col flex-1 gap-4 w-full animate-[fadeInUp_0.4s_ease-out_0.1s_both]">
                           <textarea
-                            value={editModeNotes[index]?.note1 || ""}
+                            value={editModeNotes[slideId]?.note1 || ""}
                             onChange={(e) =>
                               setEditModeNotes(prev => ({
                                 ...prev,
-                                [index]: { ...prev[index], note1: e.target.value, note2: prev[index]?.note2 || "" }
+                                [slideId]: { ...prev[slideId], note1: e.target.value, note2: prev[slideId]?.note2 || "" }
                               }))
                             }
                             className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                             style={{ borderRadius: "0px" }}
-                            placeholder="Niklas Notizen"
+                            placeholder={`${setupData.name1} Notizen`}
                           />
                           <textarea
-                            value={editModeNotes[index]?.note2 || ""}
+                            value={editModeNotes[slideId]?.note2 || ""}
                             onChange={(e) =>
                               setEditModeNotes(prev => ({
                                 ...prev,
-                                [index]: { ...prev[index], note2: e.target.value, note1: prev[index]?.note1 || "" }
+                                [slideId]: { ...prev[slideId], note2: e.target.value, note1: prev[slideId]?.note1 || "" }
                               }))
                             }
                             className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                             style={{ borderRadius: "0px" }}
-                            placeholder="Jana's Notizen"
+                            placeholder={`${setupData.name2} Notizen`}
                           />
                         </div>
                       </div>
                     ) : (
                       <>
-                        {renderCard(index)}
+                        {renderCard(slideId)}
                       </>
                     )}
 
                     {/* Edit/Close button - top right with 48x48 touch target */}
-                    {slidesWithEditButton.includes(index) && (
+                    {slidesWithEditButton.includes(slideId) && (
                       <button
-                        onClick={() => toggleEditMode(index)}
+                        onClick={() => toggleEditMode(slideId)}
                         className="absolute top-4 right-4 w-12 h-12 flex items-center justify-center z-40 cursor-pointer hover:opacity-80 transition-all duration-300 screen-only"
                         style={{ touchAction: 'manipulation' }}
                       >
-                        {editModeSlides[index] ? (
+                        {editModeSlides[slideId] ? (
                           <X size={32} strokeWidth={1} className="text-retro-white" />
                         ) : (
                           <Pencil size={24} strokeWidth={1} className="text-retro-white" />
@@ -1455,7 +1455,7 @@ const RetroCards: React.FC = () => {
                     )}
 
                     {/* Left navigation zone (32px wide) */}
-                    {index > 0 && !editModeSlides[index] && (
+                    {index > 0 && !editModeSlides[slideId] && (
                       <div
                         onClick={() => navigateCard("prev")}
                         className="absolute left-0 top-0 w-8 h-full cursor-pointer z-20"
@@ -1464,7 +1464,7 @@ const RetroCards: React.FC = () => {
                     )}
 
                     {/* Right navigation zone (32px wide) */}
-                    {index < totalCards - 1 && !editModeSlides[index] && (
+                    {index < totalCards - 1 && !editModeSlides[slideId] && (
                       <div
                         onClick={() => navigateCard("next")}
                         className="absolute right-0 top-0 w-8 h-full cursor-pointer z-20"
