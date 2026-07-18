@@ -136,10 +136,18 @@ const RetroCards: React.FC = () => {
   // State for captured photos
   const [capturedPhotos, setCapturedPhotos] = useState<string[]>([]);
 
-  // State for setup (names, emojis, open-relationship toggle)
+  // State for setup (names, emojis, open-relationship toggle, extra partners)
   const [setupData, setSetupData] = useState<SetupData>(() => {
-    const saved = loadFromStorage<SetupData>(STORAGE_KEYS.SETUP_DATA);
-    return saved || { name1: 'Niklas', name2: 'Jana', emoji1: '', emoji2: '', openRelationship: false };
+    const saved = loadFromStorage<Partial<SetupData>>(STORAGE_KEYS.SETUP_DATA);
+    return {
+      name1: '',
+      name2: '',
+      emoji1: '',
+      emoji2: '',
+      openRelationship: false,
+      extraPartners: [],
+      ...(saved || {}),
+    } as SetupData;
   });
 
   // State for reflection slide post-its
