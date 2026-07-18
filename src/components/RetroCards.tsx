@@ -77,6 +77,7 @@ const RetroCards: React.FC = () => {
   });
   const [swiperRef, setSwiperRef] = useState<SwiperType | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const setupFirstInputRef = useRef<HTMLInputElement>(null);
 
   // State for draggable memojis on health check cards - use lazy initialization
   const [memojisPositions, setMemojisPositions] = useState<
@@ -265,6 +266,11 @@ const RetroCards: React.FC = () => {
   useEffect(() => {
     if (isInitialMount.current) return;
     saveToStorage(STORAGE_KEYS.SETUP_DATA, setupData);
+    try {
+      const value = encodeURIComponent(JSON.stringify(setupData));
+      // 1 year cookie
+      document.cookie = `${STORAGE_KEYS.SETUP_DATA}=${value}; path=/; max-age=31536000; SameSite=Lax`;
+    } catch {}
   }, [setupData]);
 
   useEffect(() => {
@@ -285,7 +291,11 @@ const RetroCards: React.FC = () => {
     setCurrentCard(swiper.activeIndex);
     // Only reset if there are active edit modes
     setEditModeSlides(prev => Object.keys(prev).length > 0 ? {} : prev);
-  }, []);
+    // Autofocus first setup input when landing on setup slide
+    if (slides[swiper.activeIndex] === SLIDE_SETUP) {
+      setTimeout(() => setupFirstInputRef.current?.focus(), 50);
+    }
+  }, [slides]);
 
   // Get question text for a slide (for edit mode display)
   const getSlideQuestion = useCallback((slideId: number): string => {
@@ -1089,9 +1099,6 @@ const RetroCards: React.FC = () => {
             >
               Retro Cards
             </h1>
-            <div className="mt-8 retro-label opacity-60">
-              Swipe to continue →
-            </div>
           </div>
         );
 
@@ -1133,7 +1140,9 @@ const RetroCards: React.FC = () => {
                   className={emojiInputCls}
                 />
                 <input
+                  ref={setupFirstInputRef}
                   type="text"
+                  autoFocus
                   value={setupData.name1}
                   onChange={(e) => setSetupData({ ...setupData, name1: e.target.value })}
                   placeholder={NAME1_PLACEHOLDER}
@@ -1220,10 +1229,14 @@ const RetroCards: React.FC = () => {
                   />
                 </button>
               </div>
-              <div className="mt-6 retro-label opacity-60 text-center w-full">
-                Swipe to continue →
-              </div>
             </div>
+            <button
+              type="button"
+              onClick={() => swiperRef?.slideNext()}
+              className="mt-auto w-full retro-body text-retro-card-bg bg-retro-white rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
+            >
+              Los geht's
+            </button>
           </div>
         );
       }
