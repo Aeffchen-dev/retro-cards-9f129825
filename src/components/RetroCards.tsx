@@ -1433,7 +1433,7 @@ const RetroCards: React.FC = () => {
       {/* Card Content - Swiper.js slide animation like friends app */}
       <div className="flex-1 flex items-center justify-center px-4 py-4">
         <div className="w-full h-full">
-           <Swiper
+            <Swiper
             modules={[Navigation, Pagination]}
             spaceBetween={0}
             slidesPerView={1}
@@ -1447,7 +1447,6 @@ const RetroCards: React.FC = () => {
             resistance={true}
             resistanceRatio={0.3}
             touchStartPreventDefault={false}
-            centeredSlides={true}
             threshold={5}
             shortSwipes={true}
             longSwipes={true}
