@@ -1092,7 +1092,7 @@ const RetroCards: React.FC = () => {
 
       case SLIDE_LOGO:
         return (
-          <div className="flex flex-col items-center justify-center w-full h-full text-center">
+          <div className="flex flex-col items-center w-full h-full text-center" style={{ paddingTop: '25%' }}>
             <h1
               className="retro-title"
               style={{ fontSize: '64px', lineHeight: 1.05 }}
@@ -1111,9 +1111,9 @@ const RetroCards: React.FC = () => {
               </div>
             </div>
             <div className="flex flex-col gap-4 w-full mt-8 retro-body">
-              <p>Retro Cards is a simple guided ritual to check in with your partner, reflect on your relationship, and keep it healthy.</p>
-              <p>Make it a monthly date night. Grab a drink, and enjoy an honest conversation that builds connection.</p>
-              <p>Listen with an open mind, stay curious, and always remember you're playing on the same team.</p>
+              <p>Retro Cards ist ein einfaches, geführtes Ritual, um mit deinem Partner einzuchecken, eure Beziehung zu reflektieren und sie gesund zu halten.</p>
+              <p>Macht es zum monatlichen Date-Abend. Schnappt euch ein Getränk und genießt ein ehrliches Gespräch, das Verbindung schafft.</p>
+              <p>Hört mit offenem Herzen zu, bleibt neugierig und denkt immer daran: Ihr spielt im selben Team.</p>
             </div>
           </div>
         );
