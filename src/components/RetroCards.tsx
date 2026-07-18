@@ -35,8 +35,8 @@ interface SetupData {
   extraPartners: ExtraPartner[];
 }
 
-const NAME1_PLACEHOLDER = "Your name";
-const NAME2_PLACEHOLDER = "Your partner's name";
+const NAME1_PLACEHOLDER = "Dein Name";
+const NAME2_PLACEHOLDER = "Name deines Partners";
 const EMOJI1_PLACEHOLDER = "🧚‍♂️";
 const EMOJI2_PLACEHOLDER = "🧚‍♀️";
 
