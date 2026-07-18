@@ -156,6 +156,19 @@ const RetroCards: React.FC = () => {
   const displayEmoji1 = setupData.emoji1 || EMOJI1_PLACEHOLDER;
   const displayEmoji2 = setupData.emoji2 || EMOJI2_PLACEHOLDER;
 
+  // All persons (2 main + extra partners) — used to render draggable memojis on health-check slides
+  const persons = useMemo(() => {
+    return [
+      { key: 'p0', name: displayName1, emoji: displayEmoji1 },
+      { key: 'p1', name: displayName2, emoji: displayEmoji2 },
+      ...setupData.extraPartners.map((p, i) => ({
+        key: `p${i + 2}`,
+        name: p.name || `Partner ${i + 3}`,
+        emoji: p.emoji || '🧚',
+      })),
+    ];
+  }, [displayName1, displayName2, displayEmoji1, displayEmoji2, setupData.extraPartners]);
+
   // State for reflection slide post-its
   const [reflectionTexts, setReflectionTexts] = useState<ReflectionTexts>(() => {
     const saved = loadFromStorage<ReflectionTexts>(STORAGE_KEYS.REFLECTION_TEXTS);
