@@ -40,6 +40,20 @@ const NAME2_PLACEHOLDER = "Name deines Partners";
 const EMOJI1_PLACEHOLDER = "🧚‍♂️";
 const EMOJI2_PLACEHOLDER = "🧚‍♀️";
 
+// German possessive helper: add "s" unless name ends in s, x, z or ß
+const germanPossessive = (name: string): string => {
+  if (!name) return "";
+  const lastChar = name.slice(-1).toLowerCase();
+  const needsApostrophe = ["s", "x", "z", "ß"].includes(lastChar);
+  return name + (needsApostrophe ? "'" : "s");
+};
+
+// Post-it / takeaway placeholder that falls back to sensible German when no name is entered
+const postItPlaceholder = (name: string, label: string, fallback: string): string => {
+  if (!name || name === NAME1_PLACEHOLDER || name === NAME2_PLACEHOLDER) return fallback;
+  return `${germanPossessive(name)} ${label}`;
+};
+
 // Keep only a single emoji grapheme; drop any plain text
 const sanitizeEmoji = (input: string): string => {
   if (!input) return "";
@@ -906,7 +920,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white" style={{ paddingTop: '6px', paddingBottom: '4px' }}>
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label" style={{ lineHeight: 1, display: 'flex', alignItems: 'center' }}>Memory Time</span>
               </div>
               <h2 className="retro-heading w-full">
@@ -951,7 +965,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Health Check</span>
               </div>
               <h2 className="retro-heading w-full">{heading}</h2>
@@ -1001,7 +1015,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">The last 4 weeks</span>
               </div>
               <h2 className="retro-heading w-full">
@@ -1035,7 +1049,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full relative">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">To talk about</span>
               </div>
               <h2 className="retro-heading w-full">
@@ -1052,7 +1066,7 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder={`${displayName1}s Themen`}
+                placeholder={postItPlaceholder(setupData.name1, "Themen", "Meine Themen")}
               />
               <textarea
                 value={postItTexts.jana}
@@ -1063,16 +1077,16 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder={`${displayName2}s Themen`}
+                placeholder={postItPlaceholder(setupData.name2, "Themen", "Themen meines Partners")}
               />
             </div>
             {/* Print-only: post-it notes like takeaways with line breaks */}
             <div className="hidden print-only flex-col flex-1 w-full justify-between gap-6 mt-10">
               <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
-                {postItTexts.niklas || `${displayName1}s Themen`}
+                {postItTexts.niklas || postItPlaceholder(setupData.name1, "Themen", "Meine Themen")}
               </div>
               <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
-                {postItTexts.jana || `${displayName2}s Themen`}
+                {postItTexts.jana || postItPlaceholder(setupData.name2, "Themen", "Themen meines Partners")}
               </div>
             </div>
           </div>
@@ -1082,7 +1096,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start gap-14 w-full justify-center">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Offene Beziehung</span>
               </div>
               <h2 className="retro-heading w-full">Wie stehts mit Dates?</h2>
@@ -1092,9 +1106,9 @@ const RetroCards: React.FC = () => {
 
       case SLIDE_LOGO:
         return (
-          <div className="flex flex-col items-center w-full h-full text-center" style={{ paddingTop: '25%' }}>
+          <div className="flex flex-col items-center w-full h-full text-center" style={{ paddingTop: '45%' }}>
             <h1
-              className="retro-title"
+              className="retro-title logo-slide-anim"
               style={{ fontSize: '64px', lineHeight: 1.05 }}
             >
               Retro Cards
@@ -1106,7 +1120,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col justify-center items-start w-full h-full">
             <div className="flex flex-col items-start gap-8 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Intro</span>
               </div>
               <div className="flex flex-col gap-4 w-full retro-body-copy">
@@ -1124,7 +1138,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Setup</span>
               </div>
             </div>
@@ -1256,7 +1270,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Reflection</span>
               </div>
               <h2 className="retro-heading w-full">Reflection</h2>
@@ -1291,7 +1305,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start gap-14 w-full justify-center">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Intimacy</span>
               </div>
               <h2 className="retro-heading w-full">Sind wir uns körperlich nah?</h2>
@@ -1303,7 +1317,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Takeaways</span>
               </div>
               <h2 className="retro-heading w-full">
@@ -1320,7 +1334,7 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder={`${displayName1}s Erkenntnisse`}
+                placeholder={postItPlaceholder(setupData.name1, "Erkenntnisse", "Meine Erkenntnisse")}
               />
               <textarea
                 value={takeawayTexts.jana}
@@ -1331,7 +1345,7 @@ const RetroCards: React.FC = () => {
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
-                placeholder={`${displayName2}s Erkenntnisse`}
+                placeholder={postItPlaceholder(setupData.name2, "Erkenntnisse", "Erkenntnisse meines Partners")}
               />
             </div>
           </div>
@@ -1341,7 +1355,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-center w-full h-full">
             <div className="flex flex-col items-center gap-6 w-full text-center flex-1 justify-center">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Archive</span>
               </div>
               <h2 className="retro-heading w-full">Sichert eure Inhalte</h2>
@@ -1369,7 +1383,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Questions</span>
               </div>
               <h2 className="retro-heading w-full">
@@ -1419,7 +1433,7 @@ const RetroCards: React.FC = () => {
       {/* Card Content - Swiper.js slide animation like friends app */}
       <div className="flex-1 flex items-center justify-center px-4 py-4">
         <div className="w-full h-full">
-           <Swiper
+            <Swiper
             modules={[Navigation, Pagination]}
             spaceBetween={0}
             slidesPerView={1}
@@ -1433,7 +1447,6 @@ const RetroCards: React.FC = () => {
             resistance={true}
             resistanceRatio={0.3}
             touchStartPreventDefault={false}
-            centeredSlides={true}
             threshold={5}
             shortSwipes={true}
             longSwipes={true}
@@ -1469,7 +1482,7 @@ const RetroCards: React.FC = () => {
                             }
                             className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                             style={{ borderRadius: "0px" }}
-                            placeholder={`${displayName1} Notizen`}
+                            placeholder={postItPlaceholder(setupData.name1, "Notizen", "Meine Notizen")}
                           />
                           <textarea
                             value={editModeNotes[slideId]?.note2 || ""}
@@ -1481,7 +1494,7 @@ const RetroCards: React.FC = () => {
                             }
                             className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
                             style={{ borderRadius: "0px" }}
-                            placeholder={`${displayName2} Notizen`}
+                            placeholder={postItPlaceholder(setupData.name2, "Notizen", "Notizen meines Partners")}
                           />
                         </div>
                       </div>
