@@ -1173,24 +1173,27 @@ const RetroCards: React.FC = () => {
               <div className="flex py-1 px-3 justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label">Setup</span>
               </div>
-              <h2 className="retro-heading w-full">Setup</h2>
+              <h2 className="retro-heading w-full">
+                Tragt eure Namen ein und wählt ein individuelles Emoji
+              </h2>
             </div>
             <div className="flex flex-col gap-6 w-full mt-8">
               {/* Person 1 */}
               <div className="flex items-center gap-3 w-full border-b border-retro-white/30 pb-2">
                 <input
                   type="text"
+                  inputMode="text"
                   value={setupData.emoji1}
-                  onChange={(e) => setSetupData({ ...setupData, emoji1: e.target.value.slice(0, 4) })}
-                  placeholder="🙂"
-                  className="w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                  onChange={(e) => setSetupData({ ...setupData, emoji1: sanitizeEmoji(e.target.value) })}
+                  placeholder={EMOJI1_PLACEHOLDER}
+                  className="setup-emoji-input w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
                 />
                 <input
                   type="text"
                   value={setupData.name1}
                   onChange={(e) => setSetupData({ ...setupData, name1: e.target.value })}
-                  placeholder="Dein Name"
-                  className="flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
+                  placeholder={NAME1_PLACEHOLDER}
+                  className="setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
                 />
               </div>
               {/* Person 2 */}
@@ -1198,18 +1201,66 @@ const RetroCards: React.FC = () => {
                 <input
                   type="text"
                   value={setupData.emoji2}
-                  onChange={(e) => setSetupData({ ...setupData, emoji2: e.target.value.slice(0, 4) })}
-                  placeholder="😊"
-                  className="w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                  onChange={(e) => setSetupData({ ...setupData, emoji2: sanitizeEmoji(e.target.value) })}
+                  placeholder={EMOJI2_PLACEHOLDER}
+                  className="setup-emoji-input w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
                 />
                 <input
                   type="text"
                   value={setupData.name2}
                   onChange={(e) => setSetupData({ ...setupData, name2: e.target.value })}
-                  placeholder="Name deines Partners"
-                  className="flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
+                  placeholder={NAME2_PLACEHOLDER}
+                  className="setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
                 />
               </div>
+              {/* Extra partners */}
+              {setupData.extraPartners.map((p, idx) => (
+                <div key={idx} className="flex items-center gap-3 w-full border-b border-retro-white/30 pb-2">
+                  <input
+                    type="text"
+                    value={p.emoji}
+                    onChange={(e) => {
+                      const next = [...setupData.extraPartners];
+                      next[idx] = { ...next[idx], emoji: sanitizeEmoji(e.target.value) };
+                      setSetupData({ ...setupData, extraPartners: next });
+                    }}
+                    placeholder="🧚"
+                    className="setup-emoji-input w-14 text-3xl bg-transparent border-none focus:outline-none text-center"
+                  />
+                  <input
+                    type="text"
+                    value={p.name}
+                    onChange={(e) => {
+                      const next = [...setupData.extraPartners];
+                      next[idx] = { ...next[idx], name: e.target.value };
+                      setSetupData({ ...setupData, extraPartners: next });
+                    }}
+                    placeholder={`Partner ${idx + 3}`}
+                    className="setup-name-input flex-1 retro-body bg-transparent border-none focus:outline-none text-retro-white text-lg"
+                  />
+                  <button
+                    type="button"
+                    aria-label="Partner entfernen"
+                    onClick={() => {
+                      const next = setupData.extraPartners.filter((_, i) => i !== idx);
+                      setSetupData({ ...setupData, extraPartners: next });
+                    }}
+                    className="text-retro-white/60 hover:text-retro-white p-1"
+                  >
+                    <X size={18} strokeWidth={2} />
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => setSetupData({
+                  ...setupData,
+                  extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
+                })}
+                className="self-start retro-body text-retro-white/70 hover:text-retro-white text-sm underline underline-offset-4"
+              >
+                + Weiteren Partner hinzufügen
+              </button>
               {/* Toggle */}
               <label className="flex items-center justify-between w-full cursor-pointer mt-4">
                 <span className="retro-body">Offene Beziehung</span>
@@ -1225,12 +1276,10 @@ const RetroCards: React.FC = () => {
                   />
                 </button>
               </label>
-              <p className="retro-body text-retro-white/60 text-sm">
-                Deine Namen und Emojis werden in allen Karten verwendet.
-              </p>
             </div>
           </div>
         );
+
 
       case SLIDE_REFLECTION:
         return (
