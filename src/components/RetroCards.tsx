@@ -117,31 +117,38 @@ const RetroCards: React.FC = () => {
     return saved || {};
   });
 
-  // Slides that should have the edit button (all except 0, 4, 8, 9, 10)
-  const slidesWithEditButton = [1, 2, 3, 5, 6, 7];
-  
-  const dogMessages = [
-    "Woof!",
-    "Bark!",
-    "Ruff!",
-    "Arf arf!",
-    "Wau wau!",
-    "Yip yip!",
-    "Bork!",
-    "Howl!",
-    "Treat?",
-    "Pet me!",
-  ];
+  // State for setup (names, emojis, open-relationship toggle)
+  const [setupData, setSetupData] = useState<SetupData>(() => {
+    const saved = loadFromStorage<SetupData>(STORAGE_KEYS.SETUP_DATA);
+    return saved || { name1: 'Niklas', name2: 'Jana', emoji1: '', emoji2: '', openRelationship: false };
+  });
 
-  // Auto-hide Kalle speech bubble after 300ms
-  useEffect(() => {
-    if (showKalleBubble) {
-      const timer = setTimeout(() => setShowKalleBubble(false), 600);
-      return () => clearTimeout(timer);
-    }
-  }, [showKalleBubble]);
+  // State for reflection slide post-its
+  const [reflectionTexts, setReflectionTexts] = useState<ReflectionTexts>(() => {
+    const saved = loadFromStorage<ReflectionTexts>(STORAGE_KEYS.REFLECTION_TEXTS);
+    return saved || { nice: '', thanks: '', idea: '' };
+  });
 
-  const totalCards = 11;
+  // State for edit mode on slides — keyed by slide id (case number)
+  const [editModeSlides, setEditModeSlides] = useState<Record<number, boolean>>({});
+  const [editModeNotes, setEditModeNotes] = useState<Record<number, { note1: string; note2: string }>>(() => {
+    const saved = loadFromStorage<Record<number, { note1: string; note2: string }>>(STORAGE_KEYS.EDIT_MODE_NOTES);
+    return saved || {};
+  });
+
+  // Slide ids with edit button: health-personal(1), health-relationship(2), last-4-weeks(3),
+  // reflection(102), dates(5), intimacy(7)
+  const slidesWithEditButton = [1, 2, 3, SLIDE_REFLECTION, 5, 7];
+
+  // Ordered list of visible slide ids — filters out dates if openRelationship is off
+  const slides = useMemo(() => {
+    const arr: number[] = [SLIDE_INTRO, SLIDE_SETUP, 0, 1, 2, 3, SLIDE_REFLECTION, 4];
+    if (setupData.openRelationship) arr.push(5);
+    arr.push(7, 8, 9, 10);
+    return arr;
+  }, [setupData.openRelationship]);
+
+  const totalCards = slides.length;
 
   // Track if initial load is complete to avoid saving on mount
   const isInitialMount = useRef(true);
