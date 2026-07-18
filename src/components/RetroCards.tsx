@@ -920,7 +920,7 @@ const RetroCards: React.FC = () => {
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
-              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white" style={{ paddingTop: '6px', paddingBottom: '4px' }}>
+              <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
                 <span className="retro-label" style={{ lineHeight: 1, display: 'flex', alignItems: 'center' }}>Memory Time</span>
               </div>
               <h2 className="retro-heading w-full">
