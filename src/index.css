@@ -253,24 +253,30 @@ button {
   cursor: pointer !important;
 }
 
-/* Post-it placeholder styling */
-.bg-retro-post-it::placeholder {
-  color: #b29f71 !important;
+/* Unified input styles for all form inputs */
+.retro-input {
+  outline: none;
+  resize: none;
 }
 
-/* Setup slide: 60% opacity placeholders that vanish on typing (native behavior) */
-.setup-name-input::placeholder,
-.setup-emoji-input::placeholder,
-.name-input-field::placeholder {
+.retro-input-dark {
+  color: #ffffff;
+  caret-color: #ffffff;
+}
+
+.retro-input-dark::placeholder {
   color: rgba(255, 255, 255, 0.6);
   opacity: 1;
 }
 
-/* White blinking cursor in setup inputs */
-.setup-name-input,
-.setup-emoji-input,
-.name-input-field {
-  caret-color: #ffffff;
+.retro-input-light {
+  color: #000000;
+  caret-color: #000000;
+}
+
+.retro-input-light::placeholder {
+  color: #b29f71;
+  opacity: 1;
 }
 
 /* Name input wrapper: blinking cursor left of placeholder for empty fields */
