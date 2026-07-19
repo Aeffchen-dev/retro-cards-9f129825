@@ -1062,7 +1062,7 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setPostItTexts({ ...postItTexts, niklas: e.target.value })
                 }
-                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
+                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
@@ -1073,7 +1073,7 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setPostItTexts({ ...postItTexts, jana: e.target.value })
                 }
-                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
+                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
@@ -1133,8 +1133,8 @@ const RetroCards: React.FC = () => {
         );
 
       case SLIDE_SETUP: {
-        const emojiInputCls = "setup-emoji-input w-11 h-11 text-xl bg-transparent focus:outline-none text-center border border-retro-white/30 rounded-lg leading-none";
-        const nameInputCls = "name-input-field flex-1 retro-body-copy bg-transparent border-none focus:outline-none text-retro-white w-full";
+        const emojiInputCls = "setup-emoji-input retro-input retro-input-dark w-11 h-11 text-xl text-center border border-retro-white/30 rounded-lg leading-none";
+        const nameInputCls = "name-input-field retro-input retro-input-dark flex-1 retro-body-copy w-full";
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
@@ -1279,21 +1279,21 @@ const RetroCards: React.FC = () => {
               <textarea
                 value={reflectionTexts.nice}
                 onChange={(e) => setReflectionTexts({ ...reflectionTexts, nice: e.target.value })}
-                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-base focus:outline-none"
+                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-base"
                 style={{ borderRadius: "0px" }}
                 placeholder="Das finde ich gerade schön in unserer Beziehung"
               />
               <textarea
                 value={reflectionTexts.thanks}
                 onChange={(e) => setReflectionTexts({ ...reflectionTexts, thanks: e.target.value })}
-                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-base focus:outline-none"
+                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-base"
                 style={{ borderRadius: "0px" }}
                 placeholder="Dafür möchte ich Danke sagen / ein Kompliment für dich"
               />
               <textarea
                 value={reflectionTexts.idea}
                 onChange={(e) => setReflectionTexts({ ...reflectionTexts, idea: e.target.value })}
-                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-base focus:outline-none"
+                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-base"
                 style={{ borderRadius: "0px" }}
                 placeholder="Eine Idee für uns / Das können wir besser machen"
               />
@@ -1330,7 +1330,7 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setTakeawayTexts({ ...takeawayTexts, niklas: e.target.value })
                 }
-                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
+                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
@@ -1341,7 +1341,7 @@ const RetroCards: React.FC = () => {
                 onChange={(e) =>
                   setTakeawayTexts({ ...takeawayTexts, jana: e.target.value })
                 }
-                className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
+                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
                 style={{
                   borderRadius: "0px",
                 } as React.CSSProperties}
@@ -1480,7 +1480,7 @@ const RetroCards: React.FC = () => {
                                 [slideId]: { ...prev[slideId], note1: e.target.value, note2: prev[slideId]?.note2 || "" }
                               }))
                             }
-                            className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
+                            className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
                             style={{ borderRadius: "0px" }}
                             placeholder={postItPlaceholder(setupData.name1, "Notizen", "Meine Notizen")}
                           />
@@ -1492,7 +1492,7 @@ const RetroCards: React.FC = () => {
                                 [slideId]: { ...prev[slideId], note2: e.target.value, note1: prev[slideId]?.note1 || "" }
                               }))
                             }
-                            className="w-full flex-1 p-4 bg-retro-post-it text-black border-none resize-none text-lg focus:outline-none"
+                            className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
                             style={{ borderRadius: "0px" }}
                             placeholder={postItPlaceholder(setupData.name2, "Notizen", "Notizen meines Partners")}
                           />
