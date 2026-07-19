@@ -1431,7 +1431,7 @@ const RetroCards: React.FC = () => {
       </div>
 
       {/* Card Content - Swiper.js slide animation like friends app */}
-      <div className="flex-1 flex items-center justify-center px-4 py-4">
+      <div className="flex-1 flex items-center justify-center py-4">
         <div className="w-full h-full">
             <Swiper
             modules={[Navigation, Pagination]}
