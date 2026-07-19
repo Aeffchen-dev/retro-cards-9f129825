@@ -1153,7 +1153,7 @@ const RetroCards: React.FC = () => {
                   placeholder={EMOJI1_PLACEHOLDER}
                   className={emojiInputCls}
                 />
-                <div className="name-input-wrapper">
+                <div className="name-input-wrapper first-name-input-wrapper">
                   <input
                     ref={setupFirstInputRef}
                     type="text"
