@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { RefreshCw, Download, Pencil, X, Trash2 } from "lucide-react";
+import { RefreshCw, Download, Pencil, X, Trash2, Camera } from "lucide-react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Keyboard } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
@@ -969,6 +969,17 @@ const RetroCards: React.FC = () => {
                 ))}
               </div>
             )}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                openCamera();
+              }}
+              className="swiper-no-swiping relative z-40 mt-auto w-full flex items-center justify-center gap-3 retro-body-copy !text-black bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
+            >
+              <Camera size={18} strokeWidth={2} />
+              Kamera öffnen
+            </button>
           </div>
         );
 
