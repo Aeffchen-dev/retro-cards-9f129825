@@ -1134,7 +1134,7 @@ const RetroCards: React.FC = () => {
         );
 
       case SLIDE_SETUP: {
-        const nameInputCls = "name-input-field retro-input retro-input-dark flex-1 w-full bg-transparent border-none focus:outline-none text-lg placeholder:text-base placeholder:text-retro-white/30";
+        const nameInputCls = "name-input-field retro-input retro-input-dark h-12 w-full rounded-full bg-retro-white/5 border-none focus:outline-none focus:ring-2 focus:ring-[#00E676]/50 text-lg placeholder:text-base placeholder:text-retro-white/30";
         const emojiPicker = (
           value: string,
           placeholder: string,
@@ -1218,9 +1218,9 @@ const RetroCards: React.FC = () => {
                       const next = setupData.extraPartners.filter((_, i) => i !== idx);
                       setSetupData({ ...setupData, extraPartners: next });
                     }}
-                    className="text-retro-white/60 hover:text-retro-white p-1"
+                    className="shrink-0 w-8 h-8 rounded-full bg-[#00E676] flex items-center justify-center transition-transform hover:scale-105"
                   >
-                    <X size={18} strokeWidth={2} />
+                    <X size={16} color="#161616" strokeWidth={2.5} />
                   </button>
                 </div>
               ))}
