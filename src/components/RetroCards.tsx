@@ -1568,7 +1568,7 @@ const RetroCards: React.FC = () => {
               )}
               
               {/* Notes page right after its slide - on its own page */}
-              {slidesWithEditButton.includes(slideId) && (editModeNotes[slideId]?.note1 || editModeNotes[slideId]?.note2) && (
+              {slidesWithEditButton.includes(slideId) && persons.some(p => (editModeNotes[slideId]?.[p.key] || "").trim()) && (
                 <div className="print-slide-page print-notes-page" style={{ order: index * 2 + 1 }}>
                   <div className="retro-card-container relative flex flex-col items-start bg-retro-card-bg rounded-2xl">
                     {/* Question text */}
@@ -1579,18 +1579,17 @@ const RetroCards: React.FC = () => {
                       {getSlideQuestion(slideId)} — Notizen
                     </h2>
                     
-                    {/* Post-it notes */}
+                    {/* Post-it notes — one per person with content */}
                     <div className="flex flex-col flex-1 gap-4 w-full">
-                      {editModeNotes[slideId]?.note1 && (
-                        <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg whitespace-pre-wrap min-h-[120px]">
-                          {editModeNotes[slideId].note1}
-                        </div>
-                      )}
-                      {editModeNotes[slideId]?.note2 && (
-                        <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg whitespace-pre-wrap min-h-[120px]">
-                          {editModeNotes[slideId].note2}
-                        </div>
-                      )}
+                      {persons.map((person) => {
+                        const text = editModeNotes[slideId]?.[person.key];
+                        if (!text) return null;
+                        return (
+                          <div key={person.key} className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg whitespace-pre-wrap min-h-[120px]">
+                            {text}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
