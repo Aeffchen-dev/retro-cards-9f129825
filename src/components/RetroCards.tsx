@@ -36,7 +36,7 @@ interface SetupData {
 }
 
 const NAME1_PLACEHOLDER = "Dein Name";
-const NAME2_PLACEHOLDER = "Der Name deines Partners";
+const NAME2_PLACEHOLDER = "Name deines Partners";
 const EMOJI1_PLACEHOLDER = "🧚‍♂️";
 const EMOJI2_PLACEHOLDER = "🧚‍♀️";
 
