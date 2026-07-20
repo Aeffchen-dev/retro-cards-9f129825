@@ -906,8 +906,8 @@ const RetroCards: React.FC = () => {
   const clearAllUserData = useCallback(() => {
     if (window.confirm("Möchtest du wirklich alle deine Einträge löschen? Diese Aktion kann nicht rückgängig gemacht werden.")) {
       // Clear all state
-      setPostItTexts({ niklas: "", jana: "" });
-      setTakeawayTexts({ niklas: "", jana: "" });
+      setPostItTexts({});
+      setTakeawayTexts({});
       setEditModeNotes({});
       setReflectionTexts({ nice: '', thanks: '', idea: '' });
       setCapturedPhotos([]);
