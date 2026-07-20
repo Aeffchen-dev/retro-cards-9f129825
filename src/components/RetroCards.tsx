@@ -1110,7 +1110,9 @@ const RetroCards: React.FC = () => {
               Retro Cards
             </h1>
             <p className="retro-body-copy mt-4 opacity-80" style={{ fontSize: '16px', lineHeight: 1.5 }}>
-              Ein interaktiver Check-in für eine gesunde Beziehung
+              Ein interaktiver Check-in
+              <br />
+              für eine gesunde Beziehung
             </p>
           </div>
         );
