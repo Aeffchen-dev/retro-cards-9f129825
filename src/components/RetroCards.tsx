@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { RefreshCw, Download, Pencil, X, Trash2 } from "lucide-react";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, Keyboard } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { saveToStorage, loadFromStorage, clearExpiredStorage, STORAGE_KEYS } from '@/lib/storage';
 
