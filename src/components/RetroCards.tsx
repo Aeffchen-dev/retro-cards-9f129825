@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { RefreshCw, Download, Pencil, X, Trash2, Plus } from "lucide-react";
+import { RefreshCw, Download, Pencil, X, Trash2 } from "lucide-react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
@@ -1149,7 +1149,7 @@ const RetroCards: React.FC = () => {
               placeholder={placeholder}
               className="w-full h-full rounded-full bg-retro-white/5 text-center text-2xl retro-input retro-input-dark border-none focus:outline-none focus:ring-2 focus:ring-[#00E676]/50"
             />
-            <div className="absolute -top-1 -left-1 w-5 h-5 rounded-full bg-[#00E676] flex items-center justify-center pointer-events-none">
+            <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#00E676] flex items-center justify-center pointer-events-none">
               <Pencil size={10} color="#161616" strokeWidth={2.5} />
             </div>
           </div>
@@ -1231,12 +1231,12 @@ const RetroCards: React.FC = () => {
                   ...setupData,
                   extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
                 })}
-                className="w-full flex items-center gap-4 py-4 text-retro-white text-base transition-colors hover:text-retro-white/80 no-underline"
+                className="w-full flex items-center gap-0 py-4 text-retro-white text-base transition-colors hover:text-retro-white/80 no-underline"
               >
-                <div className="w-12 h-12 rounded-full border border-retro-white/20 flex items-center justify-center shrink-0">
-                  <Plus size={20} strokeWidth={2} />
-                </div>
-                <span className="text-left whitespace-nowrap">Weiteren Partner hinzufügen</span>
+                <span className="text-left whitespace-nowrap">
+                  <span className="text-retro-white/30">+ </span>
+                  Weiteren Partner hinzufügen
+                </span>
               </button>
               {/* Toggle */}
               <div className="flex items-center justify-between w-full py-4 border-t border-retro-white/10">
