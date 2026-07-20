@@ -1483,32 +1483,23 @@ const RetroCards: React.FC = () => {
                           {getSlideQuestion(slideId)}
                         </h2>
                         
-                        {/* Two post-it notes */}
+                        {/* Post-it notes — one per person */}
                         <div className="flex flex-col flex-1 gap-4 w-full animate-[fadeInUp_0.4s_ease-out_0.1s_both]">
-                          <textarea
-                            value={editModeNotes[slideId]?.note1 || ""}
-                            onChange={(e) =>
-                              setEditModeNotes(prev => ({
-                                ...prev,
-                                [slideId]: { ...prev[slideId], note1: e.target.value, note2: prev[slideId]?.note2 || "" }
-                              }))
-                            }
-                            className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
-                            style={{ borderRadius: "0px" }}
-                            placeholder={postItPlaceholder(setupData.name1, "Notizen", "Meine Notizen")}
-                          />
-                          <textarea
-                            value={editModeNotes[slideId]?.note2 || ""}
-                            onChange={(e) =>
-                              setEditModeNotes(prev => ({
-                                ...prev,
-                                [slideId]: { ...prev[slideId], note2: e.target.value, note1: prev[slideId]?.note1 || "" }
-                              }))
-                            }
-                            className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
-                            style={{ borderRadius: "0px" }}
-                            placeholder={postItPlaceholder(setupData.name2, "Notizen", "Notizen meines Partners")}
-                          />
+                          {persons.map((person, idx) => (
+                            <textarea
+                              key={person.key}
+                              value={editModeNotes[slideId]?.[person.key] || ""}
+                              onChange={(e) =>
+                                setEditModeNotes(prev => ({
+                                  ...prev,
+                                  [slideId]: { ...(prev[slideId] || {}), [person.key]: e.target.value }
+                                }))
+                              }
+                              className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
+                              style={{ borderRadius: "0px" }}
+                              placeholder={personPlaceholder(person, idx, "Notizen", "Meine Notizen", "Notizen meines Partners")}
+                            />
+                          ))}
                         </div>
                       </div>
                     ) : (
