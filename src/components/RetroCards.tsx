@@ -1478,13 +1478,20 @@ const RetroCards: React.FC = () => {
             style={{ height: '100%', width: '100%', minHeight: 0 }}
             effect="slide"
             resistance={true}
-            resistanceRatio={0.3}
+            resistanceRatio={0.35}
             touchStartPreventDefault={false}
-            threshold={5}
+            touchMoveStopPropagation={false}
+            threshold={3}
+            touchRatio={1.4}
+            touchAngle={45}
+            followFinger={true}
+            grabCursor={true}
             shortSwipes={true}
             longSwipes={true}
-            longSwipesRatio={0.5}
-            longSwipesMs={300}
+            longSwipesRatio={0.25}
+            longSwipesMs={250}
+            noSwipingClass="swiper-no-swiping"
+            noSwiping={true}
           >
             {slides.map((slideId, index) => (
               <SwiperSlide key={slideId} className="h-full min-h-0 overflow-hidden">
