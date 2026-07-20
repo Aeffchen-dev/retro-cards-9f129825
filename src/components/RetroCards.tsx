@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { RefreshCw, Download, Pencil, X, Trash2 } from "lucide-react";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, Keyboard } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { saveToStorage, loadFromStorage, clearExpiredStorage, STORAGE_KEYS } from '@/lib/storage';
 
@@ -1466,7 +1466,8 @@ const RetroCards: React.FC = () => {
       <div className="flex-1 min-h-0 flex items-center justify-center overflow-hidden py-2 md:py-4">
         <div className="w-full h-full min-h-0 overflow-hidden">
             <Swiper
-            modules={[Navigation, Pagination]}
+            modules={[Navigation, Pagination, Keyboard]}
+            keyboard={{ enabled: true, onlyInViewport: true, pageUpDown: false }}
             spaceBetween={0}
             slidesPerView={1}
             speed={500}
