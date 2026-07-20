@@ -1339,29 +1339,27 @@ const RetroCards: React.FC = () => {
                 Das nehmen wir aus der Retro mit
               </h2>
             </div>
-            <div className="flex flex-col flex-1 w-full justify-between gap-6 mt-10">
-              <textarea
-                value={takeawayTexts.niklas}
-                onChange={(e) =>
-                  setTakeawayTexts({ ...takeawayTexts, niklas: e.target.value })
-                }
-                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
-                style={{
-                  borderRadius: "0px",
-                } as React.CSSProperties}
-                placeholder={postItPlaceholder(setupData.name1, "Erkenntnisse", "Meine Erkenntnisse")}
-              />
-              <textarea
-                value={takeawayTexts.jana}
-                onChange={(e) =>
-                  setTakeawayTexts({ ...takeawayTexts, jana: e.target.value })
-                }
-                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
-                style={{
-                  borderRadius: "0px",
-                } as React.CSSProperties}
-                placeholder={postItPlaceholder(setupData.name2, "Erkenntnisse", "Erkenntnisse meines Partners")}
-              />
+            <div className="flex flex-col flex-1 w-full justify-between gap-6 mt-10 screen-only">
+              {persons.map((person, idx) => (
+                <textarea
+                  key={person.key}
+                  value={takeawayTexts[person.key] || ""}
+                  onChange={(e) =>
+                    setTakeawayTexts({ ...takeawayTexts, [person.key]: e.target.value })
+                  }
+                  className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
+                  style={{ borderRadius: "0px" } as React.CSSProperties}
+                  placeholder={personPlaceholder(person, idx, "Erkenntnisse", "Meine Erkenntnisse", "Erkenntnisse meines Partners")}
+                />
+              ))}
+            </div>
+            {/* Print-only: takeaway notes with line breaks per person */}
+            <div className="hidden print-only flex-col flex-1 w-full justify-between gap-6 mt-10">
+              {persons.map((person, idx) => (
+                <div key={person.key} className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
+                  {takeawayTexts[person.key] || personPlaceholder(person, idx, "Erkenntnisse", "Meine Erkenntnisse", "Erkenntnisse meines Partners")}
+                </div>
+              ))}
             </div>
           </div>
         );
