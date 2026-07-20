@@ -91,7 +91,7 @@ const RetroCards: React.FC = () => {
   });
   const [swiperRef, setSwiperRef] = useState<SwiperType | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const setupFirstInputRef = useRef<HTMLInputElement>(null);
+  
 
   // State for draggable memojis on health check cards - use lazy initialization
   const [memojisPositions, setMemojisPositions] = useState<
@@ -305,10 +305,6 @@ const RetroCards: React.FC = () => {
     setCurrentCard(swiper.activeIndex);
     // Only reset if there are active edit modes
     setEditModeSlides(prev => Object.keys(prev).length > 0 ? {} : prev);
-    // Autofocus first setup input when landing on setup slide
-    if (slides[swiper.activeIndex] === SLIDE_SETUP) {
-      setTimeout(() => setupFirstInputRef.current?.focus(), 50);
-    }
   }, [slides]);
 
   // Get question text for a slide (for edit mode display)
@@ -1155,9 +1151,7 @@ const RetroCards: React.FC = () => {
                 />
                 <div className="name-input-wrapper first-name-input-wrapper">
                   <input
-                    ref={setupFirstInputRef}
                     type="text"
-                    autoFocus
                     value={setupData.name1}
                     onChange={(e) => setSetupData({ ...setupData, name1: e.target.value })}
                     placeholder={NAME1_PLACEHOLDER}
