@@ -1232,10 +1232,10 @@ const RetroCards: React.FC = () => {
                   ...setupData,
                   extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
                 })}
-                className="w-full flex items-center gap-0 py-4 text-retro-white/60 retro-body-copy transition-colors hover:text-retro-white/80 no-underline"
+                className="w-full flex items-center gap-0 py-4 text-retro-white/50 retro-body-copy transition-colors hover:text-retro-white/70 no-underline"
               >
                 <span className="text-left whitespace-nowrap">
-                  <span className="text-retro-white/60">+ </span>
+                  <span className="text-retro-white/50">+ </span>
                   Weiteren Partner hinzufügen
                 </span>
               </button>
@@ -1247,7 +1247,7 @@ const RetroCards: React.FC = () => {
                   role="switch"
                   aria-checked={setupData.openRelationship}
                   onClick={() => setSetupData({ ...setupData, openRelationship: !setupData.openRelationship })}
-                  className={`relative shrink-0 w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-[#00E676]' : 'bg-retro-white/5'}`}
+                  className={`relative shrink-0 w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-[#00E676]' : 'bg-retro-white/20'}`}
                 >
                   <span
                     className={`absolute top-1 left-1 w-5 h-5 rounded-full bg-retro-card-bg transition-transform ${setupData.openRelationship ? 'translate-x-5' : ''}`}
