@@ -305,10 +305,6 @@ const RetroCards: React.FC = () => {
     setCurrentCard(swiper.activeIndex);
     // Only reset if there are active edit modes
     setEditModeSlides(prev => Object.keys(prev).length > 0 ? {} : prev);
-    // Autofocus first setup input when landing on setup slide
-    if (slides[swiper.activeIndex] === SLIDE_SETUP) {
-      setTimeout(() => setupFirstInputRef.current?.focus(), 50);
-    }
   }, [slides]);
 
   // Get question text for a slide (for edit mode display)
