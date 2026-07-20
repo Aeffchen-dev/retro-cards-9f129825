@@ -1019,22 +1019,22 @@ const RetroCards: React.FC = () => {
               </h2>
             </div>
             <div className="flex flex-col gap-4 w-full flex-1 justify-end">
-              <div className="retro-body">
+              <div className="retro-body-copy">
                 🏆&nbsp;&nbsp;&nbsp;Das habe(n) ich / wir richtig gerockt
               </div>
-              <div className="retro-body">
+              <div className="retro-body-copy">
                 🥰&nbsp;&nbsp;&nbsp;Ein schöner Moment
               </div>
-              <div className="retro-body">
+              <div className="retro-body-copy">
                 💡&nbsp;&nbsp;&nbsp;Das habe ich gelernt
               </div>
-              <div className="retro-body">
+              <div className="retro-body-copy">
                 💥&nbsp;&nbsp;&nbsp;Das hat mich Kraft gekostet
               </div>
-              <div className="retro-body">
+              <div className="retro-body-copy">
                 🧠&nbsp;&nbsp;&nbsp;Was beschäftigt mich grade?
               </div>
-              <div className="retro-body">
+              <div className="retro-body-copy">
                 💬&nbsp;&nbsp;&nbsp; Die letzten 4 Wochen in einem Wort
               </div>
             </div>
