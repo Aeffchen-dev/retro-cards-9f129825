@@ -1134,20 +1134,20 @@ const RetroCards: React.FC = () => {
         );
 
       case SLIDE_SETUP: {
-        const nameInputCls = "name-input-field retro-input retro-input-dark h-12 w-full rounded bg-retro-white/5 border-none focus:outline-none focus:ring-2 focus:ring-[#00E676]/50 text-lg placeholder:text-base placeholder:text-retro-white/30";
+        const nameInputCls = "name-input-field retro-input retro-input-dark h-12 w-full rounded-lg bg-retro-white/5 border-none focus:outline-none focus:ring-2 focus:ring-[#00E676]/50 px-1 text-base placeholder:text-base placeholder:text-retro-white/30";
         const emojiPicker = (
           value: string,
           placeholder: string,
           onChange: (val: string) => void
         ) => (
-          <div className="relative shrink-0 w-12 h-12 rounded">
+          <div className="relative shrink-0 w-12 h-12 rounded-lg">
             <input
               type="text"
               inputMode="text"
               value={value}
               onChange={(e) => onChange(sanitizeEmoji(e.target.value))}
               placeholder={placeholder}
-              className="w-full h-full rounded bg-retro-white/5 text-center text-2xl retro-input retro-input-dark border-none focus:outline-none focus:ring-2 focus:ring-[#00E676]/50"
+              className="w-full h-full rounded-lg bg-retro-white/5 text-center text-2xl retro-input retro-input-dark border-none focus:outline-none focus:ring-2 focus:ring-[#00E676]/50"
             />
             <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#00E676] flex items-center justify-center pointer-events-none">
               <Pencil size={10} color="#161616" strokeWidth={2.5} />
@@ -1240,7 +1240,7 @@ const RetroCards: React.FC = () => {
               </button>
               {/* Toggle */}
               <div className="flex items-center justify-between w-full py-4">
-                <span className="text-lg">Offene Beziehung</span>
+                <span className="retro-body-copy">Offene Beziehung</span>
                 <button
                   type="button"
                   role="switch"
@@ -1257,7 +1257,7 @@ const RetroCards: React.FC = () => {
             <button
               type="button"
               onClick={() => swiperRef?.slideNext()}
-              className="mt-auto w-full retro-body !text-black bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
+              className="mt-auto w-full retro-body-copy !text-black bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
             >
               Los geht's
             </button>

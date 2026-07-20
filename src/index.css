@@ -257,6 +257,7 @@ button {
 .retro-input {
   outline: none;
   resize: none;
+  font-family: Arial, sans-serif;
 }
 
 .retro-input-dark {
@@ -289,7 +290,7 @@ button {
 .first-name-input-wrapper:has(input:placeholder-shown:not(:focus))::before {
   content: '';
   position: absolute;
-  left: 0;
+  left: 4px;
   top: 50%;
   transform: translateY(-50%);
   width: 1.5px;
@@ -297,10 +298,6 @@ button {
   background-color: rgba(255, 255, 255, 1);
   animation: blink-cursor 1.1s step-end infinite;
   pointer-events: none;
-}
-
-.name-input-wrapper input {
-  padding-left: 0;
 }
 
 @keyframes blink-cursor {
