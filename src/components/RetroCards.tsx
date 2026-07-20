@@ -1105,7 +1105,7 @@ const RetroCards: React.FC = () => {
           <div className="flex flex-col items-start gap-14 w-full justify-center">
             <div className="flex flex-col items-start gap-6 w-full">
               <div className="retro-pill flex justify-center items-center gap-2 rounded-full border border-retro-white">
-                <span className="retro-label">Offene Beziehung</span>
+                <span className="retro-label">Nicht monogam</span>
               </div>
               <h2 className="retro-heading w-full">Wie stehts mit Dates?</h2>
             </div>
@@ -1256,8 +1256,17 @@ const RetroCards: React.FC = () => {
                 </span>
               </button>
               {/* Toggle */}
-              <div className="flex items-center justify-between w-full py-4">
-                <span className="retro-body-copy">Offene Beziehung</span>
+              <div className="flex items-center w-full py-4">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSetupData({ ...setupData, openRelationship: !setupData.openRelationship });
+                  }}
+                  className="retro-body-copy text-left bg-transparent p-0 m-0 no-underline"
+                >
+                  Nicht monogam
+                </button>
                 <button
                   type="button"
                   role="switch"
@@ -1266,7 +1275,7 @@ const RetroCards: React.FC = () => {
                     e.stopPropagation();
                     setSetupData({ ...setupData, openRelationship: !setupData.openRelationship });
                   }}
-                  className={`relative z-40 shrink-0 w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-[#00E676]' : 'bg-retro-white/20'}`}
+                  className={`relative z-40 shrink-0 w-12 h-7 ml-4 rounded-full transition-colors ${setupData.openRelationship ? 'bg-[#00E676]' : 'bg-retro-white/20'}`}
                 >
                   <span
                     className={`absolute top-1 left-1 w-5 h-5 rounded-full bg-retro-card-bg transition-transform ${setupData.openRelationship ? 'translate-x-5' : ''}`}
