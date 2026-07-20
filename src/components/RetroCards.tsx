@@ -1248,7 +1248,7 @@ const RetroCards: React.FC = () => {
                     extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
                   });
                 }}
-                className="relative z-40 w-full flex items-center gap-0 py-4 text-retro-white/50 retro-body-copy transition-colors hover:text-retro-white/70 no-underline"
+                className="swiper-no-swiping relative z-40 w-full flex items-center gap-0 py-4 text-retro-white/50 retro-body-copy transition-colors hover:text-retro-white/70 no-underline"
               >
                 <span className="text-left whitespace-nowrap">
                   <span className="text-retro-white/50">+ </span>
