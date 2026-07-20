@@ -1157,7 +1157,7 @@ const RetroCards: React.FC = () => {
                   <input
                     ref={setupFirstInputRef}
                     type="text"
-                    autoFocus
+                    
                     value={setupData.name1}
                     onChange={(e) => setSetupData({ ...setupData, name1: e.target.value })}
                     placeholder={NAME1_PLACEHOLDER}
