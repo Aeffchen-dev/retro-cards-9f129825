@@ -186,10 +186,32 @@ const RetroCards: React.FC = () => {
 
   // State for edit mode on slides — keyed by slide id (case number)
   const [editModeSlides, setEditModeSlides] = useState<Record<number, boolean>>({});
-  const [editModeNotes, setEditModeNotes] = useState<Record<number, { note1: string; note2: string }>>(() => {
-    const saved = loadFromStorage<Record<number, { note1: string; note2: string }>>(STORAGE_KEYS.EDIT_MODE_NOTES);
-    return saved || {};
+  // Edit-mode notes keyed by slideId -> { [personKey]: text } (migrates from legacy {note1, note2})
+  const [editModeNotes, setEditModeNotes] = useState<Record<number, Record<string, string>>>(() => {
+    const saved = loadFromStorage<Record<number, any>>(STORAGE_KEYS.EDIT_MODE_NOTES);
+    if (!saved) return {};
+    const migrated: Record<number, Record<string, string>> = {};
+    for (const k of Object.keys(saved)) {
+      const v = saved[k as any] || {};
+      if ('note1' in v || 'note2' in v) {
+        migrated[k as any] = { p0: v.note1 || '', p1: v.note2 || '' };
+      } else {
+        migrated[k as any] = v;
+      }
+    }
+    return migrated;
   });
+
+  // Placeholder helper for per-person post-its
+  const personPlaceholder = useCallback(
+    (person: { name: string }, idx: number, label: string, fallbackMine: string, fallbackPartner: string): string => {
+      if (idx === 0) return postItPlaceholder(setupData.name1, label, fallbackMine);
+      if (idx === 1) return postItPlaceholder(setupData.name2, label, fallbackPartner);
+      const name = person.name || `Partner ${idx + 1}`;
+      return `${germanPossessive(name)} ${label}`;
+    },
+    [setupData.name1, setupData.name2]
+  );
 
   // Slide ids with edit button: health-personal(1), health-relationship(2), last-4-weeks(3),
   // reflection(102), dates(5), intimacy(7)
