@@ -91,7 +91,7 @@ const RetroCards: React.FC = () => {
   });
   const [swiperRef, setSwiperRef] = useState<SwiperType | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const setupFirstInputRef = useRef<HTMLInputElement>(null);
+  
 
   // State for draggable memojis on health check cards - use lazy initialization
   const [memojisPositions, setMemojisPositions] = useState<
@@ -1151,9 +1151,7 @@ const RetroCards: React.FC = () => {
                 />
                 <div className="name-input-wrapper first-name-input-wrapper">
                   <input
-                    ref={setupFirstInputRef}
                     type="text"
-                    
                     value={setupData.name1}
                     onChange={(e) => setSetupData({ ...setupData, name1: e.target.value })}
                     placeholder={NAME1_PLACEHOLDER}
