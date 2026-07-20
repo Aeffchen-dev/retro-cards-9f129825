@@ -127,17 +127,11 @@ const RetroCards: React.FC = () => {
     typeof window !== "undefined" && window.innerWidth <= 768
   );
 
-  // State for editable post-it notes
-  const [postItTexts, setPostItTexts] = useState({
-    niklas: "",
-    jana: "",
-  });
+  // State for editable post-it notes — keyed by person key (p0, p1, p2...)
+  const [postItTexts, setPostItTexts] = useState<Record<string, string>>({});
 
-  // State for takeaway post-it notes (Erkenntnisse)
-  const [takeawayTexts, setTakeawayTexts] = useState({
-    niklas: "",
-    jana: "",
-  });
+  // State for takeaway post-it notes (Erkenntnisse) — keyed by person key
+  const [takeawayTexts, setTakeawayTexts] = useState<Record<string, string>>({});
 
   // State for random questions
   const [currentQuestion, setCurrentQuestion] = useState("");
@@ -192,10 +186,32 @@ const RetroCards: React.FC = () => {
 
   // State for edit mode on slides — keyed by slide id (case number)
   const [editModeSlides, setEditModeSlides] = useState<Record<number, boolean>>({});
-  const [editModeNotes, setEditModeNotes] = useState<Record<number, { note1: string; note2: string }>>(() => {
-    const saved = loadFromStorage<Record<number, { note1: string; note2: string }>>(STORAGE_KEYS.EDIT_MODE_NOTES);
-    return saved || {};
+  // Edit-mode notes keyed by slideId -> { [personKey]: text } (migrates from legacy {note1, note2})
+  const [editModeNotes, setEditModeNotes] = useState<Record<number, Record<string, string>>>(() => {
+    const saved = loadFromStorage<Record<number, any>>(STORAGE_KEYS.EDIT_MODE_NOTES);
+    if (!saved) return {};
+    const migrated: Record<number, Record<string, string>> = {};
+    for (const k of Object.keys(saved)) {
+      const v = saved[k as any] || {};
+      if ('note1' in v || 'note2' in v) {
+        migrated[k as any] = { p0: v.note1 || '', p1: v.note2 || '' };
+      } else {
+        migrated[k as any] = v;
+      }
+    }
+    return migrated;
   });
+
+  // Placeholder helper for per-person post-its
+  const personPlaceholder = useCallback(
+    (person: { name: string }, idx: number, label: string, fallbackMine: string, fallbackPartner: string): string => {
+      if (idx === 0) return postItPlaceholder(setupData.name1, label, fallbackMine);
+      if (idx === 1) return postItPlaceholder(setupData.name2, label, fallbackPartner);
+      const name = person.name || `Partner ${idx + 1}`;
+      return `${germanPossessive(name)} ${label}`;
+    },
+    [setupData.name1, setupData.name2]
+  );
 
   // Slide ids with edit button: health-personal(1), health-relationship(2), last-4-weeks(3),
   // reflection(102), dates(5), intimacy(7)
@@ -226,16 +242,23 @@ const RetroCards: React.FC = () => {
     // Load all saved state at once
     const savedCurrentCard = loadFromStorage<number>(STORAGE_KEYS.CURRENT_CARD);
     const savedMemojiPositions = loadFromStorage<Record<number, MemojisPosition>>(STORAGE_KEYS.MEMOJI_POSITIONS);
-    const savedPostItTexts = loadFromStorage<{niklas: string, jana: string}>(STORAGE_KEYS.POST_IT_TEXTS);
-    const savedTakeawayTexts = loadFromStorage<{niklas: string, jana: string}>(STORAGE_KEYS.TAKEAWAY_TEXTS);
+    const savedPostItTexts = loadFromStorage<any>(STORAGE_KEYS.POST_IT_TEXTS);
+    const savedTakeawayTexts = loadFromStorage<any>(STORAGE_KEYS.TAKEAWAY_TEXTS);
     const savedQuestion = loadFromStorage<string>(STORAGE_KEYS.CURRENT_QUESTION);
-    
+
+    // Migrate legacy {niklas, jana} shape to keyed record
+    const migratePostIts = (v: any): Record<string, string> => {
+      if (!v) return {};
+      if ('niklas' in v || 'jana' in v) return { p0: v.niklas || '', p1: v.jana || '' };
+      return v;
+    };
+
     // Batch state updates using unstable_batchedUpdates pattern
     // React 18 auto-batches, but we minimize by setting all at once
     if (savedCurrentCard !== null) setCurrentCard(savedCurrentCard);
     if (savedMemojiPositions !== null) setMemojisPositions(savedMemojiPositions);
-    if (savedPostItTexts !== null) setPostItTexts(savedPostItTexts);
-    if (savedTakeawayTexts !== null) setTakeawayTexts(savedTakeawayTexts);
+    if (savedPostItTexts !== null) setPostItTexts(migratePostIts(savedPostItTexts));
+    if (savedTakeawayTexts !== null) setTakeawayTexts(migratePostIts(savedTakeawayTexts));
     if (savedQuestion !== null) setCurrentQuestion(savedQuestion);
     
     // Mark initial mount complete after a tick
@@ -883,8 +906,8 @@ const RetroCards: React.FC = () => {
   const clearAllUserData = useCallback(() => {
     if (window.confirm("Möchtest du wirklich alle deine Einträge löschen? Diese Aktion kann nicht rückgängig gemacht werden.")) {
       // Clear all state
-      setPostItTexts({ niklas: "", jana: "" });
-      setTakeawayTexts({ niklas: "", jana: "" });
+      setPostItTexts({});
+      setTakeawayTexts({});
       setEditModeNotes({});
       setReflectionTexts({ nice: '', thanks: '', idea: '' });
       setCapturedPhotos([]);
@@ -1053,37 +1076,26 @@ const RetroCards: React.FC = () => {
               </h2>
             </div>
             <div className="flex flex-col flex-1 w-full justify-between gap-6 mt-10 screen-only">
-              <textarea
-                value={postItTexts.niklas}
-                onChange={(e) =>
-                  setPostItTexts({ ...postItTexts, niklas: e.target.value })
-                }
-                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
-                style={{
-                  borderRadius: "0px",
-                } as React.CSSProperties}
-                placeholder={postItPlaceholder(setupData.name1, "Themen", "Meine Themen")}
-              />
-              <textarea
-                value={postItTexts.jana}
-                onChange={(e) =>
-                  setPostItTexts({ ...postItTexts, jana: e.target.value })
-                }
-                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
-                style={{
-                  borderRadius: "0px",
-                } as React.CSSProperties}
-                placeholder={postItPlaceholder(setupData.name2, "Themen", "Themen meines Partners")}
-              />
+              {persons.map((person, idx) => (
+                <textarea
+                  key={person.key}
+                  value={postItTexts[person.key] || ""}
+                  onChange={(e) =>
+                    setPostItTexts({ ...postItTexts, [person.key]: e.target.value })
+                  }
+                  className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
+                  style={{ borderRadius: "0px" } as React.CSSProperties}
+                  placeholder={personPlaceholder(person, idx, "Themen", "Meine Themen", "Themen meines Partners")}
+                />
+              ))}
             </div>
             {/* Print-only: post-it notes like takeaways with line breaks */}
             <div className="hidden print-only flex-col flex-1 w-full justify-between gap-6 mt-10">
-              <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
-                {postItTexts.niklas || postItPlaceholder(setupData.name1, "Themen", "Meine Themen")}
-              </div>
-              <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
-                {postItTexts.jana || postItPlaceholder(setupData.name2, "Themen", "Themen meines Partners")}
-              </div>
+              {persons.map((person, idx) => (
+                <div key={person.key} className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
+                  {postItTexts[person.key] || personPlaceholder(person, idx, "Themen", "Meine Themen", "Themen meines Partners")}
+                </div>
+              ))}
             </div>
           </div>
         );
@@ -1327,29 +1339,27 @@ const RetroCards: React.FC = () => {
                 Das nehmen wir aus der Retro mit
               </h2>
             </div>
-            <div className="flex flex-col flex-1 w-full justify-between gap-6 mt-10">
-              <textarea
-                value={takeawayTexts.niklas}
-                onChange={(e) =>
-                  setTakeawayTexts({ ...takeawayTexts, niklas: e.target.value })
-                }
-                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
-                style={{
-                  borderRadius: "0px",
-                } as React.CSSProperties}
-                placeholder={postItPlaceholder(setupData.name1, "Erkenntnisse", "Meine Erkenntnisse")}
-              />
-              <textarea
-                value={takeawayTexts.jana}
-                onChange={(e) =>
-                  setTakeawayTexts({ ...takeawayTexts, jana: e.target.value })
-                }
-                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
-                style={{
-                  borderRadius: "0px",
-                } as React.CSSProperties}
-                placeholder={postItPlaceholder(setupData.name2, "Erkenntnisse", "Erkenntnisse meines Partners")}
-              />
+            <div className="flex flex-col flex-1 w-full justify-between gap-6 mt-10 screen-only">
+              {persons.map((person, idx) => (
+                <textarea
+                  key={person.key}
+                  value={takeawayTexts[person.key] || ""}
+                  onChange={(e) =>
+                    setTakeawayTexts({ ...takeawayTexts, [person.key]: e.target.value })
+                  }
+                  className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
+                  style={{ borderRadius: "0px" } as React.CSSProperties}
+                  placeholder={personPlaceholder(person, idx, "Erkenntnisse", "Meine Erkenntnisse", "Erkenntnisse meines Partners")}
+                />
+              ))}
+            </div>
+            {/* Print-only: takeaway notes with line breaks per person */}
+            <div className="hidden print-only flex-col flex-1 w-full justify-between gap-6 mt-10">
+              {persons.map((person, idx) => (
+                <div key={person.key} className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
+                  {takeawayTexts[person.key] || personPlaceholder(person, idx, "Erkenntnisse", "Meine Erkenntnisse", "Erkenntnisse meines Partners")}
+                </div>
+              ))}
             </div>
           </div>
         );
@@ -1473,32 +1483,23 @@ const RetroCards: React.FC = () => {
                           {getSlideQuestion(slideId)}
                         </h2>
                         
-                        {/* Two post-it notes */}
+                        {/* Post-it notes — one per person */}
                         <div className="flex flex-col flex-1 gap-4 w-full animate-[fadeInUp_0.4s_ease-out_0.1s_both]">
-                          <textarea
-                            value={editModeNotes[slideId]?.note1 || ""}
-                            onChange={(e) =>
-                              setEditModeNotes(prev => ({
-                                ...prev,
-                                [slideId]: { ...prev[slideId], note1: e.target.value, note2: prev[slideId]?.note2 || "" }
-                              }))
-                            }
-                            className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
-                            style={{ borderRadius: "0px" }}
-                            placeholder={postItPlaceholder(setupData.name1, "Notizen", "Meine Notizen")}
-                          />
-                          <textarea
-                            value={editModeNotes[slideId]?.note2 || ""}
-                            onChange={(e) =>
-                              setEditModeNotes(prev => ({
-                                ...prev,
-                                [slideId]: { ...prev[slideId], note2: e.target.value, note1: prev[slideId]?.note1 || "" }
-                              }))
-                            }
-                            className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
-                            style={{ borderRadius: "0px" }}
-                            placeholder={postItPlaceholder(setupData.name2, "Notizen", "Notizen meines Partners")}
-                          />
+                          {persons.map((person, idx) => (
+                            <textarea
+                              key={person.key}
+                              value={editModeNotes[slideId]?.[person.key] || ""}
+                              onChange={(e) =>
+                                setEditModeNotes(prev => ({
+                                  ...prev,
+                                  [slideId]: { ...(prev[slideId] || {}), [person.key]: e.target.value }
+                                }))
+                              }
+                              className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
+                              style={{ borderRadius: "0px" }}
+                              placeholder={personPlaceholder(person, idx, "Notizen", "Meine Notizen", "Notizen meines Partners")}
+                            />
+                          ))}
                         </div>
                       </div>
                     ) : (
@@ -1567,7 +1568,7 @@ const RetroCards: React.FC = () => {
               )}
               
               {/* Notes page right after its slide - on its own page */}
-              {slidesWithEditButton.includes(slideId) && (editModeNotes[slideId]?.note1 || editModeNotes[slideId]?.note2) && (
+              {slidesWithEditButton.includes(slideId) && persons.some(p => (editModeNotes[slideId]?.[p.key] || "").trim()) && (
                 <div className="print-slide-page print-notes-page" style={{ order: index * 2 + 1 }}>
                   <div className="retro-card-container relative flex flex-col items-start bg-retro-card-bg rounded-2xl">
                     {/* Question text */}
@@ -1578,18 +1579,17 @@ const RetroCards: React.FC = () => {
                       {getSlideQuestion(slideId)} — Notizen
                     </h2>
                     
-                    {/* Post-it notes */}
+                    {/* Post-it notes — one per person with content */}
                     <div className="flex flex-col flex-1 gap-4 w-full">
-                      {editModeNotes[slideId]?.note1 && (
-                        <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg whitespace-pre-wrap min-h-[120px]">
-                          {editModeNotes[slideId].note1}
-                        </div>
-                      )}
-                      {editModeNotes[slideId]?.note2 && (
-                        <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg whitespace-pre-wrap min-h-[120px]">
-                          {editModeNotes[slideId].note2}
-                        </div>
-                      )}
+                      {persons.map((person) => {
+                        const text = editModeNotes[slideId]?.[person.key];
+                        if (!text) return null;
+                        return (
+                          <div key={person.key} className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg whitespace-pre-wrap min-h-[120px]">
+                            {text}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
