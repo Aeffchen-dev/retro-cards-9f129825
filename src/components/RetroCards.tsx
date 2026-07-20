@@ -1149,7 +1149,7 @@ const RetroCards: React.FC = () => {
               placeholder={placeholder}
               className="w-full h-full rounded-full bg-retro-white/5 text-center text-2xl retro-input retro-input-dark border-none focus:outline-none focus:ring-2 focus:ring-[#00E676]/50"
             />
-            <div className="absolute -top-1 -left-1 w-5 h-5 rounded-full bg-[#00E676] flex items-center justify-center pointer-events-none">
+            <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#00E676] flex items-center justify-center pointer-events-none">
               <Pencil size={10} color="#161616" strokeWidth={2.5} />
             </div>
           </div>
