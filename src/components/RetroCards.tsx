@@ -1227,11 +1227,12 @@ const RetroCards: React.FC = () => {
                   <button
                     type="button"
                     aria-label="Partner entfernen"
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       const next = setupData.extraPartners.filter((_, i) => i !== idx);
                       setSetupData({ ...setupData, extraPartners: next });
                     }}
-                    className="shrink-0 w-5 h-5 rounded-full bg-[#00E676] flex items-center justify-center transition-transform hover:scale-105"
+                    className="relative z-40 shrink-0 w-5 h-5 rounded-full bg-[#00E676] flex items-center justify-center transition-transform hover:scale-105"
                   >
                     <X size={10} color="#161616" strokeWidth={2.5} />
                   </button>
@@ -1240,11 +1241,14 @@ const RetroCards: React.FC = () => {
               {/* Add partner button */}
               <button
                 type="button"
-                onClick={() => setSetupData({
-                  ...setupData,
-                  extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
-                })}
-                className="w-full flex items-center gap-0 py-4 text-retro-white/50 retro-body-copy transition-colors hover:text-retro-white/70 no-underline"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSetupData({
+                    ...setupData,
+                    extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
+                  });
+                }}
+                className="relative z-40 w-full flex items-center gap-0 py-4 text-retro-white/50 retro-body-copy transition-colors hover:text-retro-white/70 no-underline"
               >
                 <span className="text-left whitespace-nowrap">
                   <span className="text-retro-white/50">+ </span>
@@ -1258,8 +1262,11 @@ const RetroCards: React.FC = () => {
                   type="button"
                   role="switch"
                   aria-checked={setupData.openRelationship}
-                  onClick={() => setSetupData({ ...setupData, openRelationship: !setupData.openRelationship })}
-                  className={`relative shrink-0 w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-[#00E676]' : 'bg-retro-white/20'}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSetupData({ ...setupData, openRelationship: !setupData.openRelationship });
+                  }}
+                  className={`relative z-40 shrink-0 w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-[#00E676]' : 'bg-retro-white/20'}`}
                 >
                   <span
                     className={`absolute top-1 left-1 w-5 h-5 rounded-full bg-retro-card-bg transition-transform ${setupData.openRelationship ? 'translate-x-5' : ''}`}
@@ -1269,8 +1276,11 @@ const RetroCards: React.FC = () => {
             </div>
             <button
               type="button"
-              onClick={() => swiperRef?.slideNext()}
-              className="mt-auto w-full retro-body-copy !text-black bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
+              onClick={(e) => {
+                e.stopPropagation();
+                swiperRef?.slideNext();
+              }}
+              className="relative z-40 mt-auto w-full retro-body-copy !text-black bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
             >
               Los geht's
             </button>
