@@ -1121,7 +1121,7 @@ const RetroCards: React.FC = () => {
             >
               Retro Cards
             </h1>
-            <p className="retro-body-copy mt-8 opacity-80" style={{ fontSize: '16px', lineHeight: 1.5 }}>
+            <p className="retro-body-copy mt-8 text-retro-white/50" style={{ fontSize: '16px', lineHeight: 1.5 }}>
               Ein interaktiver Check-in
               <br />
               für eine gesunde Beziehung
@@ -1146,7 +1146,7 @@ const RetroCards: React.FC = () => {
         );
 
       case SLIDE_SETUP: {
-        const nameInputCls = "name-input-field retro-input retro-input-dark h-12 w-full rounded-lg bg-retro-white/5 border-none focus:outline-none focus:ring-2 focus:ring-black/20 px-1 text-base placeholder:text-base placeholder:text-retro-white/30";
+        const nameInputCls = "name-input-field retro-input retro-input-dark h-12 w-full rounded-lg bg-retro-white/5 border-none focus:outline-none focus:ring-2 focus:ring-black/20 px-2 text-base placeholder:text-base placeholder:text-retro-white/30";
         const emojiPicker = (
           value: string,
           placeholder: string,
