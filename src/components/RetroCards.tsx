@@ -1134,20 +1134,20 @@ const RetroCards: React.FC = () => {
         );
 
       case SLIDE_SETUP: {
-        const nameInputCls = "name-input-field retro-input retro-input-dark h-12 w-full rounded-full bg-retro-white/5 border-none focus:outline-none focus:ring-2 focus:ring-[#00E676]/50 text-lg placeholder:text-base placeholder:text-retro-white/30";
+        const nameInputCls = "name-input-field retro-input retro-input-dark h-12 w-full rounded bg-retro-white/5 border-none focus:outline-none focus:ring-2 focus:ring-[#00E676]/50 text-lg placeholder:text-base placeholder:text-retro-white/30";
         const emojiPicker = (
           value: string,
           placeholder: string,
           onChange: (val: string) => void
         ) => (
-          <div className="relative shrink-0 w-12 h-12">
+          <div className="relative shrink-0 w-12 h-12 rounded">
             <input
               type="text"
               inputMode="text"
               value={value}
               onChange={(e) => onChange(sanitizeEmoji(e.target.value))}
               placeholder={placeholder}
-              className="w-full h-full rounded-full bg-retro-white/5 text-center text-2xl retro-input retro-input-dark border-none focus:outline-none focus:ring-2 focus:ring-[#00E676]/50"
+              className="w-full h-full rounded bg-retro-white/5 text-center text-2xl retro-input retro-input-dark border-none focus:outline-none focus:ring-2 focus:ring-[#00E676]/50"
             />
             <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#00E676] flex items-center justify-center pointer-events-none">
               <Pencil size={10} color="#161616" strokeWidth={2.5} />
@@ -1163,7 +1163,7 @@ const RetroCards: React.FC = () => {
             </div>
             <div className="flex flex-col w-full mt-8">
               {/* Person 1 */}
-              <div className="flex items-center gap-4 w-full py-4 border-b border-retro-white/10">
+              <div className="flex items-center gap-4 w-full py-4">
                 {emojiPicker(setupData.emoji1, EMOJI1_PLACEHOLDER, (val) => setSetupData({ ...setupData, emoji1: val }))}
                 <div className="name-input-wrapper first-name-input-wrapper flex-1">
                   <input
@@ -1176,7 +1176,7 @@ const RetroCards: React.FC = () => {
                 </div>
               </div>
               {/* Person 2 */}
-              <div className="flex items-center gap-4 w-full py-4 border-b border-retro-white/10">
+              <div className="flex items-center gap-4 w-full py-4">
                 {emojiPicker(setupData.emoji2, EMOJI2_PLACEHOLDER, (val) => setSetupData({ ...setupData, emoji2: val }))}
                 <div className="name-input-wrapper flex-1">
                   <input
@@ -1190,7 +1190,7 @@ const RetroCards: React.FC = () => {
               </div>
               {/* Extra partners */}
               {setupData.extraPartners.map((p, idx) => (
-                <div key={idx} className="flex items-center gap-4 w-full py-4 border-b border-retro-white/10">
+                <div key={idx} className="flex items-center gap-4 w-full py-4">
                   <div className="flex-1 flex items-center gap-4">
                     {emojiPicker(p.emoji, "🧚", (val) => {
                       const next = [...setupData.extraPartners];
@@ -1231,22 +1231,22 @@ const RetroCards: React.FC = () => {
                   ...setupData,
                   extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
                 })}
-                className="w-full flex items-center gap-0 py-4 text-retro-white retro-body-copy transition-colors hover:text-retro-white/80 no-underline"
+                className="w-full flex items-center gap-0 py-4 text-retro-white/60 retro-body-copy transition-colors hover:text-retro-white/80 no-underline"
               >
                 <span className="text-left whitespace-nowrap">
-                  <span className="text-retro-white/30">+ </span>
+                  <span className="text-retro-white/60">+ </span>
                   Weiteren Partner hinzufügen
                 </span>
               </button>
               {/* Toggle */}
-              <div className="flex items-center justify-between w-full py-4 border-t border-retro-white/10">
+              <div className="flex items-center justify-between w-full py-4">
                 <span className="text-lg">Offene Beziehung</span>
                 <button
                   type="button"
                   role="switch"
                   aria-checked={setupData.openRelationship}
                   onClick={() => setSetupData({ ...setupData, openRelationship: !setupData.openRelationship })}
-                  className={`relative shrink-0 w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-[#00E676]' : 'bg-retro-white/30'}`}
+                  className={`relative shrink-0 w-12 h-7 rounded-full transition-colors ${setupData.openRelationship ? 'bg-[#00E676]' : 'bg-retro-white/5'}`}
                 >
                   <span
                     className={`absolute top-1 left-1 w-5 h-5 rounded-full bg-retro-card-bg transition-transform ${setupData.openRelationship ? 'translate-x-5' : ''}`}
