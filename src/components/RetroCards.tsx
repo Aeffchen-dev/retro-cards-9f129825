@@ -1146,7 +1146,7 @@ const RetroCards: React.FC = () => {
         );
 
       case SLIDE_SETUP: {
-        const nameInputCls = "name-input-field retro-input retro-input-dark h-12 w-full rounded-lg bg-retro-white/5 border-none focus:outline-none focus:ring-2 focus:ring-black/20 px-2 text-base placeholder:text-base placeholder:text-retro-white/30";
+        const nameInputCls = "swiper-no-swiping name-input-field retro-input retro-input-dark h-12 w-full rounded-lg bg-retro-white/5 border-none focus:outline-none focus:ring-2 focus:ring-black/20 px-2 text-base placeholder:text-base placeholder:text-retro-white/30";
         const emojiPicker = (
           value: string,
           placeholder: string,
@@ -1232,7 +1232,7 @@ const RetroCards: React.FC = () => {
                       const next = setupData.extraPartners.filter((_, i) => i !== idx);
                       setSetupData({ ...setupData, extraPartners: next });
                     }}
-                    className="relative z-40 shrink-0 w-5 h-5 rounded-full bg-[#00E676] flex items-center justify-center transition-transform hover:scale-105"
+                    className="swiper-no-swiping relative z-40 shrink-0 w-5 h-5 rounded-full bg-[#00E676] flex items-center justify-center transition-transform hover:scale-105"
                   >
                     <X size={10} color="#161616" strokeWidth={2.5} />
                   </button>
@@ -1248,7 +1248,7 @@ const RetroCards: React.FC = () => {
                     extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
                   });
                 }}
-                className="relative z-40 w-full flex items-center gap-0 py-4 text-retro-white/50 retro-body-copy transition-colors hover:text-retro-white/70 no-underline"
+                className="swiper-no-swiping relative z-40 w-full flex items-center gap-0 py-4 text-retro-white/50 retro-body-copy transition-colors hover:text-retro-white/70 no-underline"
               >
                 <span className="text-left whitespace-nowrap">
                   <span className="text-retro-white/50">+ </span>
@@ -1263,7 +1263,7 @@ const RetroCards: React.FC = () => {
                     e.stopPropagation();
                     setSetupData({ ...setupData, openRelationship: !setupData.openRelationship });
                   }}
-                  className="retro-body-copy text-left bg-transparent p-0 m-0 no-underline"
+                  className="swiper-no-swiping retro-body-copy text-left bg-transparent p-0 m-0 no-underline"
                 >
                   Nicht monogam
                 </button>
@@ -1275,7 +1275,7 @@ const RetroCards: React.FC = () => {
                     e.stopPropagation();
                     setSetupData({ ...setupData, openRelationship: !setupData.openRelationship });
                   }}
-                  className={`relative z-40 shrink-0 w-12 h-7 ml-4 rounded-full transition-colors ${setupData.openRelationship ? 'bg-[#00E676]' : 'bg-retro-white/20'}`}
+                  className={`swiper-no-swiping relative z-40 shrink-0 w-12 h-7 ml-4 rounded-full transition-colors ${setupData.openRelationship ? 'bg-[#00E676]' : 'bg-retro-white/20'}`}
                 >
                   <span
                     className={`absolute top-1 left-1 w-5 h-5 rounded-full bg-retro-card-bg transition-transform ${setupData.openRelationship ? 'translate-x-5' : ''}`}
@@ -1289,7 +1289,7 @@ const RetroCards: React.FC = () => {
                 e.stopPropagation();
                 swiperRef?.slideNext();
               }}
-              className="relative z-40 mt-auto w-full retro-body-copy !text-black bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
+              className="swiper-no-swiping relative z-40 mt-auto w-full retro-body-copy !text-black bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
             >
               Los geht's
             </button>
@@ -1478,13 +1478,20 @@ const RetroCards: React.FC = () => {
             style={{ height: '100%', width: '100%', minHeight: 0 }}
             effect="slide"
             resistance={true}
-            resistanceRatio={0.3}
+            resistanceRatio={0.35}
             touchStartPreventDefault={false}
-            threshold={5}
+            touchMoveStopPropagation={false}
+            threshold={3}
+            touchRatio={1.4}
+            touchAngle={45}
+            followFinger={true}
+            grabCursor={true}
             shortSwipes={true}
             longSwipes={true}
-            longSwipesRatio={0.5}
-            longSwipesMs={300}
+            longSwipesRatio={0.25}
+            longSwipesMs={250}
+            noSwipingClass="swiper-no-swiping"
+            noSwiping={true}
           >
             {slides.map((slideId, index) => (
               <SwiperSlide key={slideId} className="h-full min-h-0 overflow-hidden">
@@ -1532,7 +1539,7 @@ const RetroCards: React.FC = () => {
                     {slidesWithEditButton.includes(slideId) && (
                       <button
                         onClick={() => toggleEditMode(slideId)}
-                        className="absolute top-4 right-4 w-12 h-12 flex items-center justify-center z-40 cursor-pointer hover:opacity-80 transition-all duration-300 screen-only"
+                        className="swiper-no-swiping absolute top-4 right-4 w-12 h-12 flex items-center justify-center z-40 cursor-pointer hover:opacity-80 transition-all duration-300 screen-only"
                         style={{ touchAction: 'manipulation' }}
                       >
                         {editModeSlides[slideId] ? (
