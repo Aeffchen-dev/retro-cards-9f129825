@@ -127,17 +127,11 @@ const RetroCards: React.FC = () => {
     typeof window !== "undefined" && window.innerWidth <= 768
   );
 
-  // State for editable post-it notes
-  const [postItTexts, setPostItTexts] = useState({
-    niklas: "",
-    jana: "",
-  });
+  // State for editable post-it notes — keyed by person key (p0, p1, p2...)
+  const [postItTexts, setPostItTexts] = useState<Record<string, string>>({});
 
-  // State for takeaway post-it notes (Erkenntnisse)
-  const [takeawayTexts, setTakeawayTexts] = useState({
-    niklas: "",
-    jana: "",
-  });
+  // State for takeaway post-it notes (Erkenntnisse) — keyed by person key
+  const [takeawayTexts, setTakeawayTexts] = useState<Record<string, string>>({});
 
   // State for random questions
   const [currentQuestion, setCurrentQuestion] = useState("");
