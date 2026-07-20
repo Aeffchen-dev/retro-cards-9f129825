@@ -1466,7 +1466,8 @@ const RetroCards: React.FC = () => {
       <div className="flex-1 min-h-0 flex items-center justify-center overflow-hidden py-2 md:py-4">
         <div className="w-full h-full min-h-0 overflow-hidden">
             <Swiper
-            modules={[Navigation, Pagination]}
+            modules={[Navigation, Pagination, Keyboard]}
+            keyboard={{ enabled: true, onlyInViewport: true, pageUpDown: false }}
             spaceBetween={0}
             slidesPerView={1}
             speed={500}
