@@ -242,16 +242,23 @@ const RetroCards: React.FC = () => {
     // Load all saved state at once
     const savedCurrentCard = loadFromStorage<number>(STORAGE_KEYS.CURRENT_CARD);
     const savedMemojiPositions = loadFromStorage<Record<number, MemojisPosition>>(STORAGE_KEYS.MEMOJI_POSITIONS);
-    const savedPostItTexts = loadFromStorage<{niklas: string, jana: string}>(STORAGE_KEYS.POST_IT_TEXTS);
-    const savedTakeawayTexts = loadFromStorage<{niklas: string, jana: string}>(STORAGE_KEYS.TAKEAWAY_TEXTS);
+    const savedPostItTexts = loadFromStorage<any>(STORAGE_KEYS.POST_IT_TEXTS);
+    const savedTakeawayTexts = loadFromStorage<any>(STORAGE_KEYS.TAKEAWAY_TEXTS);
     const savedQuestion = loadFromStorage<string>(STORAGE_KEYS.CURRENT_QUESTION);
-    
+
+    // Migrate legacy {niklas, jana} shape to keyed record
+    const migratePostIts = (v: any): Record<string, string> => {
+      if (!v) return {};
+      if ('niklas' in v || 'jana' in v) return { p0: v.niklas || '', p1: v.jana || '' };
+      return v;
+    };
+
     // Batch state updates using unstable_batchedUpdates pattern
     // React 18 auto-batches, but we minimize by setting all at once
     if (savedCurrentCard !== null) setCurrentCard(savedCurrentCard);
     if (savedMemojiPositions !== null) setMemojisPositions(savedMemojiPositions);
-    if (savedPostItTexts !== null) setPostItTexts(savedPostItTexts);
-    if (savedTakeawayTexts !== null) setTakeawayTexts(savedTakeawayTexts);
+    if (savedPostItTexts !== null) setPostItTexts(migratePostIts(savedPostItTexts));
+    if (savedTakeawayTexts !== null) setTakeawayTexts(migratePostIts(savedTakeawayTexts));
     if (savedQuestion !== null) setCurrentQuestion(savedQuestion);
     
     // Mark initial mount complete after a tick
