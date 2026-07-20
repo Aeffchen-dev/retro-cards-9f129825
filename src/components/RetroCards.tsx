@@ -1146,8 +1146,9 @@ const RetroCards: React.FC = () => {
               inputMode="text"
               value={value}
               onChange={(e) => onChange(sanitizeEmoji(e.target.value))}
+              onFocus={(e) => e.currentTarget.select()}
               placeholder={placeholder}
-              className="w-full h-full rounded-lg bg-retro-white/5 text-center text-2xl retro-input retro-input-dark border-none focus:outline-none focus:ring-2 focus:ring-black/20"
+              className="emoji-picker-input w-full h-full rounded-lg bg-retro-white/5 text-center text-2xl retro-input retro-input-dark border-none caret-transparent focus:outline-none focus:ring-2 focus:ring-black/20 focus:opacity-10"
             />
             <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#00E676] flex items-center justify-center pointer-events-none">
               <Pencil size={10} color="#161616" strokeWidth={2.5} />
