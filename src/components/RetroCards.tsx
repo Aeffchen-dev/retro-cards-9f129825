@@ -1134,8 +1134,26 @@ const RetroCards: React.FC = () => {
         );
 
       case SLIDE_SETUP: {
-        const emojiInputCls = "setup-emoji-input retro-input retro-input-dark w-11 h-11 text-xl text-center bg-black/20 border border-retro-white/30 rounded-lg leading-none";
-        const nameInputCls = "name-input-field retro-input retro-input-dark flex-1 retro-body-copy w-full bg-black/20";
+        const nameInputCls = "name-input-field retro-input retro-input-dark flex-1 w-full bg-transparent border-none focus:outline-none text-lg placeholder:text-retro-white/30";
+        const emojiPicker = (
+          value: string,
+          placeholder: string,
+          onChange: (val: string) => void
+        ) => (
+          <div className="relative shrink-0 w-12 h-12">
+            <input
+              type="text"
+              inputMode="text"
+              value={value}
+              onChange={(e) => onChange(sanitizeEmoji(e.target.value))}
+              placeholder={placeholder}
+              className="w-full h-full rounded-full bg-retro-white/5 text-center text-2xl retro-input retro-input-dark border-none focus:outline-none focus:ring-2 focus:ring-[#00E676]/50"
+            />
+            <div className="absolute -top-1 -left-1 w-5 h-5 rounded-full bg-[#00E676] flex items-center justify-center pointer-events-none">
+              <Pencil size={10} color="#161616" strokeWidth={2.5} />
+            </div>
+          </div>
+        );
         return (
           <div className="flex flex-col items-start w-full h-full">
             <div className="flex flex-col items-start gap-6 w-full">
@@ -1143,18 +1161,11 @@ const RetroCards: React.FC = () => {
                 <span className="retro-label">Setup</span>
               </div>
             </div>
-            <div className="flex flex-col gap-4 w-full mt-8">
+            <div className="flex flex-col w-full mt-8">
               {/* Person 1 */}
-              <div className="flex items-center gap-3 w-full">
-                <input
-                  type="text"
-                  inputMode="text"
-                  value={setupData.emoji1}
-                  onChange={(e) => setSetupData({ ...setupData, emoji1: sanitizeEmoji(e.target.value) })}
-                  placeholder={EMOJI1_PLACEHOLDER}
-                  className={emojiInputCls}
-                />
-                <div className="name-input-wrapper first-name-input-wrapper">
+              <div className="flex items-center gap-4 w-full py-4 border-b border-retro-white/10">
+                {emojiPicker(setupData.emoji1, EMOJI1_PLACEHOLDER, (val) => setSetupData({ ...setupData, emoji1: val }))}
+                <div className="name-input-wrapper first-name-input-wrapper flex-1">
                   <input
                     type="text"
                     value={setupData.name1}
@@ -1165,15 +1176,9 @@ const RetroCards: React.FC = () => {
                 </div>
               </div>
               {/* Person 2 */}
-              <div className="flex items-center gap-3 w-full">
-                <input
-                  type="text"
-                  value={setupData.emoji2}
-                  onChange={(e) => setSetupData({ ...setupData, emoji2: sanitizeEmoji(e.target.value) })}
-                  placeholder={EMOJI2_PLACEHOLDER}
-                  className={emojiInputCls}
-                />
-                <div className="name-input-wrapper">
+              <div className="flex items-center gap-4 w-full py-4 border-b border-retro-white/10">
+                {emojiPicker(setupData.emoji2, EMOJI2_PLACEHOLDER, (val) => setSetupData({ ...setupData, emoji2: val }))}
+                <div className="name-input-wrapper flex-1">
                   <input
                     type="text"
                     value={setupData.name2}
@@ -1185,20 +1190,14 @@ const RetroCards: React.FC = () => {
               </div>
               {/* Extra partners */}
               {setupData.extraPartners.map((p, idx) => (
-                <div key={idx} className="flex items-center gap-3 w-full">
-                  <div className="flex-1 flex items-center gap-3">
-                    <input
-                      type="text"
-                      value={p.emoji}
-                      onChange={(e) => {
-                        const next = [...setupData.extraPartners];
-                        next[idx] = { ...next[idx], emoji: sanitizeEmoji(e.target.value) };
-                        setSetupData({ ...setupData, extraPartners: next });
-                      }}
-                      placeholder="🧚"
-                      className={emojiInputCls}
-                    />
-                    <div className="name-input-wrapper">
+                <div key={idx} className="flex items-center gap-4 w-full py-4 border-b border-retro-white/10">
+                  <div className="flex-1 flex items-center gap-4">
+                    {emojiPicker(p.emoji, "🧚", (val) => {
+                      const next = [...setupData.extraPartners];
+                      next[idx] = { ...next[idx], emoji: val };
+                      setSetupData({ ...setupData, extraPartners: next });
+                    })}
+                    <div className="name-input-wrapper flex-1">
                       <input
                         type="text"
                         value={p.name}
@@ -1225,19 +1224,23 @@ const RetroCards: React.FC = () => {
                   </button>
                 </div>
               ))}
+              {/* Add partner button */}
               <button
                 type="button"
                 onClick={() => setSetupData({
                   ...setupData,
                   extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
                 })}
-                className="self-start retro-body-copy text-retro-white/60 bg-retro-white/5 backdrop-blur-md border border-retro-white/10 rounded-full px-4 py-2 hover:bg-retro-white/10 hover:text-retro-white/80 transition-colors no-underline"
+                className="w-full flex items-center gap-4 py-4 text-retro-white retro-body-copy transition-colors hover:text-retro-white/80 no-underline"
               >
-                + Weiteren Partner hinzufügen
+                <div className="w-12 h-12 rounded-full border border-retro-white/20 flex items-center justify-center shrink-0">
+                  <Plus size={20} strokeWidth={2} />
+                </div>
+                <span>Weiteren Partner hinzufügen</span>
               </button>
               {/* Toggle */}
-              <div className="flex items-center justify-between w-full mt-4">
-                <span className="retro-body-copy">Offene Beziehung</span>
+              <div className="flex items-center justify-between w-full py-4 border-t border-retro-white/10">
+                <span className="text-lg">Offene Beziehung</span>
                 <button
                   type="button"
                   role="switch"
