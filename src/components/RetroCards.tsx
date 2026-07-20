@@ -1102,14 +1102,14 @@ const RetroCards: React.FC = () => {
 
       case SLIDE_LOGO:
         return (
-          <div className="flex flex-col items-center w-full h-full text-center" style={{ paddingTop: '45%' }}>
+          <div className="flex flex-col items-center w-full h-full text-center" style={{ paddingTop: '35%' }}>
             <h1
               className="retro-title logo-slide-anim"
               style={{ fontSize: '64px', lineHeight: 1.05 }}
             >
               Retro Cards
             </h1>
-            <p className="retro-body-copy mt-4 opacity-80" style={{ fontSize: '16px', lineHeight: 1.5 }}>
+            <p className="retro-body-copy mt-8 opacity-80" style={{ fontSize: '16px', lineHeight: 1.5 }}>
               Ein interaktiver Check-in
               <br />
               für eine gesunde Beziehung
