@@ -1480,7 +1480,7 @@ const RetroCards: React.FC = () => {
               <SwiperSlide key={slideId}>
                 <div className="w-full h-full flex items-center justify-center px-4">
                   <div 
-                    className="retro-card-container relative h-full w-full max-w-[500px] max-h-[720px] mx-auto flex flex-col justify-center items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl overflow-y-auto"
+                    className="retro-card-container relative h-full w-full max-w-[500px] max-h-[720px] min-h-0 mx-auto flex flex-col justify-start items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl overflow-y-auto"
                   >
                     {/* Edit Mode View */}
                     {editModeSlides[slideId] && slidesWithEditButton.includes(slideId) ? (
