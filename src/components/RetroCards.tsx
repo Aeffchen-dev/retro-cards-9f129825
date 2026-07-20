@@ -1539,7 +1539,7 @@ const RetroCards: React.FC = () => {
                     {slidesWithEditButton.includes(slideId) && (
                       <button
                         onClick={() => toggleEditMode(slideId)}
-                        className="absolute top-4 right-4 w-12 h-12 flex items-center justify-center z-40 cursor-pointer hover:opacity-80 transition-all duration-300 screen-only"
+                        className="swiper-no-swiping absolute top-4 right-4 w-12 h-12 flex items-center justify-center z-40 cursor-pointer hover:opacity-80 transition-all duration-300 screen-only"
                         style={{ touchAction: 'manipulation' }}
                       >
                         {editModeSlides[slideId] ? (
