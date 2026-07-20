@@ -1454,8 +1454,8 @@ const RetroCards: React.FC = () => {
       </div>
 
       {/* Card Content - Swiper.js slide animation like friends app */}
-      <div className="flex-1 flex items-center justify-center py-2 md:py-4">
-        <div className="w-full h-full">
+      <div className="flex-1 min-h-0 flex items-center justify-center overflow-hidden py-2 md:py-4">
+        <div className="w-full h-full min-h-0 overflow-hidden">
             <Swiper
             modules={[Navigation, Pagination]}
             spaceBetween={0}
@@ -1465,7 +1465,8 @@ const RetroCards: React.FC = () => {
             onSwiper={setSwiperRef}
             onSlideChange={handleSlideChange}
             allowTouchMove={!draggingMemoji}
-            style={{ height: '100%', width: '100%' }}
+            className="h-full min-h-0"
+            style={{ height: '100%', width: '100%', minHeight: 0 }}
             effect="slide"
             resistance={true}
             resistanceRatio={0.3}
@@ -1477,8 +1478,8 @@ const RetroCards: React.FC = () => {
             longSwipesMs={300}
           >
             {slides.map((slideId, index) => (
-              <SwiperSlide key={slideId}>
-                <div className="w-full h-full flex items-center justify-center px-4">
+              <SwiperSlide key={slideId} className="h-full min-h-0 overflow-hidden">
+                <div className="w-full h-full min-h-0 flex items-center justify-center overflow-hidden px-4">
                   <div 
                     className="retro-card-container relative h-full w-full max-w-[500px] max-h-[720px] min-h-0 mx-auto flex flex-col justify-start items-start gap-10 bg-retro-card-bg rounded-2xl p-8 shadow-2xl overflow-y-auto"
                   >
