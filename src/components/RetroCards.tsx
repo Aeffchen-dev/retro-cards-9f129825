@@ -1134,7 +1134,7 @@ const RetroCards: React.FC = () => {
         );
 
       case SLIDE_SETUP: {
-        const nameInputCls = "name-input-field retro-input retro-input-dark flex-1 w-full bg-transparent border-none focus:outline-none text-lg placeholder:text-base placeholder:text-retro-white/30";
+        const nameInputCls = "name-input-field retro-input retro-input-dark h-12 w-full rounded-full bg-retro-white/5 border-none focus:outline-none focus:ring-2 focus:ring-[#00E676]/50 text-lg placeholder:text-base placeholder:text-retro-white/30";
         const emojiPicker = (
           value: string,
           placeholder: string,
