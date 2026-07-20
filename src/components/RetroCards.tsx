@@ -1231,12 +1231,12 @@ const RetroCards: React.FC = () => {
                   ...setupData,
                   extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
                 })}
-                className="w-full flex items-center gap-4 py-4 text-retro-white retro-body-copy transition-colors hover:text-retro-white/80 no-underline"
+                className="w-full flex items-center gap-4 py-4 text-retro-white text-lg transition-colors hover:text-retro-white/80 no-underline"
               >
                 <div className="w-12 h-12 rounded-full border border-retro-white/20 flex items-center justify-center shrink-0">
                   <Plus size={20} strokeWidth={2} />
                 </div>
-                <span>Weiteren Partner hinzufügen</span>
+                <span className="text-left whitespace-nowrap">Weiteren Partner hinzufügen</span>
               </button>
               {/* Toggle */}
               <div className="flex items-center justify-between w-full py-4 border-t border-retro-white/10">
