@@ -1076,37 +1076,26 @@ const RetroCards: React.FC = () => {
               </h2>
             </div>
             <div className="flex flex-col flex-1 w-full justify-between gap-6 mt-10 screen-only">
-              <textarea
-                value={postItTexts.niklas}
-                onChange={(e) =>
-                  setPostItTexts({ ...postItTexts, niklas: e.target.value })
-                }
-                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
-                style={{
-                  borderRadius: "0px",
-                } as React.CSSProperties}
-                placeholder={postItPlaceholder(setupData.name1, "Themen", "Meine Themen")}
-              />
-              <textarea
-                value={postItTexts.jana}
-                onChange={(e) =>
-                  setPostItTexts({ ...postItTexts, jana: e.target.value })
-                }
-                className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
-                style={{
-                  borderRadius: "0px",
-                } as React.CSSProperties}
-                placeholder={postItPlaceholder(setupData.name2, "Themen", "Themen meines Partners")}
-              />
+              {persons.map((person, idx) => (
+                <textarea
+                  key={person.key}
+                  value={postItTexts[person.key] || ""}
+                  onChange={(e) =>
+                    setPostItTexts({ ...postItTexts, [person.key]: e.target.value })
+                  }
+                  className="w-full flex-1 p-4 bg-retro-post-it retro-input retro-input-light border-none text-lg"
+                  style={{ borderRadius: "0px" } as React.CSSProperties}
+                  placeholder={personPlaceholder(person, idx, "Themen", "Meine Themen", "Themen meines Partners")}
+                />
+              ))}
             </div>
             {/* Print-only: post-it notes like takeaways with line breaks */}
             <div className="hidden print-only flex-col flex-1 w-full justify-between gap-6 mt-10">
-              <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
-                {postItTexts.niklas || postItPlaceholder(setupData.name1, "Themen", "Meine Themen")}
-              </div>
-              <div className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
-                {postItTexts.jana || postItPlaceholder(setupData.name2, "Themen", "Themen meines Partners")}
-              </div>
+              {persons.map((person, idx) => (
+                <div key={person.key} className="w-full flex-1 p-4 bg-retro-post-it text-black text-lg min-h-[120px] whitespace-pre-wrap">
+                  {postItTexts[person.key] || personPlaceholder(person, idx, "Themen", "Meine Themen", "Themen meines Partners")}
+                </div>
+              ))}
             </div>
           </div>
         );
