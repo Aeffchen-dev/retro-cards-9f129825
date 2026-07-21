@@ -1243,7 +1243,7 @@ const RetroCards: React.FC = () => {
                       const next = setupData.extraPartners.filter((_, i) => i !== idx);
                       setSetupData({ ...setupData, extraPartners: next });
                     }}
-                    className="swiper-no-swiping relative z-40 shrink-0 w-5 h-5 rounded-full bg-[#00E676] flex items-center justify-center transition-transform hover:scale-105"
+                    className="relative z-40 shrink-0 w-5 h-5 rounded-full bg-[#00E676] flex items-center justify-center transition-transform hover:scale-105"
                   >
                     <X size={10} color="#161616" strokeWidth={2.5} />
                   </button>
@@ -1259,7 +1259,7 @@ const RetroCards: React.FC = () => {
                     extraPartners: [...setupData.extraPartners, { name: '', emoji: '' }],
                   });
                 }}
-                className="swiper-no-swiping relative z-40 w-full flex items-center gap-0 py-4 text-retro-white/50 retro-body-copy transition-colors hover:text-retro-white/70 no-underline"
+                className="relative z-40 w-full flex items-center gap-0 py-4 text-retro-white/50 retro-body-copy transition-colors hover:text-retro-white/70 no-underline"
               >
                 <span className="text-left whitespace-nowrap">
                   <span className="text-retro-white/50">+ </span>
@@ -1274,7 +1274,7 @@ const RetroCards: React.FC = () => {
                     e.stopPropagation();
                     setSetupData({ ...setupData, openRelationship: !setupData.openRelationship });
                   }}
-                  className="swiper-no-swiping retro-body-copy text-left bg-transparent p-0 m-0 no-underline"
+                  className="retro-body-copy text-left bg-transparent p-0 m-0 no-underline"
                 >
                   Nicht monogam
                 </button>
@@ -1286,7 +1286,7 @@ const RetroCards: React.FC = () => {
                     e.stopPropagation();
                     setSetupData({ ...setupData, openRelationship: !setupData.openRelationship });
                   }}
-                  className={`swiper-no-swiping relative z-40 shrink-0 w-12 h-7 ml-4 rounded-full transition-colors ${setupData.openRelationship ? 'bg-[#00E676]' : 'bg-retro-white/20'}`}
+                  className={`relative z-40 shrink-0 w-12 h-7 ml-4 rounded-full transition-colors ${setupData.openRelationship ? 'bg-[#00E676]' : 'bg-retro-white/20'}`}
                 >
                   <span
                     className={`absolute top-1 left-1 w-5 h-5 rounded-full bg-retro-card-bg transition-transform ${setupData.openRelationship ? 'translate-x-5' : ''}`}
@@ -1300,7 +1300,7 @@ const RetroCards: React.FC = () => {
                 e.stopPropagation();
                 swiperRef?.slideNext();
               }}
-              className="swiper-no-swiping relative z-40 mt-auto w-full retro-body-copy !text-black bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
+              className="relative z-40 mt-auto w-full retro-body-copy !text-black bg-[#00E676] rounded-full px-6 py-3 hover:opacity-90 transition-opacity"
             >
               Los geht's
             </button>
