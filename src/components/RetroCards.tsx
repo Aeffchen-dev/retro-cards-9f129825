@@ -1274,7 +1274,7 @@ const RetroCards: React.FC = () => {
                     e.stopPropagation();
                     setSetupData({ ...setupData, openRelationship: !setupData.openRelationship });
                   }}
-                  className="swiper-no-swiping retro-body-copy text-left bg-transparent p-0 m-0 no-underline"
+                  className="retro-body-copy text-left bg-transparent p-0 m-0 no-underline"
                 >
                   Nicht monogam
                 </button>
